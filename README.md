@@ -10,4 +10,6 @@ Readers will be able to read the news by selecting categories or selecting/filte
 | Day | Time | What I did |
 | :----:|:-----| :-----|
 | 4.2. | 1 | Initial commit |
-| Total  | 1 | | 
+| 8.2. | 2.5 | Creating node backend with express, adding basic routing structure and eslint |
+| | 2 | Creating basic frontend structure with react, redux, eslint | 
+| Total  | 4.5 | | 
