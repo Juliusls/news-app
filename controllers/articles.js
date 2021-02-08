@@ -1,65 +1,77 @@
 const articlesRouter = require('express').Router()
+const Article = require('../models/article')
 
-let articles = [
-	{
-		'id': 1,
-		'title': 'First article',
-		'content': 'Deserunt eu non veniam sit magna esse magna sunt nisi ullamco. Irure aliquip do nostrud ullamco esse. Mollit dolore commodo minim dolore fugiat laborum qui. Consectetur ut minim quis sint adipisicing laborum minim cillum tempor proident labore nostrud.    Nostrud aliqua id esse et eu ullamco dolor.',
-		'published': 2010,
-		'author': 'First author',
-		'views': 0,
-		'type': 'free',
-		'comments': [],
-		'genres': ['Business']
-	},
-	{
-		'id': 2,
-		'title': 'Second article',
-		'content': 'Deserunt eu non veniam sit magna esse magna sunt nisi ullamco. Irure aliquip do nostrud ullamco esse. Mollit dolore commodo minim dolore fugiat laborum qui. Consectetur ut minim quis sint adipisicing laborum minim cillum tempor proident labore nostrud. Nostrud aliqua id esse et eu ullamco dolor.',
-		'published': 2020,
-		'author': 'Second author',
-		'views': 10,
-		'type': 'paid',
-		'comments': [],
-		'genres': ['Economy']
-	},
-	{
-		'id': 3,
-		'title': 'Third article',
-		'content': 'Deserunt eu non veniam sit magna esse magna sunt nisi ullamco. Irure aliquip do nostrud ullamco esse. Mollit dolore commodo minim dolore fugiat laborum qui. Consectetur ut minim quis sint adipisicing laborum minim cillum tempor proident labore nostrud. Nostrud aliqua id esse et eu ullamco dolor.',
-		'published': 2015,
-		'author': 'Third author',
-		'views': 0,
-		'type': 'free',
-		'comments': [],
-		'genres': ['Crime']
-	},
-	{
-		'id': 4,
-		'title': 'Fourh article',
-		'content': 'Deserunt eu non veniam sit magna esse magna sunt nisi ullamco. Irure aliquip do nostrud ullamco esse. Mollit dolore commodo minim dolore fugiat laborum qui. Consectetur ut minim quis sint adipisicing laborum minim cillum tempor proident labore nostrud. Nostrud aliqua id esse et eu ullamco dolor.',
-		'published': 2021,
-		'author': 'Fourth author',
-		'views': 0,
-		'type': 'paid',
-		'comments': [],
-		'genres': ['Sport']
-	}
-]
-
-// eslint-disable-next-line no-unused-vars
-articlesRouter.get('/', (request, response) => {
+articlesRouter.get('/', async (request, response) => {
+	const articles = await Article
+		.find({})
+		.populate('writer')
+		.populate('commnet')
 	response.json(articles)
 })
 
-articlesRouter.get('/:id', (request, response) => {
-	const id = Number(request.params.id)
-	const article = articles.find(article => article.id === id)
+articlesRouter.get('/:id', async (request, response) => {
+	const article = await Article.findById(request.params.id)
+		.populate('writer')
+		.populate('commnet')
 	if (article) {
 		response.json(article)
 	} else {
 		response.status(404).end()
 	}
+})
+
+articlesRouter.put('/:id', async (request, response) => {
+	const body = request.body
+    
+	const article = {
+		title: body.title,
+		content: body.content,
+		published: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''),
+		views: 0,
+		author: body.author,
+		paid: body.paid,
+		genres: body.genres
+	}
+
+	await Article.findByIdAndUpdate(request.params.id, article, {new: true})
+		.then(updatedArticle => {
+			response.status(200).json(updatedArticle.toJSON())
+		})
+})
+
+articlesRouter.post('/', (request, response) => {
+	const body = request.body
+  
+	if (body.title === undefined) {
+		return response.status(400).json({ error: 'title missing' })
+	} 
+	if (body.content === undefined) {
+		return response.status(400).json({ error: 'content missing' })
+	} 
+	if (body.author === undefined) {
+		return response.status(400).json({ error: 'author missing' })
+	}
+  
+	const article = new Article({
+		title: body.title,
+		content: body.content,
+		published: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''),
+		author: body.author,
+		views: 0,
+		paid: body.paid || 'no',
+		genres: body.genres
+	})
+  
+	article.save()
+		.then(savedArticle => {
+			response.json(savedArticle.toJSON())
+		})
+		.catch(error => console.log(error))
+})
+
+articlesRouter.delete('/:id', async (request, response) => {
+	await Article.findByIdAndRemove(request.params.id)
+	response.status(204).end()
 })
 
 module.exports = articlesRouter
