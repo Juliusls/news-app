@@ -27,10 +27,14 @@ readersRouter.post('/', async (request, response) => {
 	if (body.lastName === undefined) {
 		return response.status(400).json({error: 'last name missing'})
 	}
+	if (body.userName === undefined) {
+		return response.status(400).json({error: 'username missing'})
+	}
 
 	const reader = new Reader({
 		firstName: body.firstName,
 		lastName: body.lastName,
+		userName: body.userName,
 		funds: 0
 	})
 
@@ -47,6 +51,7 @@ readersRouter.put('/:id', (request, response) =>{
 	const reader = {
 		firstName: body.firstName,
 		lastName: body.lastName,
+		userName: body.userName,
 		funds: body.funds
 	}
 

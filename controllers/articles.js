@@ -39,7 +39,7 @@ articlesRouter.post('/', async (request, response) => {
 	} 
 
 	try {
-		const writer = await Writer.findById('60226425595a9eb6f2988ce7')
+		const writer = await Writer.findById('602288e0ffcb1ec19d68c5de')
   
 		const article = new Article({
 			title: body.title,
@@ -54,6 +54,7 @@ articlesRouter.post('/', async (request, response) => {
 		const savedArticle = await article.save()
 		writer.myarticles = writer.myarticles.concat(savedArticle._id)
 		await writer.save()
+		response.status(201).json(savedArticle)
 	} catch (error) {
 		logger.error(error)
 	}

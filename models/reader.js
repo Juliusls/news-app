@@ -5,6 +5,7 @@ mongoose.set('useFindAndModify', false)
 const readerSchema = new mongoose.Schema({
 	firstName: String,
 	lastName: String,
+	userName: String,
 	funds: Number,
 	readingHistory: [
 		{
