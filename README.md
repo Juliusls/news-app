@@ -14,4 +14,5 @@ Readers will be able to read the news by selecting categories or selecting/filte
 | | 2 | Creating basic frontend structure with react, redux, eslint | 
 | | 2.5 | Connecting backend to MongoDB, creating controllers for articles, and writers | 
 | 9.2 | 3 | Creating all controllers and modifing models in backend and testing them with Postman |
-| Total  | 8 | | 
+| | 4 | Creating dummy data for backend, adding materialUI to frontend: Drawer and AppBar components |
+| Total  | 15 | | 
