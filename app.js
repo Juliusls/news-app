@@ -6,13 +6,14 @@ const writersRouter = require('./controllers/writers')
 const readersRouter = require('./controllers/readers')
 const mongoose = require('mongoose')
 const config = require('./utils/config')
+const logger = require('./utils/logger')
 
 mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
 	.then(() => {
-		console.log('Connecting to MongoDB')
+		logger.info('Connecting to MongoDB')
 	})
 	.catch((error) => {
-		console.error('error connecing to MongoDB', error.message)
+		logger.error('error connecing to MongoDB', error.message)
 	})
 
 app.use(cors())

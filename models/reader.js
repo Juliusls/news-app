@@ -3,24 +3,33 @@ const mongoose = require('mongoose')
 mongoose.set('useFindAndModify', false)
 
 const readerSchema = new mongoose.Schema({
-	name: String,
+	firstName: String,
+	lastName: String,
 	funds: Number,
-	readingHistory: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: 'Article'
-	},
-	readercomments: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: 'Comment'
-	},
-	subscriptions: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: 'Writer'
-	},
-	favoritewriters: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: 'Writer'
-	},
+	readingHistory: [
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Article'
+		}
+	],
+	readerComments: [
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Comment'
+		}
+	],
+	subscriptions: [
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Writer'
+		}
+	],
+	favoritewriters: [
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Writer'
+		}
+	]
 })
 
 readerSchema.set('toJSON', {

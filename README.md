@@ -13,4 +13,5 @@ Readers will be able to read the news by selecting categories or selecting/filte
 | 8.2. | 2.5 | Creating node backend with express, adding basic routing structure and eslint |
 | | 2 | Creating basic frontend structure with react, redux, eslint | 
 | | 2.5 | Connecting backend to MongoDB, creating controllers for articles, and writers | 
+| 9.2 | 3 | Creating all controllers and modifing models in backend and testing them with Postman |
 | Total  | 8 | | 

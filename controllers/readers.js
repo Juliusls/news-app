@@ -1,70 +1,16 @@
 const readersRouter = require('express').Router()
-
-let readers = [
-	{
-		'id': 1,
-		'name': 'Ross',
-		'funds': 0,
-		'readinghistory': [],
-		'readercomments': [],
-		'subscriptions': [],
-		'favoritewriters': ['Harvey']
-	},
-	{
-		'id': 2,
-		'name': 'Chandler',
-		'funds': 25,
-		'readinghistory': [],
-		'readercomments': [],
-		'subscriptions': [],
-		'favoritewriters': ['Louis']
-	},
-	{
-		'id': 3,
-		'name': 'Joey',
-		'funds': 100,
-		'readinghistory': [],
-		'readercomments': [],
-		'subscriptions': [],
-		'favoritewriters': ['Donna']
-	},
-	{
-		'id': 4,
-		'name': 'Rachel',
-		'funds': 50,
-		'readinghistory': [],
-		'readercomments': [],
-		'subscriptions': [],
-		'favoritewriters': ['Mike']
-	},
-	{
-		'id': 5,
-		'name': 'Phoebe',
-		'funds': 50,
-		'readinghistory': [],
-		'readercomments': [],
-		'subscriptions': [],
-		'favoritewriters': ['Jessica']
-	},
-	{
-		'id': 6,
-		'name': 'Monica',
-		'funds': 50,
-		'readinghistory': [],
-		'readercomments': [],
-		'subscriptions': [],
-		'favoritewriters': ['Katrina']
-	},
-]
+const Reader = require('../models/reader')
+const logger = require('../utils/logger')
 
 // eslint-disable-next-line no-unused-vars
-readersRouter.get('/', (request, response) => {
+readersRouter.get('/', async (request, response) => {
+	const readers = await Reader.find({})
+		.populate('readerComments')
 	response.json(readers)
 })
 
-readersRouter.get('/:id', (request, response) => {
-	const id = Number(request.params.id)
-	const reader = readers.find(reader => reader.id === id)
+readersRouter.get('/:id', async (request, response) => {
+	const reader = await Reader.findById(request.params.id)
 	if (reader) {
 		response.json(reader)
 	} else {
@@ -72,4 +18,55 @@ readersRouter.get('/:id', (request, response) => {
 	}
 })
 
+readersRouter.post('/', async (request, response) => {
+	const body = request.body
+
+	if (body.firstName === undefined) {
+		return response.status(400).json({error: 'first name missing'})
+	}
+	if (body.lastName === undefined) {
+		return response.status(400).json({error: 'last name missing'})
+	}
+
+	const reader = new Reader({
+		firstName: body.firstName,
+		lastName: body.lastName,
+		funds: 0
+	})
+
+	reader.save()
+		.then(savedReader => {
+			response.json(savedReader)
+		})
+		.catch(error => logger.error(error))
+})
+
+readersRouter.put('/:id', (request, response) =>{
+	const body = request.body
+
+	const reader = {
+		firstName: body.firstName,
+		lastName: body.lastName,
+		funds: body.funds
+	}
+
+	Reader.findByIdAndUpdate(request.params.id, reader, { new: true})
+		.then(updatedReader => {
+			response.status(200).json(updatedReader)
+		})
+})
+
+readersRouter.delete('/:id', async (request, response) => {
+	await Reader.findByIdAndRemove(request.params.id)
+	response.status(204).end()
+})
+
 module.exports = readersRouter
+
+
+
+
+// 'readinghistory': [],
+// 'readercomments': [],
+// 'subscriptions': [],
+// 'favoritewriters': ['Harvey']

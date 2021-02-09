@@ -1,7 +1,7 @@
 const writersRouter = require('express').Router()
 const Writer = require('../models/writer')
+const logger = require('../utils/logger')
 
-// eslint-disable-next-line no-unused-vars
 writersRouter.get('/', async (request, response) => {
 	const writers = await Writer
 		.find({})
@@ -10,15 +10,17 @@ writersRouter.get('/', async (request, response) => {
 	response.json(writers)
 })
 
-// writersRouter.get('/:id', (request, response) => {
-// 	const id = Number(request.params.id)
-// 	const writer = writers.find(writer => writer.id === id)
-// 	if (writer) {
-// 		response.json(writer)
-// 	} else {
-// 		response.status(404).end()
-// 	}
-// })
+writersRouter.get('/:id', async (request, response) => {
+	const writer = await Writer
+		.findById(request.params.id)
+		.populate('article')
+		.populate('readers')
+	if (writer) {
+		response.json(writer)
+	} else {
+		response.status(404).end()
+	}
+})
 
 writersRouter.post('/', async (request, response) => {
 	const body = request.body
@@ -29,24 +31,64 @@ writersRouter.post('/', async (request, response) => {
 	if (body.lastName === undefined) {
 		return response.status(400).json({error: 'Last name missing'})
 	}
-	if (body.writergenres === undefined) {
+	if (body.writerGenres === undefined) {
 		return response.status(400).json({error: 'Genres missing'})
 	}
 
 	const writer = new Writer({
 		firstName: body.firstName,
 		lastName: body.lastName,
-		writergenres: body.genres,
+		writerGenres: body.writerGenres,
 		earnings: 0,
-		totalviews: 0,
+		totalViews: 0,
 	})
 
 	writer.save()
 		.then(savedWriter => {
 			response.json(savedWriter.toJSON())
 		})
-		.catch(error => console.log(error))
+		.catch(error => logger.error(error))
 })
+
+writersRouter.put('/:id', (request, response) => {
+	const body = request.body
+
+	if (body.firstName === undefined) {
+		return response.status(400).json({error: 'First name missing'})
+	}
+	if (body.lastName === undefined) {
+		return response.status(400).json({error: 'Last name missing'})
+	}
+	if (body.writerGenres === undefined) {
+		return response.status(400).json({error: 'Genres missing'})
+	}
+	if (body.earnings === undefined) {
+		return response.status(400).json({error: 'Earinings missing'})
+	}
+	if (body.totalViews === undefined) {
+		return response.status(400).json({error: 'Total views missing'})
+	}
+
+	const writer = {
+		firstName: body.firstName,
+		lastName: body.lastName,
+		writerGenres: body.writerGenres,
+		earnings: body.earnings,
+		totalViews: body.totalViews,
+	}
+
+	Writer.findByIdAndUpdate(request.params.id, writer, { new: true })
+		.then(updatedWriter => {
+			response.status(200).json(updatedWriter.toJSON())
+		})
+})
+
+writersRouter.delete('/:id', async (request, response) => {
+	await Writer.findByIdAndRemove(request.params.id)
+	response.status(204).end()
+})
+
+
 
 module.exports = writersRouter
 

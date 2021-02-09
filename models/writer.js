@@ -7,21 +7,25 @@ const writerSchema = new mongoose.Schema({
 	lastName: String,
 	earnings: Number,
 	totalViews: Number,
-	writergenres: [{
-		type: String
-	}],
-	myarticles: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: 'Article'
-	},
-	subscribers: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: 'Reader'
-	},
-	followers: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: 'Reader'
-	},
+	writerGenres: [String],
+	myarticles: [
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Article'
+		}
+	],
+	subscribers: [
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Reader'
+		}
+	],
+	followers: [
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Reader'
+		}
+	],
 })
 
 writerSchema.set('toJSON', {
