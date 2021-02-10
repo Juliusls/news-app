@@ -7,34 +7,35 @@ import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import CloseIcon from '@material-ui/icons/Close'
 
-const useStyles = makeStyles( theme => ({
+const useStyles = makeStyles(theme => ({
 	list: {
 		width: 250,
 	},
-	closeIcon: {
-		color: 'white'
+	icon: {
+		fontSize: theme.icons.fontSize,
+		fill: theme.icons.fill
 	},
 	drawerpadding: {
-		paddingTop: 0,
+		padding: 0,
 	},
-	text: {
-		color: '#FCFCFC'
+	listItemText: {
+		primary: theme.palette.text.primary
 	},
 	paper: {
-		background: '#222525'
+		background: theme.palette.primary.lighter
 	},
-	border: {
+	paperAnchorDockedLeft: {
 		borderRight: 0
 	},
 	drawerHeader: {
 		display: 'flex',
 		alignItems: 'center',
-		background: '#181616',
+		background: theme.palette.primary.main,
 		justifyContent: 'flex-start',
 		padding: theme.spacing(0, 1),
 		marginTop: '0',
 		...theme.mixins.toolbar,
-	}
+	},
 }))
 
 const TemporaryDrawer = ({ drawerIsOpen, setDrawerIsOpen }) => {
@@ -47,15 +48,15 @@ const TemporaryDrawer = ({ drawerIsOpen, setDrawerIsOpen }) => {
 			onClick={() => setDrawerIsOpen(false)}
 			onKeyDown={() => setDrawerIsOpen(false)}
 		>
-			<List classes={{ padding: classes.drawerpadding }}>
+			<List className={classes.drawerpadding}>
 				<div className={classes.drawerHeader}>
 					<IconButton onClick={() => setDrawerIsOpen(false)}>
-						<CloseIcon style={{ fill: '#FFFFFF', fontSize: 30 }} />
+						<CloseIcon className={classes.icon} />
 					</IconButton>
 				</div>
 				{['Latest', 'My Favorites', 'Business', 'Cars', 'Entertainment', 'Family', 'Health', 'Politics', 'Religion', 'Science', 'Sports', 'Technology', 'Travel', 'World'].map((text) => (
 					<ListItem button key={text} >
-						<ListItemText primary={text} classes={{ primary: classes.text }}/>
+						<ListItemText primary={text} className={classes.listItemText}/>
 					</ListItem>
 				))}
 			</List>
@@ -64,7 +65,7 @@ const TemporaryDrawer = ({ drawerIsOpen, setDrawerIsOpen }) => {
 
 	return (
 		<Drawer
-			classes={{ paper: classes.paper, paperAnchorDockedLeft: classes.border }}
+			classes={{ paper: classes.paper, paperAnchorDockedLeft: classes.paperAnchorDockedLeft }}
 			anchor="left"
 			variant="persistent"
 			open={drawerIsOpen}

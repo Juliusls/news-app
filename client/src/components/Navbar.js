@@ -14,19 +14,29 @@ import MenuItem from '@material-ui/core/MenuItem'
 import Menu from '@material-ui/core/Menu'
 import Button from '@material-ui/core/Button'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
+	appbar: {
+		background: theme.primary
+	},
 	root: {
 		flexGrow: 1,
+	},
+	menuItem: {
+		color: theme.palette.text.secondary,
 	},
 	menuButton: {
 		marginRight: theme.spacing(2),
 	},
 	title: {
 		flexGrow: 1,
-		align: 'center'
+		textAlign: 'center',
 	},
 	button: {
 		marginRight: 10
+	},
+	icons: {
+		fill: theme.icons.fill,
+		fontSize: theme.icons.fontSize
 	}
 }))
 
@@ -56,10 +66,10 @@ const Navbar = () =>  {
 	return (
 		<div className={classes.root}>
 			<TemporaryDrawer drawerIsOpen={drawerIsOpen} setDrawerIsOpen={setDrawerIsOpen} />
-			<AppBar position="static" style={{ background: '#181616' }}>
+			<AppBar position="static" className={classes.appbar}>
 				<Toolbar>
 					<IconButton edge="start" onClick={handleDrawerIsOpen} className={classes.menuButton} color="inherit" aria-label="menu">
-						<MenuIcon style={{ fill: '#FFFFFF', fontSize: 30 }}/>
+						<MenuIcon className={classes.icons}/>
 					</IconButton>
 					<Typography variant="h6" className={classes.title}>
                         News App
@@ -71,9 +81,9 @@ const Navbar = () =>  {
 								aria-controls="menu-appbar"
 								aria-haspopup="true"
 								onClick={handleMenu}
-								color="inherit"
+								color='red'
 							>
-								<AccountCircle />
+								<AccountCircle className={classes.icons}/>
 							</IconButton>
 							<Menu
 								id="menu-appbar"
@@ -90,8 +100,8 @@ const Navbar = () =>  {
 								open={open}
 								onClose={handleClose}
 							>
-								<MenuItem onClick={handleClose}>Profile</MenuItem>
-								<MenuItem onClick={handleClose}>My account</MenuItem>
+								<MenuItem onClick={handleClose} classes={{ root: classes.menuItem }}>Profile</MenuItem>
+								<MenuItem onClick={handleClose} classes={{ root: classes.menuItem }}>My account</MenuItem>
 							</Menu>
 						</div>
 					) : (

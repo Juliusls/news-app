@@ -15,4 +15,5 @@ Readers will be able to read the news by selecting categories or selecting/filte
 | | 2.5 | Connecting backend to MongoDB, creating controllers for articles, and writers | 
 | 9.2 | 3 | Creating all controllers and modifing models in backend and testing them with Postman |
 | | 4 | Creating dummy data for backend, adding materialUI to frontend: Drawer and AppBar components |
+| 10.2 | 3.5 | Working Material UI theme, Creating Grid, ArticleCard components |
 | Total  | 15 | | 
