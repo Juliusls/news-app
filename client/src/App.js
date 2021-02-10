@@ -1,23 +1,19 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from './components/Navbar'
 import { useSelector, useDispatch } from 'react-redux'
 import { initArticles } from './reducers/articlesReducer'
-import Grid from '@material-ui/core/Grid'
 import Container  from '@material-ui/core/Container'
-import ArticleCard from './components/ArticleCard'
-import { makeStyles } from '@material-ui/core/styles'
+import ArticlesList from './components/ArticlesList'
+import ArticlePage from './components/ArticlePage'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
 
-const useStyles = makeStyles({
-	container: {
-		maxWidth: 'lg'
-	}
-})
-
-function App() {
-	const classes = useStyles()
+const App = () => {
 	const dispatch = useDispatch()
+	const [filterValue, setFilerValue] = useState('all')
 	const articles = useSelector(state => state.articles)
+
+	console.log('filterValue', filterValue)
 
 	useEffect(() => {
 		async function getAllArticles() {
@@ -27,21 +23,20 @@ function App() {
 	}, [dispatch])
 
 	return (
-		<div>
-			<Navbar />
-			<Container classes={{ maxWidth: classes.container }} >
-				<Grid 
-					container
-					justify="center"
-				>
-					{articles.map(article => <ArticleCard key={article.id} article={article}/> )}
-				</Grid>
+		<Router>
+			<Navbar setFilerValue={setFilerValue} />
+			<Container>
+				<Switch>
+					<Route path="/article/:id">
+						<ArticlePage />
+					</Route>
+					<Route path="/">
+						<ArticlesList articles={articles} />
+					</Route>
+				</Switch>
 			</Container>
-		</div>
+		</Router>
 	)
 }
 
 export default App
-
-
-// {articles.map(article => <Article key={article.id} article={article}/> )}

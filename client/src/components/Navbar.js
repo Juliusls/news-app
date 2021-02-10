@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import TemporaryDrawer from './TemporaryDrawer'
+import LeftSideMenu from './LeftSideMenu'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
@@ -40,7 +40,7 @@ const useStyles = makeStyles(theme => ({
 	}
 }))
 
-const Navbar = () =>  {
+const Navbar = ({ setFilerValue }) =>  {
 	const classes = useStyles()
 	const [auth, setAuth] = useState(true)
 	const [anchorEl, setAnchorEl] = useState(null)
@@ -65,7 +65,7 @@ const Navbar = () =>  {
 
 	return (
 		<div className={classes.root}>
-			<TemporaryDrawer drawerIsOpen={drawerIsOpen} setDrawerIsOpen={setDrawerIsOpen} />
+			<LeftSideMenu drawerIsOpen={drawerIsOpen} setDrawerIsOpen={setDrawerIsOpen} setFilerValue={setFilerValue} />
 			<AppBar position="static" className={classes.appbar}>
 				<Toolbar>
 					<IconButton edge="start" onClick={handleDrawerIsOpen} className={classes.menuButton} color="inherit" aria-label="menu">
@@ -81,7 +81,6 @@ const Navbar = () =>  {
 								aria-controls="menu-appbar"
 								aria-haspopup="true"
 								onClick={handleMenu}
-								color='red'
 							>
 								<AccountCircle className={classes.icons}/>
 							</IconButton>

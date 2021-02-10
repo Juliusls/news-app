@@ -38,7 +38,7 @@ const useStyles = makeStyles(theme => ({
 	},
 }))
 
-const TemporaryDrawer = ({ drawerIsOpen, setDrawerIsOpen }) => {
+const LeftSideMenu = ({ drawerIsOpen, setDrawerIsOpen }) => {
 	const classes = useStyles()
 
 	const list = () => (
@@ -55,7 +55,7 @@ const TemporaryDrawer = ({ drawerIsOpen, setDrawerIsOpen }) => {
 					</IconButton>
 				</div>
 				{['Latest', 'My Favorites', 'Business', 'Cars', 'Entertainment', 'Family', 'Health', 'Politics', 'Religion', 'Science', 'Sports', 'Technology', 'Travel', 'World'].map((text) => (
-					<ListItem button key={text} >
+					<ListItem button key={text} onClick={() => console.log('selected categorie: ', text)}>
 						<ListItemText primary={text} className={classes.listItemText}/>
 					</ListItem>
 				))}
@@ -76,4 +76,4 @@ const TemporaryDrawer = ({ drawerIsOpen, setDrawerIsOpen }) => {
 	)
 }
 
-export default TemporaryDrawer
+export default LeftSideMenu
