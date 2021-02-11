@@ -6,6 +6,8 @@ import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import CloseIcon from '@material-ui/icons/Close'
+import Divider from '@material-ui/core/Divider'
+import { Link } from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
 	list: {
@@ -36,6 +38,9 @@ const useStyles = makeStyles(theme => ({
 		marginTop: '0',
 		...theme.mixins.toolbar,
 	},
+	divider: {
+		background: theme.palette.primary.light
+	}
 }))
 
 const LeftSideMenu = ({ drawerIsOpen, setDrawerIsOpen }) => {
@@ -55,10 +60,13 @@ const LeftSideMenu = ({ drawerIsOpen, setDrawerIsOpen }) => {
 					</IconButton>
 				</div>
 				{['Latest', 'My Favorites', 'Business', 'Cars', 'Entertainment', 'Family', 'Health', 'Politics', 'Religion', 'Science', 'Sports', 'Technology', 'Travel', 'World'].map((text) => (
-					<ListItem button key={text} onClick={() => console.log('selected categorie: ', text)}>
-						<ListItemText primary={text} className={classes.listItemText}/>
-					</ListItem>
+					<Link style={{ textDecoration: 'none', color: 'inherit' }} key={text} to={`/${text}`}>
+						<ListItem  button href={`/${text}`}>
+							<ListItemText primary={text} className={classes.listItemText}/>
+						</ListItem>
+					</Link>
 				))}
+				<Divider light classes={{ light: classes.divider }}/>
 			</List>
 		</div>
 	)
@@ -77,3 +85,5 @@ const LeftSideMenu = ({ drawerIsOpen, setDrawerIsOpen }) => {
 }
 
 export default LeftSideMenu
+
+// TODO forbid page scrolling on side menu open

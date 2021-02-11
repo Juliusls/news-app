@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
+import { Link } from 'react-router-dom'
 import LeftSideMenu from './LeftSideMenu'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
@@ -71,9 +72,11 @@ const Navbar = ({ setFilerValue }) =>  {
 					<IconButton edge="start" onClick={handleDrawerIsOpen} className={classes.menuButton} color="inherit" aria-label="menu">
 						<MenuIcon className={classes.icons}/>
 					</IconButton>
-					<Typography variant="h6" className={classes.title}>
+					<Link className={classes.title} style={{ textDecoration: 'none', color: 'inherit' }} to='/'>
+						<Typography variant="h6" className={classes.title}>
                         News App
-					</Typography>
+						</Typography>
+					</Link>
 					{auth ? (
 						<div>
 							<IconButton

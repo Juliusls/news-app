@@ -11,38 +11,57 @@ const useStyles = makeStyles(theme => ({
 	root: {
 		maxWidth: 345,
 		borderRadius: 10,
-		backgroundColor: '#bdbebe',
-		margin: 20
+		// backgroundColor: '#bdbebe',
+		margin: 20,
 	},
 	media: {
 		height: 140,
 	},
-	text: {
+	textTitle: {
 		color: theme.palette.text.secondary,
 		fontWeight: 'bold'
+	},
+	text: {
+		color: theme.palette.text.secondary
+	},
+	cardInfoContainer: {
+		display: 'flex',
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+		paddingTop: 10
+	},
+	cardContent: {
+		display: 'flex',
+		flexDirection: 'column',
+		justifyContent: 'space-between',
 	}
 }))
 
 const ArticleCard = ({ article }) => {
 	const classes = useStyles()
 	return (
-		<Card className={classes.root} onClick={() => console.log(article.id) }>
+		<Card classes={{ root: classes.rootBorder }} className={classes.root} onClick={() => console.log(article.id) }>
 			<Link style={{ textDecoration: 'none', color: 'inherit' }} to={`/article/${article.id}`}>
 				<CardActionArea>
 					<CardMedia
 						className={classes.media}
-						image="https://i.picsum.photos/id/10/300/300.jpg?hmac=-HNJRisuHIZRc8PHpxFmPyT6yP7T3SZ6puHalS_MgqQ"
+						image="https://source.unsplash.com/random"
 						title="Contemplative Reptile"
 					/>
-					<CardContent>
-						<Typography className={classes.text}>
+					<CardContent className={classes.cardContent}>
+						<Typography className={classes.textTitle}>
 							{article.title}
 						</Typography>
-						{article.genres.map(genre => 
-							<Typography key={genre}>
-								{genre}
+						<div className={classes.cardInfoContainer}>
+							{article.genres.map(genre => 
+								<Typography key={genre} className={classes.text}>
+									{genre}
+								</Typography>
+							)}
+							<Typography className={classes.text} variant='caption'>
+								{article.paid === 'yes' ? 'Paid' : 'Free'}
 							</Typography>
-						)}
+						</div>
 					</CardContent>
 				</CardActionArea>
 			</Link>
@@ -52,3 +71,4 @@ const ArticleCard = ({ article }) => {
 
 export default ArticleCard
 
+// TODO add author to the card

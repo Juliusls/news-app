@@ -17,4 +17,5 @@ Readers will be able to read the news by selecting categories or selecting/filte
 | | 4 | Creating dummy data for backend, adding materialUI to frontend: Drawer and AppBar components |
 | 10.2 | 3.5 | Working Material UI theme, Creating Grid, ArticleCard components |
 | | 1.5 | Adding react router, creating single article view |
-| Total  | 20 | | 
+| 11.2 | 4 | Creating writer component with reducer and services, improving interaction between all components |
+| Total  | 24 | | 
