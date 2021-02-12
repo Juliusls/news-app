@@ -7,13 +7,19 @@ import { Provider } from 'react-redux'
 import theme from './theme'
 import { ThemeProvider } from '@material-ui/styles'
 
+import { PersistGate } from 'redux-persist/integration/react'
+import { persistStore } from 'redux-persist'
+let persistor = persistStore(store)
+
 ReactDOM.render(
-	<React.StrictMode>
-		<Provider store={store}>
+	// <React.StrictMode>
+	<Provider store={store}>
+		<PersistGate loading={ <p>Loading...</p> } persistor={persistor}>
 			<ThemeProvider theme={theme}>
 				<App />
 			</ThemeProvider>
-		</Provider>
-	</React.StrictMode>,
+		</PersistGate>
+	</Provider>,
+	// </React.StrictMode>,
 	document.getElementById('root')
 )

@@ -7,6 +7,7 @@ import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import CloseIcon from '@material-ui/icons/Close'
 import Divider from '@material-ui/core/Divider'
+import allCategories from '../data/data'
 import { Link } from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
@@ -59,8 +60,8 @@ const LeftSideMenu = ({ drawerIsOpen, setDrawerIsOpen }) => {
 						<CloseIcon className={classes.icon} />
 					</IconButton>
 				</div>
-				{['Latest', 'My Favorites', 'Business', 'Cars', 'Entertainment', 'Family', 'Health', 'Politics', 'Religion', 'Science', 'Sports', 'Technology', 'Travel', 'World'].map((text) => (
-					<Link style={{ textDecoration: 'none', color: 'inherit' }} key={text} to={`/${text}`}>
+				{allCategories.map((text) => (
+					<Link style={{ textDecoration: 'none', color: 'inherit' }} key={text} to={`/genres/${text}`}>
 						<ListItem  button href={`/${text}`}>
 							<ListItemText primary={text} className={classes.listItemText}/>
 						</ListItem>
@@ -85,5 +86,3 @@ const LeftSideMenu = ({ drawerIsOpen, setDrawerIsOpen }) => {
 }
 
 export default LeftSideMenu
-
-// TODO forbid page scrolling on side menu open

@@ -11,7 +11,6 @@ const useStyles = makeStyles(theme => ({
 	root: {
 		maxWidth: 345,
 		borderRadius: 10,
-		// backgroundColor: '#bdbebe',
 		margin: 20,
 	},
 	media: {
@@ -21,8 +20,12 @@ const useStyles = makeStyles(theme => ({
 		color: theme.palette.text.secondary,
 		fontWeight: 'bold'
 	},
-	text: {
+	textauthor: {
 		color: theme.palette.text.secondary
+		
+	},
+	text: {
+		color: '#6A6A6A',
 	},
 	cardInfoContainer: {
 		display: 'flex',
@@ -40,7 +43,7 @@ const useStyles = makeStyles(theme => ({
 const ArticleCard = ({ article }) => {
 	const classes = useStyles()
 	return (
-		<Card classes={{ root: classes.rootBorder }} className={classes.root} onClick={() => console.log(article.id) }>
+		<Card classes={{ root: classes.rootBorder }} className={classes.root} >
 			<Link style={{ textDecoration: 'none', color: 'inherit' }} to={`/article/${article.id}`}>
 				<CardActionArea>
 					<CardMedia
@@ -51,6 +54,9 @@ const ArticleCard = ({ article }) => {
 					<CardContent className={classes.cardContent}>
 						<Typography className={classes.textTitle}>
 							{article.title}
+						</Typography>
+						<Typography className={classes.textauthor}>
+							By {article.author.firstName} {article.author.lastName}
 						</Typography>
 						<div className={classes.cardInfoContainer}>
 							{article.genres.map(genre => 
@@ -70,5 +76,3 @@ const ArticleCard = ({ article }) => {
 }
 
 export default ArticleCard
-
-// TODO add author to the card

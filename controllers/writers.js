@@ -34,11 +34,15 @@ writersRouter.post('/', async (request, response) => {
 	if (body.writerGenres === undefined) {
 		return response.status(400).json({error: 'Genres missing'})
 	}
+	if (body.writerDescription === undefined) {
+		return response.status(400).json({error: 'Writer description missing'})
+	}
 
 	const writer = new Writer({
 		firstName: body.firstName,
 		lastName: body.lastName,
 		writerGenres: body.writerGenres,
+		writerDescription: body.writerDescription,
 		earnings: 0,
 		totalViews: 0,
 	})
@@ -68,6 +72,9 @@ writersRouter.put('/:id', (request, response) => {
 	if (body.totalViews === undefined) {
 		return response.status(400).json({error: 'Total views missing'})
 	}
+	if (body.writerDescription === undefined) {
+		return response.status(400).json({error: 'Writer description missing'})
+	}
 
 	const writer = {
 		firstName: body.firstName,
@@ -75,6 +82,8 @@ writersRouter.put('/:id', (request, response) => {
 		writerGenres: body.writerGenres,
 		earnings: body.earnings,
 		totalViews: body.totalViews,
+		writerDescription: body.writerDescription,
+
 	}
 
 	Writer.findByIdAndUpdate(request.params.id, writer, { new: true })
@@ -91,16 +100,3 @@ writersRouter.delete('/:id', async (request, response) => {
 
 
 module.exports = writersRouter
-
-
-
-
-// 'id': 1, 
-// 'firstName': 'Harvey',
-// 'lastName': 'Specter',
-// 'writergenres': [],
-// 'earnings': 0,
-// 'totalviews': 0,
-// 'myarticles': [],
-// 'subscribers': [],
-// 'followers': []

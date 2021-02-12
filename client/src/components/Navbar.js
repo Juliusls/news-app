@@ -1,47 +1,66 @@
 import React, { useState } from 'react'
-import { makeStyles } from '@material-ui/core/styles'
 import { Link } from 'react-router-dom'
-import LeftSideMenu from './LeftSideMenu'
-import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
-import Typography from '@material-ui/core/Typography'
-import IconButton from '@material-ui/core/IconButton'
-import MenuIcon from '@material-ui/icons/Menu'
+import { makeStyles, Button, Menu, MenuItem, FormGroup, FormControlLabel, Switch, IconButton, Typography, Toolbar, AppBar } from '@material-ui/core/'
 import AccountCircle from '@material-ui/icons/AccountCircle'
-import Switch from '@material-ui/core/Switch'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import FormGroup from '@material-ui/core/FormGroup'
-import MenuItem from '@material-ui/core/MenuItem'
-import Menu from '@material-ui/core/Menu'
-import Button from '@material-ui/core/Button'
+import MenuIcon from '@material-ui/icons/Menu'
+import SearchField from './SearchField'
+import LeftSideMenu from './LeftSideMenu'
 
 const useStyles = makeStyles(theme => ({
 	appbar: {
-		background: theme.primary
+		background: theme.primary,
+		marginBottom: 100
 	},
 	root: {
 		flexGrow: 1,
 	},
-	menuItem: {
-		color: theme.palette.text.secondary,
+	leftElement: {
+		flex: 1,
+		display: 'flex',
+		justifyContent: 'center',
 	},
-	menuButton: {
-		marginRight: theme.spacing(2),
+	leftElementChild: {
+		marginRight: 'auto'
 	},
-	title: {
-		flexGrow: 1,
-		textAlign: 'center',
+	rightElement: {
+		flex: 1,
+		display: 'flex',
+		justifyContent: 'center',
+	},
+	rightElementChild: {
+		marginLeft: 'auto'
+	},
+	menuIcon: {
+		fill: theme.icons.fill,
+		fontSize: theme.icons.fontSize,
+	},
+	titleLink: {
+		flex: 1,
+		display: 'flex',
+		justifyContent: 'center',
+		textDecoration: 'none',
+		color: 'inherit',
+	},
+	titleText: {
+		textDecoration: 'none',
+		color: 'inherit',
 	},
 	button: {
 		marginRight: 10
 	},
-	icons: {
+	accountIcon: {
 		fill: theme.icons.fill,
-		fontSize: theme.icons.fontSize
+		fontSize: theme.icons.fontSize,
+	},
+	signUpButton: {
+		color: theme.palette.secondary
+	},
+	menuItem: {
+		color: theme.palette.text.secondary,
 	}
 }))
 
-const Navbar = ({ setFilerValue }) =>  {
+const Navbar = () =>  {
 	const classes = useStyles()
 	const [auth, setAuth] = useState(true)
 	const [anchorEl, setAnchorEl] = useState(null)
@@ -66,58 +85,69 @@ const Navbar = ({ setFilerValue }) =>  {
 
 	return (
 		<div className={classes.root}>
-			<LeftSideMenu drawerIsOpen={drawerIsOpen} setDrawerIsOpen={setDrawerIsOpen} setFilerValue={setFilerValue} />
-			<AppBar position="static" className={classes.appbar}>
+			<LeftSideMenu drawerIsOpen={drawerIsOpen} setDrawerIsOpen={setDrawerIsOpen} />
+			<AppBar position="fixed" className={classes.appbar}>
 				<Toolbar>
-					<IconButton edge="start" onClick={handleDrawerIsOpen} className={classes.menuButton} color="inherit" aria-label="menu">
-						<MenuIcon className={classes.icons}/>
-					</IconButton>
-					<Link className={classes.title} style={{ textDecoration: 'none', color: 'inherit' }} to='/'>
-						<Typography variant="h6" className={classes.title}>
-                        News App
+					<div className={classes.leftElement}>
+						<IconButton className={classes.leftElementChild} color="inherit" aria-label="menu" onClick={handleDrawerIsOpen}>
+							<MenuIcon className={classes.menuIcon} />
+						</IconButton>
+					</div>
+
+					<Link className={classes.titleLink} to='/'>
+						<Typography variant="h6" className={classes.titleText}>
+						News App
 						</Typography>
 					</Link>
+
 					{auth ? (
-						<div>
-							<IconButton
-								aria-label="account of current user"
-								aria-controls="menu-appbar"
-								aria-haspopup="true"
-								onClick={handleMenu}
-							>
-								<AccountCircle className={classes.icons}/>
-							</IconButton>
-							<Menu
-								id="menu-appbar"
-								anchorEl={anchorEl}
-								anchorOrigin={{
-									vertical: 'top',
-									horizontal: 'right',
-								}}
-								keepMounted
-								transformOrigin={{
-									vertical: 'top',
-									horizontal: 'right',
-								}}
-								open={open}
-								onClose={handleClose}
-							>
-								<MenuItem onClick={handleClose} classes={{ root: classes.menuItem }}>Profile</MenuItem>
-								<MenuItem onClick={handleClose} classes={{ root: classes.menuItem }}>My account</MenuItem>
-							</Menu>
+						<div className={classes.rightElement} >
+							<div className={classes.rightElementChild}>
+								<SearchField />
+								<IconButton
+									aria-label="account of current user"
+									aria-controls="menu-appbar"
+									aria-haspopup="true"
+									onClick={handleMenu}
+								>
+									<AccountCircle className={classes.accountIcon}/>
+								</IconButton>
+								<Menu
+									id="menu-appbar"
+									anchorEl={anchorEl}
+									anchorOrigin={{
+										vertical: 'top',
+										horizontal: 'right',
+									}}
+									keepMounted
+									transformOrigin={{
+										vertical: 'top',
+										horizontal: 'right',
+									}}
+									open={open}
+									onClose={handleClose}
+								>
+									<MenuItem onClick={handleClose} classes={{ root: classes.menuItem }}>Profile</MenuItem>
+									<MenuItem onClick={handleClose} classes={{ root: classes.menuItem }}>My account</MenuItem>
+								</Menu>
+							</div>
 						</div>
 					) : (
-						<div>
-							<Button color="inherit" className={classes.button}>
-                                Login
-							</Button>
-							<Button variant="contained" color="#FCFCFC">
-                                Sign Up
-							</Button>
+						<div className={classes.rightElement}>
+							<div className={classes.rightElementChild}>
+								<SearchField />
+								<Button color="inherit" className={classes.button}>
+									Login
+								</Button>
+								<Button variant="contained" className={classes.signUpButton}>
+									Sign Up
+								</Button>
+							</div>
 						</div>
 					)}
 				</Toolbar>
 			</AppBar>
+			<Toolbar />
 			<FormGroup>
 				<FormControlLabel
 					control={<Switch checked={auth} onChange={handleChange} aria-label="login switch" />}

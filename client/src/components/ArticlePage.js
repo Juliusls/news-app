@@ -26,7 +26,7 @@ const ArticlePage = () => {
 		<div>
 			<div className={classes.categoryButton}>
 				{filteredArticle.genres.map(genre => 
-					<Link style={{ textDecoration: 'none', color: 'inherit' }} to={`/${genre.toLowerCase()}`} key={genre}><Button marginottom='50' size='small' variant="outlined" color="primary">{genre}</Button></Link>
+					<Link style={{ textDecoration: 'none', color: 'inherit' }} to={`/genres/${genre}`} key={genre}><Button marginottom='50' size='small' variant="outlined" color="primary">{genre}</Button></Link>
 				)}
 			</div>
 			<Typography variant='h4' className={classes.title}>
@@ -34,7 +34,7 @@ const ArticlePage = () => {
 			</Typography>
 			<br/>
 			<Typography variant="subtitle1" className={classes.infoText}>
-				By <Link to={`/authors/${filteredArticle.author.id}`}>{filteredArticle.author.firstName} {filteredArticle.author.lastName}</Link> | {filteredArticle.published}
+				By <Link to={`/author/${filteredArticle.author.id}`}>{filteredArticle.author.firstName} {filteredArticle.author.lastName}</Link> | {filteredArticle.published}
 			</Typography>
 			<br/>
 			<Typography>
@@ -45,10 +45,6 @@ const ArticlePage = () => {
 }
 
 export default ArticlePage
-
-// TODO: Link author name to authors page
-
-// TODO: Fix article not working on refresh
 
 // TODO: Create db model so that article can have multiple paragrahs and map them in this component
 // {filteredArticle.content.map(content => 

@@ -7,6 +7,7 @@ const writerSchema = new mongoose.Schema({
 	lastName: String,
 	earnings: Number,
 	totalViews: Number,
+	writerDescription: String,
 	writerGenres: [String],
 	myarticles: [
 		{

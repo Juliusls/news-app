@@ -1,22 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import Navbar from './components/Navbar'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { initArticles } from './reducers/articlesReducer'
 import { initWriters } from './reducers/writersReducer'
 import Container  from '@material-ui/core/Container'
 import ArticlesList from './components/ArticlesList'
 import ArticlePage from './components/ArticlePage'
 import WriterPage from './components/WriterPage'
-import { BrowserRouter as Router, Switch, Route, useParams } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
 const App = () => {
-	const { genre } = useParams()
 	const dispatch = useDispatch()
-	const [filterValue, setFilerValue] = useState('all')
-	const articles = useSelector(state => state.articles)
-
-	console.log('filterValue', filterValue)
-	console.log('genre', genre)
 
 	useEffect(() => {
 		async function getAllArticles() {
@@ -32,23 +26,25 @@ const App = () => {
 		getAllWriters()
 	}, [])
 
-
 	return (
 		<Router>
-			<Navbar setFilerValue={setFilerValue} />
+			<Navbar />
 			<Container>
 				<Switch>
-					<Route path='/article/:id'>
+					<Route exact path='/article/:id'>
 						<ArticlePage />
 					</Route>
-					<Route path='/:genre'>
-						Hello
+					<Route exact path='/genres/:genre'>
+						<ArticlesList />
 					</Route>
-					<Route path='/authors/:id'>
+					<Route exact path='/search/:searchResult'>
+						<ArticlesList />
+					</Route>
+					<Route exact path='/author/:author'>
 						<WriterPage />
 					</Route>
-					<Route path='/'>
-						<ArticlesList articles={articles} />
+					<Route exact path='/'>
+						<ArticlesList />
 					</Route>
 				</Switch>
 			</Container>
@@ -58,4 +54,11 @@ const App = () => {
 
 export default App
 
-// TODO add categories to router
+
+// TODO Check ArticlePage
+// TODO Ability to search also by text content
+// TODO All writers component
+// TODO Add fields to side menu: Writers, Become a writer, Login as writer
+// TODO Fix all todo
+// TODO Add new data with description and add it to writer page
+// TODO Fix project theme https://bareynol.github.io/mui-theme-creator/

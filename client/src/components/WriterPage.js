@@ -1,9 +1,10 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import { useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import ArticlesList from './ArticlesList'
 import Typography from '@material-ui/core/Typography'
+import { useParams } from 'react-router-dom'
+
 
 const useStyles = makeStyles({
 	profileContaner: {
@@ -28,11 +29,9 @@ const useStyles = makeStyles({
 
 const WriterPage = () => {
 	const classes = useStyles()
-	let { id } = useParams()
+	let { author } = useParams()
 	const writers = useSelector(state => state.writers)
-	const articles = useSelector(state => state.articles)
-	const filteredWriter = writers.filter(writer => writer.id === id)[0]
-	const filteredArticles = articles.filter(article => article.author.id === id)
+	const filteredWriter = writers.filter(writer => writer.id === author)[0]
 
 	return (
 		<div>
@@ -57,12 +56,9 @@ const WriterPage = () => {
 			<Typography variant='h5' className={classes.text}>
 				My Articles
 			</Typography>
-			<ArticlesList articles={filteredArticles} />
+			<ArticlesList />
 		</div>
 	)
 }
 
 export default WriterPage
-
-
-// TODO add writer description to modal
