@@ -1,8 +1,13 @@
-const getDate = () => {
-	const date = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
-	return date
+const tokenExtractor = (request, response, next) => {
+	let accessToken = request.cookies.authCookie
+	
+	if (accessToken){
+		request.token = accessToken
+	}
+	
+	next()
 }
 
 module.exports = {
-	getDate
+	tokenExtractor
 }

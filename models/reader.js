@@ -3,9 +3,24 @@ const mongoose = require('mongoose')
 mongoose.set('useFindAndModify', false)
 
 const readerSchema = new mongoose.Schema({
-	firstName: String,
-	lastName: String,
-	userName: String,
+	firstName: {
+		type: String,
+		required: true,
+		minlength: 2,
+	},
+	lastName: {
+		type: String,
+		required: true,
+		minlength: 2,
+	},
+	userName: {
+		type: String,
+		required: true,
+		minlength: 3,
+		unique: true
+	},
+	passwordHash: String,
+	refreshToken: String,
 	funds: Number,
 	readingHistory: [
 		{

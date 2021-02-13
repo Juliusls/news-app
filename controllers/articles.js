@@ -3,8 +3,9 @@ const Comment = require('../models/comment')
 const Article = require('../models/article')
 const Writer = require('../models/writer')
 const Reader = require('../models/reader')
-const { getDate } = require('../utils/middleware')
+const { getDate } = require('../utils/helpers')
 const logger = require('../utils/logger')
+const jwt = require('jsonwebtoken')
 
 articlesRouter.get('/', async (request, response) => {
 	const articles = await Article
@@ -90,12 +91,17 @@ articlesRouter.delete('/:id', async (request, response) => {
 articlesRouter.post('/:id/comments', async (request, response) => {
 	const body = request.body
 
+	const decodedToken = jwt.verify(request.token, process.env.ACCESS_TOKEN_SECRET)
+	if (!request.token || !decodedToken.id) {
+		return response.status(401).json({ error: 'token missing or invalid' })
+	}
+
 	if (body.comment === undefined) {
 		return response.status(400).json({error: 'comment missing'})
 	}
 	try {
 		const article = await Article.findById(request.params.id)
-		const reader = await Reader.findById('6022782ae7f9c9bb9c6d581d')
+		const reader = await Reader.findById(decodedToken.id)
 
 		if (!article) {
 			return response.status(400).json({ error: 'article that you are trying to comment does not exist' })

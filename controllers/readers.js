@@ -1,4 +1,5 @@
 const readersRouter = require('express').Router()
+const bcrypt = require('bcrypt')
 const Reader = require('../models/reader')
 const logger = require('../utils/logger')
 
@@ -19,30 +20,41 @@ readersRouter.get('/:id', async (request, response) => {
 })
 
 readersRouter.post('/', async (request, response) => {
-	const body = request.body
+	try {
+		const body = request.body
 
-	if (body.firstName === undefined) {
-		return response.status(400).json({error: 'first name missing'})
-	}
-	if (body.lastName === undefined) {
-		return response.status(400).json({error: 'last name missing'})
-	}
-	if (body.userName === undefined) {
-		return response.status(400).json({error: 'username missing'})
-	}
+		if (body.password.length < 3) {
+			return response.status(400).json({ error: 'password too short' }).end()
+		}
+		if (body.firstName === undefined) {
+			return response.status(400).json({error: 'first name missing'})
+		}
+		if (body.lastName === undefined) {
+			return response.status(400).json({error: 'last name missing'})
+		}
+		if (body.userName === undefined) {
+			return response.status(400).json({error: 'username missing'})
+		}
+		if (body.password === undefined) {
+			return response.status(400).json({error: 'password missing'})
+		}
+		const saltRounds = 12
+		const passwordHash = await bcrypt.hash(body.password, saltRounds)
 
-	const reader = new Reader({
-		firstName: body.firstName,
-		lastName: body.lastName,
-		userName: body.userName,
-		funds: 0
-	})
 
-	reader.save()
-		.then(savedReader => {
-			response.json(savedReader)
+		const reader = new Reader({
+			firstName: body.firstName,
+			lastName: body.lastName,
+			userName: body.userName,
+			funds: 0,
+			passwordHash
 		})
-		.catch(error => logger.error(error))
+
+		const savedReader = await reader.save()
+		response.status(201).json(savedReader)
+	} catch(error) {
+		logger.error(error)
+	}
 })
 
 readersRouter.put('/:id', (request, response) =>{
@@ -52,7 +64,7 @@ readersRouter.put('/:id', (request, response) =>{
 		firstName: body.firstName,
 		lastName: body.lastName,
 		userName: body.userName,
-		funds: body.funds
+		funds: body.funds,
 	}
 
 	Reader.findByIdAndUpdate(request.params.id, reader, { new: true})
@@ -68,10 +80,4 @@ readersRouter.delete('/:id', async (request, response) => {
 
 module.exports = readersRouter
 
-
-
-
-// 'readinghistory': [],
-// 'readercomments': [],
-// 'subscriptions': [],
-// 'favoritewriters': ['Harvey']
+// TODO fix other routes for password hash

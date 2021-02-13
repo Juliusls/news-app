@@ -8,6 +8,7 @@ import ArticlesList from './components/ArticlesList'
 import ArticlePage from './components/ArticlePage'
 import WriterPage from './components/WriterPage'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import LoginReader from './components/LoginReader'
 
 const App = () => {
 	const dispatch = useDispatch()
@@ -42,6 +43,9 @@ const App = () => {
 					</Route>
 					<Route exact path='/author/:author'>
 						<WriterPage />
+					</Route>
+					<Route exact path='/reader/login'>
+						<LoginReader />
 					</Route>
 					<Route exact path='/'>
 						<ArticlesList />

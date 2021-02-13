@@ -7,6 +7,11 @@ const readersRouter = require('./controllers/readers')
 const mongoose = require('mongoose')
 const config = require('./utils/config')
 const logger = require('./utils/logger')
+const bodyParser = require('body-parser')
+const cookieParser = require('cookie-parser')
+const loginReaderRouter = require('./controllers/loginReader')
+const middleware = require('./utils/middleware')
+// const refreshReader = require('./controllers/refreshReader')
 
 mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
 	.then(() => {
@@ -16,10 +21,15 @@ mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology
 		logger.error('error connecing to MongoDB', error.message)
 	})
 
+app.use(cookieParser())
+app.use(middleware.tokenExtractor)
+app.use(bodyParser.json())
 app.use(cors())
 app.use(express.json())
 app.use('/api/articles', articlesRouter)
 app.use('/api/writers', writersRouter)
 app.use('/api/readers', readersRouter)
+app.use('/api/reader/login', loginReaderRouter)
+// app.post('/api/reader/refresh', refreshReader)
 
 module.exports = app
