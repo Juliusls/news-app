@@ -20,4 +20,5 @@ Readers will be able to read the news by selecting categories or selecting/filte
 | 11.2 | 4 | Creating writer component with reducer and services, improving interaction between all components |
 | 12.2 | 7 | Adding search bar component, improving router, adding redux persist to fix state problem after reload, other minor improvements |
 | 13.2 | 5 | Implemeneting token authentification in the backend with cookies. Started login implementation in frontend with Login component |
-| Total  | 36 | | 
+| 15.2 | 6 | Modifing backend for login in the backend, creating login component with formik and yup. Adding comments component for ArticlePage |
+| Total  | 42 | | 

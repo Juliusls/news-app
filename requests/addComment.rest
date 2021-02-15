@@ -2,5 +2,5 @@ post http://localhost:3001/api/articles/60228ae98f23f2c359732217/comments
 Content-Type: application/json
 
 {
-    "comment": "Some rangom asdfsdfsdf"
+    "comment": "Some rangom axsaxax"
 }

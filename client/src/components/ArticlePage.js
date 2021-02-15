@@ -4,6 +4,7 @@ import { Link, useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
+import Comments from './Comments'
 
 const useStyles = makeStyles({
 	infoText: {
@@ -12,11 +13,15 @@ const useStyles = makeStyles({
 	categoryButton: {
 		marginBottom: 10,
 		marginRight: 10
+	},
+	articleDiv: {
+		marginBottom: 100
 	}
 })
 
 const ArticlePage = () => {
 	const classes = useStyles()
+	// const [commentsVisible, setCommentsVisible] = useState(false)
 	let { id } = useParams()
 	const articles = useSelector(state => state.articles)
 
@@ -24,22 +29,25 @@ const ArticlePage = () => {
 
 	return (
 		<div>
-			<div className={classes.categoryButton}>
-				{filteredArticle.genres.map(genre => 
-					<Link style={{ textDecoration: 'none', color: 'inherit' }} to={`/genres/${genre}`} key={genre}><Button marginottom='50' size='small' variant="outlined" color="primary">{genre}</Button></Link>
-				)}
-			</div>
-			<Typography variant='h4' className={classes.title}>
-				{filteredArticle.title}
-			</Typography>
-			<br/>
-			<Typography variant="subtitle1" className={classes.infoText}>
+			<div className={classes.articleDiv}>
+				<div className={classes.categoryButton}>
+					{filteredArticle.genres.map(genre => 
+						<Link style={{ textDecoration: 'none', color: 'inherit' }} to={`/genres/${genre}`} key={genre}><Button marginottom='50' size='small' variant="outlined" color="primary">{genre}</Button></Link>
+					)}
+				</div>
+				<Typography variant='h4' className={classes.title}>
+					{filteredArticle.title}
+				</Typography>
+				<br/>
+				<Typography variant="subtitle1" className={classes.infoText}>
 				By <Link to={`/author/${filteredArticle.author.id}`}>{filteredArticle.author.firstName} {filteredArticle.author.lastName}</Link> | {filteredArticle.published}
-			</Typography>
-			<br/>
-			<Typography>
-				{filteredArticle.content}
-			</Typography>
+				</Typography>
+				<br/>
+				<Typography>
+					{filteredArticle.content}
+				</Typography>
+			</div>
+			<Comments />
 		</div>
 	)
 }

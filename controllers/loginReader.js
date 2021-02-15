@@ -42,4 +42,3 @@ loginReaderRouter.post('/', async (request, response) => {
 })
 
 module.exports = loginReaderRouter
-module.exports = loginReaderRouter

@@ -43,7 +43,7 @@ const useStyles = makeStyles(theme => ({
 const ArticleCard = ({ article }) => {
 	const classes = useStyles()
 	return (
-		<Card classes={{ root: classes.rootBorder }} className={classes.root} >
+		<Card className={classes.root} >
 			<Link style={{ textDecoration: 'none', color: 'inherit' }} to={`/article/${article.id}`}>
 				<CardActionArea>
 					<CardMedia

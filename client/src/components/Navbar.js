@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { makeStyles, Button, Menu, MenuItem, FormGroup, FormControlLabel, Switch, IconButton, Typography, Toolbar, AppBar } from '@material-ui/core/'
+import { useDispatch, useSelector } from 'react-redux'
+import { makeStyles, Button, Menu, MenuItem, IconButton, Typography, Toolbar, AppBar } from '@material-ui/core/'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import MenuIcon from '@material-ui/icons/Menu'
 import SearchField from './SearchField'
 import LeftSideMenu from './LeftSideMenu'
+import { removeReader } from '../reducers/readerReducer'
+import { useCookies } from 'react-cookie'
 
 const useStyles = makeStyles(theme => ({
 	appbar: {
@@ -34,13 +37,6 @@ const useStyles = makeStyles(theme => ({
 		fill: theme.icons.fill,
 		fontSize: theme.icons.fontSize,
 	},
-	titleLink: {
-		flex: 1,
-		display: 'flex',
-		justifyContent: 'center',
-		textDecoration: 'none',
-		color: 'inherit',
-	},
 	titleText: {
 		textDecoration: 'none',
 		color: 'inherit',
@@ -57,19 +53,21 @@ const useStyles = makeStyles(theme => ({
 	},
 	menuItem: {
 		color: theme.palette.text.secondary,
+	},
+	linkNoDecoration: {
+		textDecoration: 'none',
 	}
 }))
 
 const Navbar = () =>  {
+	const dispatch = useDispatch()
+	const reader = useSelector(state => state.reader)
 	const classes = useStyles()
-	const [auth, setAuth] = useState(true)
 	const [anchorEl, setAnchorEl] = useState(null)
 	const open = Boolean(anchorEl)
 	const [drawerIsOpen, setDrawerIsOpen] = useState(false)
-
-	const handleChange = (event) => {
-		setAuth(event.target.checked)
-	}
+	// eslint-disable-next-line no-unused-vars
+	const [cookies, setCookie, removeCookie] = useCookies(['authCookie'])
 
 	const handleMenu = (event) => {
 		setAnchorEl(event.currentTarget)
@@ -83,6 +81,11 @@ const Navbar = () =>  {
 		setDrawerIsOpen(true)
 	}
 
+	const handleLogout = () => {
+		dispatch(removeReader())
+		removeCookie('authCookie')
+	}
+
 	return (
 		<div className={classes.root}>
 			<LeftSideMenu drawerIsOpen={drawerIsOpen} setDrawerIsOpen={setDrawerIsOpen} />
@@ -93,14 +96,10 @@ const Navbar = () =>  {
 							<MenuIcon className={classes.menuIcon} />
 						</IconButton>
 					</div>
-
-					<Link className={classes.titleLink} to='/'>
-						<Typography variant="h6" className={classes.titleText}>
-						News App
-						</Typography>
-					</Link>
-
-					{auth ? (
+					<Typography component={ Link } to='/' variant="h6" className={classes.titleText}>
+                        News App
+					</Typography>
+					{reader ? (
 						<div className={classes.rightElement} >
 							<div className={classes.rightElementChild}>
 								<SearchField />
@@ -128,7 +127,7 @@ const Navbar = () =>  {
 									onClose={handleClose}
 								>
 									<MenuItem onClick={handleClose} classes={{ root: classes.menuItem }}>Profile</MenuItem>
-									<MenuItem onClick={handleClose} classes={{ root: classes.menuItem }}>My account</MenuItem>
+									<MenuItem component={ Button } onClick={handleLogout} classes={{ root: classes.menuItem }}>Log Out</MenuItem>
 								</Menu>
 							</div>
 						</div>
@@ -136,10 +135,10 @@ const Navbar = () =>  {
 						<div className={classes.rightElement}>
 							<div className={classes.rightElementChild}>
 								<SearchField />
-								<Button color="inherit" className={classes.button}>
-									Login
+								<Button color="inherit" to='/reader/login' component={ Link } className={classes.button}>
+                                    Log in
 								</Button>
-								<Button variant="contained" className={classes.signUpButton}>
+								<Button variant="contained" to='/reader/signup' component={ Link } className={classes.signUpButton}>
 									Sign Up
 								</Button>
 							</div>
@@ -148,12 +147,7 @@ const Navbar = () =>  {
 				</Toolbar>
 			</AppBar>
 			<Toolbar />
-			<FormGroup>
-				<FormControlLabel
-					control={<Switch checked={auth} onChange={handleChange} aria-label="login switch" />}
-					label={auth ? 'Logout' : 'Login'}
-				/>
-			</FormGroup>
+			<Toolbar />
 		</div>
 	)
 }

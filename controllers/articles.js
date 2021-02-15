@@ -11,14 +11,22 @@ articlesRouter.get('/', async (request, response) => {
 	const articles = await Article
 		.find({})
 		.populate('author')
-		.populate('comments')
+		.populate({
+			path: 'comments',
+			model: 'Comment',
+			populate: {
+				path: 'commentator',
+				model: 'Reader'
+			}
+		})
+
 	response.json(articles)
 })
 
 articlesRouter.get('/:id', async (request, response) => {
 	const article = await Article.findById(request.params.id)
 		.populate('writer')
-		.populate('commnet')
+		.populate('comment')
 	if (article) {
 		response.json(article)
 	} else {
@@ -90,9 +98,12 @@ articlesRouter.delete('/:id', async (request, response) => {
 
 articlesRouter.post('/:id/comments', async (request, response) => {
 	const body = request.body
+	let accessToken = request.cookies.authCookie
 
-	const decodedToken = jwt.verify(request.token, process.env.ACCESS_TOKEN_SECRET)
-	if (!request.token || !decodedToken.id) {
+	const decodedToken = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET)
+
+	// const decodedToken = jwt.verify(request.token, process.env.ACCESS_TOKEN_SECRET)
+	if (!request.cookies.authCookie || !decodedToken.id) {
 		return response.status(401).json({ error: 'token missing or invalid' })
 	}
 

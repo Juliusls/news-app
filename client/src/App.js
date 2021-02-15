@@ -7,12 +7,12 @@ import Container  from '@material-ui/core/Container'
 import ArticlesList from './components/ArticlesList'
 import ArticlePage from './components/ArticlePage'
 import WriterPage from './components/WriterPage'
+import Comments from './components/Comments'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import LoginReader from './components/LoginReader'
 
 const App = () => {
 	const dispatch = useDispatch()
-
 	useEffect(() => {
 		async function getAllArticles() {
 			await dispatch(initArticles())
@@ -46,6 +46,9 @@ const App = () => {
 					</Route>
 					<Route exact path='/reader/login'>
 						<LoginReader />
+					</Route>
+					<Route exact path='/comments'>
+						<Comments />
 					</Route>
 					<Route exact path='/'>
 						<ArticlesList />

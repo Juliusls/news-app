@@ -14,7 +14,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const SearchField = () => {
-	let histry = useHistory()
+	let hisotry = useHistory()
 	const classes = useStyles()
 	const [searchVisible, setSearchVisible] = useState(false)
 	const [searchValue, setSearchValue] = useState('')
@@ -31,7 +31,7 @@ const SearchField = () => {
 		if (event.charCode === 13) { 
 			event.preventDefault()
 			setSearchVisible(false)
-			histry.push(`/search/${searchValue}`)
+			hisotry.push(`/search/${searchValue}`)
 			setSearchValue('')
 		} 
 	}
