@@ -22,4 +22,5 @@ Readers will be able to read the news by selecting categories or selecting/filte
 | 13.2 | 5 | Implemeneting token authentification in the backend with cookies. Started login implementation in frontend with Login component |
 | 15.2 | 6 | Modifing backend for login in the backend, creating login component with formik and yup. Adding comments component for ArticlePage |
 | 16.2 | 2 | Fixing token issue while creating new comments, comments to articles are possible only for logged in users |
-| Total  | 44 | | 
+| 16.2 | 1 | Creating Sign uo component and connecting it to backend. Fixing issue of page not re-loading while running static file |
+| Total  | 45 | | 

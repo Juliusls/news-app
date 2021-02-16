@@ -6,7 +6,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle'
 import MenuIcon from '@material-ui/icons/Menu'
 import SearchField from './SearchField'
 import LeftSideMenu from './LeftSideMenu'
-import { removeReader } from '../reducers/readerReducer'
+import { removeReader } from '../reducers/loginReaderReducer'
 import { useCookies } from 'react-cookie'
 
 const useStyles = makeStyles(theme => ({

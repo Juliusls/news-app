@@ -5,8 +5,8 @@ import { useHistory } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import Button from '@material-ui/core/Button'
 import { makeStyles, TextField, Typography } from '@material-ui/core'
-import { addReader } from '../reducers/readerReducer'
-import loginReaderService from '../services/loginReader'
+import { addReader } from '../reducers/loginReaderReducer'
+// import loginReaderService from '../services/loginReader'
 
 const useStyles = makeStyles(theme => ({
 	inputColor:{
@@ -60,8 +60,7 @@ const LoginReader = () => {
 	const handleSubmit = async (values) => {
 
 		try {
-			const reader = await loginReaderService.login(values)
-			dispatch(addReader(reader))
+			dispatch(addReader(values))
 			hisotry.push('/')
 		} catch (error) {
 			console.log(error)

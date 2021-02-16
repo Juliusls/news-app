@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express()
+const path = require('path')
 const cors = require('cors')
 const articlesRouter = require('./controllers/articles')
 const writersRouter = require('./controllers/writers')
@@ -29,6 +30,9 @@ app.use('/api/articles', articlesRouter)
 app.use('/api/writers', writersRouter)
 app.use('/api/readers', readersRouter)
 app.use('/api/reader/login', loginReaderRouter)
+app.get('/*',(req, res) => {
+	res.sendFile(path.join(__dirname + '/build/index.html'))
+})
 // app.post('/api/reader/refresh', refreshReader)
 
 module.exports = app

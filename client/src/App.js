@@ -9,6 +9,8 @@ import ArticlePage from './components/ArticlePage'
 import WriterPage from './components/WriterPage'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import LoginReader from './components/LoginReader'
+import SignUpReader from './components/SignUpReader'
+import { initReaders } from './reducers/readersReducer'
 
 const App = () => {
 	const dispatch = useDispatch()
@@ -26,6 +28,13 @@ const App = () => {
 			await dispatch(initWriters())
 		}
 		getAllWriters()
+	}, [])
+	
+	useEffect(() => {
+		async function getAllReaders() {
+			await dispatch(initReaders())
+		}
+		getAllReaders()
 	}, [])
 
 	return (
@@ -48,6 +57,9 @@ const App = () => {
 					<Route exact path='/reader/login'>
 						<LoginReader />
 					</Route>
+					<Route exact path='/reader/signup'>
+						<SignUpReader />
+					</Route>
 					<Route exact path='/'>
 						<ArticlesList />
 					</Route>
@@ -59,7 +71,6 @@ const App = () => {
 
 export default App
 
-// TODO Fixing issue of data not taken from redux store on refresh runinng on static file
 // TODO Check ArticlePage
 // TODO Ability to search also by text content
 // TODO All writers component
