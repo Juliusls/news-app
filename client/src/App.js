@@ -11,17 +11,19 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import LoginReader from './components/LoginReader'
 import SignUpReader from './components/SignUpReader'
 import { initReaders } from './reducers/readersReducer'
+import ReaderPage from './components/ReaderPage'
 
 const App = () => {
 	const dispatch = useDispatch()
-	const [fetchInProgress, setFetchInProgress] = useState(true)
+	const [articlesFetchInProgress, setArticlesFetchInProgress] = useState(true)
+	const [readersFetchInProgress, setReadersFetchInProgress] = useState(true)
 	useEffect(() => {
 		async function getAllArticles() {
 			await dispatch(initArticles())
-			setFetchInProgress(false)
+			setArticlesFetchInProgress(false)
 		}
 		getAllArticles()
-	}, [fetchInProgress])
+	}, [articlesFetchInProgress])
 
 	useEffect(() => {
 		async function getAllWriters() {
@@ -33,9 +35,10 @@ const App = () => {
 	useEffect(() => {
 		async function getAllReaders() {
 			await dispatch(initReaders())
+			setReadersFetchInProgress(false)
 		}
 		getAllReaders()
-	}, [])
+	}, [readersFetchInProgress])
 
 	return (
 		<Router>
@@ -43,7 +46,7 @@ const App = () => {
 			<Container>
 				<Switch>
 					<Route exact path='/article/:id'>
-						<ArticlePage setFetchInProgress={setFetchInProgress} />
+						<ArticlePage setArticlesFetchInProgress={setArticlesFetchInProgress} />
 					</Route>
 					<Route exact path='/genres/:genre'>
 						<ArticlesList />
@@ -59,6 +62,9 @@ const App = () => {
 					</Route>
 					<Route exact path='/reader/signup'>
 						<SignUpReader />
+					</Route>
+					<Route exact path='/reader/profile/:id'>
+						<ReaderPage setReadersFetchInProgress={setReadersFetchInProgress} />
 					</Route>
 					<Route exact path='/'>
 						<ArticlesList />

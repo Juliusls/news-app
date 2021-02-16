@@ -44,19 +44,19 @@ const useStyles = makeStyles(theme => ({
 	}
 }))
 
-const LeftSideMenu = ({ drawerIsOpen, setDrawerIsOpen }) => {
+const LeftSideMenu = ({ leftSideMenuIsOpen, setLeftSideMenuIsOpenIsOpen }) => {
 	const classes = useStyles()
 
 	const list = () => (
 		<div
 			className={classes.list}
 			role="button"
-			onClick={() => setDrawerIsOpen(false)}
-			onKeyDown={() => setDrawerIsOpen(false)}
+			onClick={() => setLeftSideMenuIsOpenIsOpen(false)}
+			onKeyDown={() => setLeftSideMenuIsOpenIsOpen(false)}
 		>
 			<List className={classes.drawerpadding}>
 				<div className={classes.drawerHeader}>
-					<IconButton onClick={() => setDrawerIsOpen(false)}>
+					<IconButton onClick={() => setLeftSideMenuIsOpenIsOpen(false)}>
 						<CloseIcon className={classes.icon} />
 					</IconButton>
 				</div>
@@ -77,8 +77,8 @@ const LeftSideMenu = ({ drawerIsOpen, setDrawerIsOpen }) => {
 			classes={{ paper: classes.paper, paperAnchorDockedLeft: classes.paperAnchorDockedLeft }}
 			anchor="left"
 			variant="persistent"
-			open={drawerIsOpen}
-			onClose={() => setDrawerIsOpen(false)}
+			open={leftSideMenuIsOpen}
+			onClose={() => setLeftSideMenuIsOpenIsOpen(false)}
 		>
 			{list('left')}
 		</Drawer>

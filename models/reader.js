@@ -19,6 +19,7 @@ const readerSchema = new mongoose.Schema({
 		minlength: 3,
 		unique: true
 	},
+	joined: String,
 	passwordHash: String,
 	refreshToken: String,
 	funds: Number,

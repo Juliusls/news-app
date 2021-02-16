@@ -36,11 +36,9 @@ loginReaderRouter.post('/', async (request, response) => {
 	// user.refreshToken = refreshToken
 	// await user.save()
 
-	console.log('login token', accessToken)
-
 	response.cookie('authCookie', accessToken)
 	// TODO response.cookie('authCookie', accessToken, {secure: true, httpOnly: true})
-	response.status(200).send({ accessToken, userName: user.userName })
+	response.status(200).send({ userName: user.userName, id: user._id })
 })
 
 module.exports = loginReaderRouter

@@ -100,12 +100,7 @@ articlesRouter.post('/:id/comments', async (request, response) => {
 	const body = request.body
 	let accessToken = request.cookies.authCookie
 
-	console.log('accessToken', accessToken)
-
 	const decodedToken = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET)
-
-	console.log('decodedToken', decodedToken)
-
 
 	if (!request.cookies.authCookie || !decodedToken.id) {
 		return response.status(401).json({ error: 'token missing or invalid' })

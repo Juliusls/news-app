@@ -1,6 +1,7 @@
 const writersRouter = require('express').Router()
 const Writer = require('../models/writer')
 const logger = require('../utils/logger')
+const { getDate } = require('../utils/helpers')
 
 writersRouter.get('/', async (request, response) => {
 	const writers = await Writer
@@ -43,6 +44,7 @@ writersRouter.post('/', async (request, response) => {
 		lastName: body.lastName,
 		writerGenres: body.writerGenres,
 		writerDescription: body.writerDescription,
+		joined: getDate(),
 		earnings: 0,
 		totalViews: 0,
 	})

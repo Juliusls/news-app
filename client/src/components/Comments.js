@@ -60,7 +60,7 @@ const useStyles = makeStyles(theme => ({
 	},
 }))
 
-const Comments = ({ setFetchInProgress }) => {
+const Comments = ({ setArticlesFetchInProgress }) => {
 	const classes = useStyles()
 	const [commentValue, setCommentValue] = useState('')
 	const articles = useSelector(state => state.articles)
@@ -68,7 +68,6 @@ const Comments = ({ setFetchInProgress }) => {
 	let { id } = useParams()
 	const filteredArticle = articles.filter(article => article.id === id)[0]
 
-	console.log('Reader: ', reader)
 	const onChangeComment = event => {
 		setCommentValue(event.target.value)
 	}
@@ -77,7 +76,7 @@ const Comments = ({ setFetchInProgress }) => {
 		event.preventDefault()
 		const newComment = { comment: commentValue }
 		articlesService.postComment(newComment, id)
-		setFetchInProgress(true)
+		setArticlesFetchInProgress(true)
 		setCommentValue('')
 	}
 	

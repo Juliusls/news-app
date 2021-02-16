@@ -2,6 +2,8 @@ const readersRouter = require('express').Router()
 const bcrypt = require('bcrypt')
 const Reader = require('../models/reader')
 const logger = require('../utils/logger')
+const { getDate } = require('../utils/helpers')
+const jwt = require('jsonwebtoken')
 
 // eslint-disable-next-line no-unused-vars
 readersRouter.get('/', async (request, response) => {
@@ -46,6 +48,7 @@ readersRouter.post('/', async (request, response) => {
 			firstName: body.firstName,
 			lastName: body.lastName,
 			userName: body.userName,
+			joined: getDate(),
 			funds: 0,
 			passwordHash
 		})
@@ -60,14 +63,19 @@ readersRouter.post('/', async (request, response) => {
 readersRouter.put('/:id', (request, response) =>{
 	const body = request.body
 
-	const reader = {
-		firstName: body.firstName,
-		lastName: body.lastName,
-		userName: body.userName,
-		funds: body.funds,
+	let accessToken = request.cookies.authCookie
+
+	const decodedToken = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET)
+
+	if (!request.cookies.authCookie || !decodedToken.id) {
+		return response.status(401).json({ error: 'token missing or invalid' })
 	}
 
-	Reader.findByIdAndUpdate(request.params.id, reader, { new: true})
+	const reader = {
+		funds: body.funds
+	}
+
+	Reader.findByIdAndUpdate(request.params.id, reader, { new: true })
 		.then(updatedReader => {
 			response.status(200).json(updatedReader)
 		})
@@ -79,5 +87,3 @@ readersRouter.delete('/:id', async (request, response) => {
 })
 
 module.exports = readersRouter
-
-// TODO fix other routes for password hash

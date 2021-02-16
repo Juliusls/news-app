@@ -11,7 +11,13 @@ const create = async (newReader) => {
 	return response.data
 }
 
+const update = async (updatedReader, id) => {
+	const response = await axios.put(`${baseUrl}/${id}`, updatedReader)
+	return response.data
+}
+
 export default { 
 	create,
-	getAll 
+	getAll,
+	update
 }

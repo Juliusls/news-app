@@ -6,6 +6,8 @@ const readersReducer = (state = [], action) => {
 		return action.data
 	case 'CREATE_READER':
 		return state.concat(action.data)
+	case 'UPDATE_READER':
+		return state.filter(reader => reader.id !== action.data.id ? reader : action.data) 
 	default:
 		return state
 	}
@@ -24,10 +26,20 @@ export const initReaders = () => {
 export const createReader = (newReader) => {
 	return async dispatch => {
 		const reader = await readersService.create(newReader)
-		console.log('Reader from reducer', reader)
 		dispatch ({
 			type: 'CREATE_READER',
 			data: reader
+		})
+	}
+}
+
+export const updateReaderFunds = (fundsToAdd, reader) => {
+	return async dispatch => {
+		const readerToUpdate = { ...reader, funds: reader.funds + fundsToAdd }
+		const updatedReader = await readersService.update(readerToUpdate, reader.id)
+		dispatch ({
+			type: 'UPDATE_READER',
+			data: updatedReader
 		})
 	}
 }

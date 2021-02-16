@@ -64,22 +64,22 @@ const Navbar = () =>  {
 	const history = useHistory()
 	const reader = useSelector(state => state.reader)
 	const classes = useStyles()
-	const [anchorEl, setAnchorEl] = useState(null)
-	const open = Boolean(anchorEl)
-	const [drawerIsOpen, setDrawerIsOpen] = useState(false)
+	const [profileMenu, setProfileMenu] = useState(null)
+	const open = Boolean(profileMenu)
+	const [leftSideMenuIsOpen, setLeftSideMenuIsOpenIsOpen] = useState(false)
 	// eslint-disable-next-line no-unused-vars
 	const [cookies, setCookie, removeCookie] = useCookies(['authCookie'])
 
-	const handleMenu = (event) => {
-		setAnchorEl(event.currentTarget)
+	const handleProfileMenu = (event) => {
+		setProfileMenu(event.currentTarget)
 	}
 
-	const handleClose = () => {
-		setAnchorEl(null)
+	const handleProfileMenuClose = () => {
+		setProfileMenu(null)
 	}
 
-	const handleDrawerIsOpen = () => {
-		setDrawerIsOpen(true)
+	const handleLeftSideMenuIsOpen = () => {
+		setLeftSideMenuIsOpenIsOpen(true)
 	}
 
 	const handleLogout = () => {
@@ -90,11 +90,11 @@ const Navbar = () =>  {
 
 	return (
 		<div className={classes.root}>
-			<LeftSideMenu drawerIsOpen={drawerIsOpen} setDrawerIsOpen={setDrawerIsOpen} />
+			<LeftSideMenu leftSideMenuIsOpen={leftSideMenuIsOpen} setLeftSideMenuIsOpenIsOpen={setLeftSideMenuIsOpenIsOpen} />
 			<AppBar position="fixed" className={classes.appbar}>
 				<Toolbar>
 					<div className={classes.leftElement}>
-						<IconButton className={classes.leftElementChild} color="inherit" aria-label="menu" onClick={handleDrawerIsOpen}>
+						<IconButton className={classes.leftElementChild} color="inherit" aria-label="menu" onClick={handleLeftSideMenuIsOpen}>
 							<MenuIcon className={classes.menuIcon} />
 						</IconButton>
 					</div>
@@ -109,13 +109,13 @@ const Navbar = () =>  {
 									aria-label="account of current user"
 									aria-controls="menu-appbar"
 									aria-haspopup="true"
-									onClick={handleMenu}
+									onClick={handleProfileMenu}
 								>
 									<AccountCircle className={classes.accountIcon}/>
 								</IconButton>
 								<Menu
 									id="menu-appbar"
-									anchorEl={anchorEl}
+									anchorEl={profileMenu}
 									anchorOrigin={{
 										vertical: 'top',
 										horizontal: 'right',
@@ -126,9 +126,9 @@ const Navbar = () =>  {
 										horizontal: 'right',
 									}}
 									open={open}
-									onClose={handleClose}
+									onClose={handleProfileMenuClose}
 								>
-									<MenuItem onClick={handleClose} classes={{ root: classes.menuItem }}>Profile</MenuItem>
+									<MenuItem component={ Link } to={`/reader/profile/${reader.id}`} classes={{ root: classes.menuItem }}>Profile</MenuItem>
 									<MenuItem component={ Button } onClick={handleLogout} classes={{ root: classes.menuItem }}>Log Out</MenuItem>
 								</Menu>
 							</div>
