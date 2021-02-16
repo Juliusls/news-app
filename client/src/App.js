@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from './components/Navbar'
 import { useDispatch } from 'react-redux'
 import { initArticles } from './reducers/articlesReducer'
@@ -7,18 +7,19 @@ import Container  from '@material-ui/core/Container'
 import ArticlesList from './components/ArticlesList'
 import ArticlePage from './components/ArticlePage'
 import WriterPage from './components/WriterPage'
-import Comments from './components/Comments'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import LoginReader from './components/LoginReader'
 
 const App = () => {
 	const dispatch = useDispatch()
+	const [fetchInProgress, setFetchInProgress] = useState(true)
 	useEffect(() => {
 		async function getAllArticles() {
 			await dispatch(initArticles())
+			setFetchInProgress(false)
 		}
 		getAllArticles()
-	}, [])
+	}, [fetchInProgress])
 
 	useEffect(() => {
 		async function getAllWriters() {
@@ -33,7 +34,7 @@ const App = () => {
 			<Container>
 				<Switch>
 					<Route exact path='/article/:id'>
-						<ArticlePage />
+						<ArticlePage setFetchInProgress={setFetchInProgress} />
 					</Route>
 					<Route exact path='/genres/:genre'>
 						<ArticlesList />
@@ -47,9 +48,6 @@ const App = () => {
 					<Route exact path='/reader/login'>
 						<LoginReader />
 					</Route>
-					<Route exact path='/comments'>
-						<Comments />
-					</Route>
 					<Route exact path='/'>
 						<ArticlesList />
 					</Route>
@@ -61,7 +59,7 @@ const App = () => {
 
 export default App
 
-
+// TODO Fixing issue of data not taken from redux store on refresh runinng on static file
 // TODO Check ArticlePage
 // TODO Ability to search also by text content
 // TODO All writers component

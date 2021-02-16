@@ -19,9 +19,8 @@ const useStyles = makeStyles({
 	}
 })
 
-const ArticlePage = () => {
+const ArticlePage = ({ setFetchInProgress }) => {
 	const classes = useStyles()
-	// const [commentsVisible, setCommentsVisible] = useState(false)
 	let { id } = useParams()
 	const articles = useSelector(state => state.articles)
 
@@ -40,14 +39,14 @@ const ArticlePage = () => {
 				</Typography>
 				<br/>
 				<Typography variant="subtitle1" className={classes.infoText}>
-				By <Link to={`/author/${filteredArticle.author.id}`}>{filteredArticle.author.firstName} {filteredArticle.author.lastName}</Link> | {filteredArticle.published}
+					By <Link to={`/author/${filteredArticle.author.id}`}>{filteredArticle.author.firstName} {filteredArticle.author.lastName}</Link> | {filteredArticle.published}
 				</Typography>
 				<br/>
 				<Typography>
 					{filteredArticle.content}
 				</Typography>
 			</div>
-			<Comments />
+			<Comments setFetchInProgress={setFetchInProgress} />
 		</div>
 	)
 }

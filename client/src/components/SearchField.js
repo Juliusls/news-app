@@ -39,7 +39,6 @@ const SearchField = () => {
 	return (
 		<div style={{ display: 'inline-block' }}>
 			<TextField
-				id="outlined-basic"
 				label="Search"
 				type="search"
 				value={searchValue}

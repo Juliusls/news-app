@@ -9,7 +9,7 @@ import { addReader } from '../reducers/readerReducer'
 import loginReaderService from '../services/loginReader'
 
 const useStyles = makeStyles(theme => ({
-	multilineColor:{
+	inputColor:{
 		color: theme.palette.text.secondary
 	},
 	loginText: {
@@ -29,7 +29,6 @@ const useStyles = makeStyles(theme => ({
 		borderWidth: 1,
 		borderStyle: 'solid',
 		background: theme.palette.primary.lightGrey
-
 	},
 	form: {
 		margin: 30
@@ -62,7 +61,6 @@ const LoginReader = () => {
 
 		try {
 			const reader = await loginReaderService.login(values)
-			console.log(reader)
 			dispatch(addReader(reader))
 			hisotry.push('/')
 		} catch (error) {
@@ -94,7 +92,7 @@ const LoginReader = () => {
 						label="Username"
 						variant="outlined"
 						InputProps={{
-							className: classes.multilineColor
+							className: classes.inputColor
 						}}
 						value={formik.values.userName}
 						onChange={formik.handleChange}
@@ -110,7 +108,7 @@ const LoginReader = () => {
 						type="password"
 						variant="outlined"
 						InputProps={{
-							className: classes.multilineColor
+							className: classes.inputColor
 						}}
 						value={formik.values.password}
 						onChange={formik.handleChange}

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { makeStyles, Button, Menu, MenuItem, IconButton, Typography, Toolbar, AppBar } from '@material-ui/core/'
 import AccountCircle from '@material-ui/icons/AccountCircle'
@@ -61,6 +61,7 @@ const useStyles = makeStyles(theme => ({
 
 const Navbar = () =>  {
 	const dispatch = useDispatch()
+	const history = useHistory()
 	const reader = useSelector(state => state.reader)
 	const classes = useStyles()
 	const [anchorEl, setAnchorEl] = useState(null)
@@ -84,6 +85,7 @@ const Navbar = () =>  {
 	const handleLogout = () => {
 		dispatch(removeReader())
 		removeCookie('authCookie')
+		history.push('/')
 	}
 
 	return (
