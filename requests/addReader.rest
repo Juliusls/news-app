@@ -1,0 +1,9 @@
+post http://localhost:3001/api/readers/
+Content-Type: application/json
+
+{
+    "firstName": "Julius",
+    "lastName": "Lubys",
+    "userName": "JuliusL",
+	"password": "julius"
+}

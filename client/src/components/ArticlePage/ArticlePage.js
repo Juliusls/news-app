@@ -34,7 +34,7 @@ const ArticlePage = ({ setArticlesFetchInProgress }) => {
 						<Link style={{ textDecoration: 'none', color: 'inherit' }} to={`/genres/${genre}`} key={genre}><Button marginottom='50' size='small' variant="outlined" color="primary">{genre}</Button></Link>
 					)}
 				</div>
-				<Typography variant='h4' className={classes.title}>
+				<Typography variant='h4'>
 					{filteredArticle.title}
 				</Typography>
 				<br/>
@@ -42,9 +42,14 @@ const ArticlePage = ({ setArticlesFetchInProgress }) => {
 					By <Link to={`/author/${filteredArticle.author.id}`}>{filteredArticle.author.firstName} {filteredArticle.author.lastName}</Link> | {filteredArticle.published}
 				</Typography>
 				<br/>
-				<Typography>
-					{filteredArticle.content}
-				</Typography>
+				{filteredArticle.content.map(content => 
+					<div key={content.id} >
+						<Typography >
+							{content}
+						</Typography>
+						<br />
+					</div>
+				)}
 			</div>
 			<Comments setArticlesFetchInProgress={setArticlesFetchInProgress} />
 		</div>
@@ -52,10 +57,3 @@ const ArticlePage = ({ setArticlesFetchInProgress }) => {
 }
 
 export default ArticlePage
-
-// TODO: Create db model so that article can have multiple paragrahs and map them in this component
-// {filteredArticle.content.map(content => 
-// 	<Typography key={content.id} >
-// 		{content}
-// 	</Typography>
-// )}

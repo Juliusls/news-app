@@ -3,7 +3,8 @@ import { makeStyles } from '@material-ui/core/styles'
 import { useSelector } from 'react-redux'
 import { Typography, Button } from '@material-ui/core'
 import { useParams } from 'react-router-dom'
-import AddFundsDialog from './AddFundsDialog'
+import AddFundsDialog from '../AddFundsDialog'
+import ReaderTabs from './ReaderTabs'
 
 const useStyles = makeStyles({
 	profileContaner: {
@@ -41,7 +42,7 @@ const ReaderPage = ({ setReadersFetchInProgress }) => {
 	const { id } = useParams()
 	const readers = useSelector(state => state.readers)
 	const filteredReader = readers.filter(reader => reader.id === id)[0]
-	const date = filteredReader.date !== undefined ? filteredReader.date : 'No data'
+	const date = filteredReader.joined !== undefined ? filteredReader.joined : 'No data'
 
 	return (
 		<div>
@@ -68,6 +69,7 @@ const ReaderPage = ({ setReadersFetchInProgress }) => {
 					</Typography>				
 				</div>
 			</div>
+			<ReaderTabs reader={filteredReader} />
 			<AddFundsDialog openDialog={openDialog} setOpenDialog={setOpenDialog} reader={filteredReader} setReadersFetchInProgress={setReadersFetchInProgress} />
 		</div>
 	)
@@ -75,13 +77,4 @@ const ReaderPage = ({ setReadersFetchInProgress }) => {
 
 export default ReaderPage
 
-// TODO fix issue with data in both readers and writers
-// readingHistory: [ ],
-// readerComments: [ ],
-// subscriptions: [ ],
-// favoritewriters: [ ],
-// firstName: "Ross ",
-// lastName: "Geller",
-// userName: "RossG",
-// funds: 0,
 

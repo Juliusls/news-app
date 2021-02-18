@@ -23,12 +23,6 @@ const readerSchema = new mongoose.Schema({
 	passwordHash: String,
 	refreshToken: String,
 	funds: Number,
-	readingHistory: [
-		{
-			type: mongoose.Schema.Types.ObjectId,
-			ref: 'Article'
-		}
-	],
 	readerComments: [
 		{
 			type: mongoose.Schema.Types.ObjectId,

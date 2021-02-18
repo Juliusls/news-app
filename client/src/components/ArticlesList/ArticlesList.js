@@ -15,7 +15,6 @@ const useStyles = makeStyles({
 		textAlign: 'center',
 		paddingBottom: 20
 	}
-
 })
 
 const ArticlesList = () => {

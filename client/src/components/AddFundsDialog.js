@@ -23,7 +23,6 @@ const AddFundsDialog = ({ openDialog, setOpenDialog, reader, setReadersFetchInPr
 	const handleSubmit = event => {
 		event.preventDefault()
 		const fundsToAdd = Number(fundsValue)
-		// TODO Function goes here for adding funds
 		dispatch(updateReaderFunds(fundsToAdd, reader))
 		setReadersFetchInProgress(true)
 		setFundsValue(0)

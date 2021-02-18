@@ -9,7 +9,8 @@ const theme = createMuiTheme({
 		},
 		text: {
 			primary: '#FCFCFC',
-			secondary: '#181616'
+			secondary: '#181616',
+			blueish: '#731DD8'
 		}
 	},
 	icons: {

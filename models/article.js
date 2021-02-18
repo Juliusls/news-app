@@ -4,7 +4,7 @@ mongoose.set('useFindAndModify', false)
 
 const articleSchema = new mongoose.Schema({
 	title: String,
-	content: String,
+	content: [String],
 	author: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Writer'

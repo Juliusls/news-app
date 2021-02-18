@@ -1,0 +1,9 @@
+post http://localhost:3001/api/writers/
+Content-Type: application/json
+
+{
+    "firstName": "Donna",
+    "lastName": "Paulses",
+    "writerGenres": ["Family"],
+    "writerDescription": "I am family relationships expert"
+}

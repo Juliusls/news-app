@@ -8,7 +8,14 @@ const jwt = require('jsonwebtoken')
 // eslint-disable-next-line no-unused-vars
 readersRouter.get('/', async (request, response) => {
 	const readers = await Reader.find({})
-		.populate('readerComments')
+		.populate({
+			path: 'readerComments',
+			model: 'Comment',
+			populate: {
+				path: 'article',
+				model: 'Article'
+			}
+		})
 	response.json(readers)
 })
 

@@ -4,14 +4,14 @@ import { useDispatch } from 'react-redux'
 import { initArticles } from './reducers/articlesReducer'
 import { initWriters } from './reducers/writersReducer'
 import Container  from '@material-ui/core/Container'
-import ArticlesList from './components/ArticlesList'
-import ArticlePage from './components/ArticlePage'
+import ArticlesList from './components/ArticlesList/ArticlesList'
+import ArticlePage from './components/ArticlePage/ArticlePage'
 import WriterPage from './components/WriterPage'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import LoginReader from './components/LoginReader'
 import SignUpReader from './components/SignUpReader'
 import { initReaders } from './reducers/readersReducer'
-import ReaderPage from './components/ReaderPage'
+import ReaderPage from './components/ReaderPage/ReaderPage'
 
 const App = () => {
 	const dispatch = useDispatch()
@@ -77,10 +77,14 @@ const App = () => {
 
 export default App
 
+// TODO Create db model so that article can have multiple paragrahs and map them in this component
+//  Add new data with description and add it to writer page
+// remove readingHistory from reader
+
+
+// TODO show my favorites for only logged in users
 // TODO Check ArticlePage
 // TODO Ability to search also by text content
 // TODO All writers component
 // TODO Add fields to side menu: Writers, Become a writer, Login as writer
-// TODO Fix all todo
-// TODO Add new data with description and add it to writer page
 // TODO Fix project theme https://bareynol.github.io/mui-theme-creator/
