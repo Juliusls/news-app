@@ -6,7 +6,9 @@ const readersReducer = (state = [], action) => {
 		return action.data
 	case 'CREATE_READER':
 		return state.concat(action.data)
-	case 'UPDATE_READER':
+	case 'UPDATE_READERS_FUNDS':
+		return state.filter(reader => reader.id !== action.data.id ? reader : action.data)
+	case 'ADD_FAVORITE_WRITER':
 		return state.filter(reader => reader.id !== action.data.id ? reader : action.data) 
 	default:
 		return state
@@ -36,9 +38,23 @@ export const createReader = (newReader) => {
 export const updateReaderFunds = (fundsToAdd, reader) => {
 	return async dispatch => {
 		const readerToUpdate = { ...reader, funds: reader.funds + fundsToAdd }
+		console.log('readerToUpdate', readerToUpdate)
 		const updatedReader = await readersService.update(readerToUpdate, reader.id)
 		dispatch ({
-			type: 'UPDATE_READER',
+			type: 'UPDATE_READERS_FUNDS',
+			data: updatedReader
+		})
+	}
+}
+
+export const addFavoriteWriter = (writerToAdd, reader) => {
+	return async dispatch => {
+		console.log(reader.favoritewriters)
+		const readerToUpdate = { ...reader, favoritewriters: reader.favoritewriters.map(favoritewriter => favoritewriter.id).concat((writerToAdd.id)) }
+		console.log('readerToUpdate', readerToUpdate)
+		const updatedReader = await readersService.update(readerToUpdate, reader.id)
+		dispatch ({
+			type: 'ADD_FAVORITE_WRITER',
 			data: updatedReader
 		})
 	}

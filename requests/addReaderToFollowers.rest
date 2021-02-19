@@ -1,0 +1,8 @@
+put http://localhost:3001/api/writers/602e7aeee71e521d9c1bd644
+Content-Type: application/json
+
+{
+    "followers": ["602e8c52cbfac11f842074d7"],
+	"earnings": 0,
+	"totalViews": 0
+}

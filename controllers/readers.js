@@ -16,6 +16,7 @@ readersRouter.get('/', async (request, response) => {
 				model: 'Article'
 			}
 		})
+		.populate('favoritewriters')
 	response.json(readers)
 })
 
@@ -47,6 +48,7 @@ readersRouter.post('/', async (request, response) => {
 		if (body.password === undefined) {
 			return response.status(400).json({error: 'password missing'})
 		}
+
 		const saltRounds = 12
 		const passwordHash = await bcrypt.hash(body.password, saltRounds)
 
@@ -79,13 +81,15 @@ readersRouter.put('/:id', (request, response) =>{
 	}
 
 	const reader = {
-		funds: body.funds
+		funds: body.funds,
+		favoritewriters: body.favoritewriters
 	}
 
 	Reader.findByIdAndUpdate(request.params.id, reader, { new: true })
 		.then(updatedReader => {
 			response.status(200).json(updatedReader)
 		})
+		.catch(error => logger.error(error))
 })
 
 readersRouter.delete('/:id', async (request, response) => {

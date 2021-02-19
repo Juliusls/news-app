@@ -1,0 +1,7 @@
+put http://localhost:3001/api/readers/602e8c52cbfac11f842074d7
+Content-Type: application/json
+
+{
+    "favoritewriters": ["602e7aeee71e521d9c1bd644", "602e7b2de71e521d9c1bd645"],
+	"funds": 10
+}

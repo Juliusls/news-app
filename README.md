@@ -25,4 +25,5 @@ Readers will be able to read the news by selecting categories or selecting/filte
 | | 1 | Creating Sign up component and connecting it to backend. Fixing issue of page not re-loading while running static file |
 | | 4 | Creating Reader component, adding ability to add funds |
 | 17.2 | 3 | Adding favorite writers, subscriptions and comments to readers page. Renewing db models and adding new data |
-| Total  | 52 | | 
+| 18.2 | 4 | Working on ability to add writers to favorites list, and readers apear on writers follower list |
+| Total  | 56 | | 

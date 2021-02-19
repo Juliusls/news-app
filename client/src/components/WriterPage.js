@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React from 'react'
+import { useDispatch } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles'
 import { useSelector } from 'react-redux'
 import ArticlesList from './ArticlesList/ArticlesList'
@@ -6,6 +7,8 @@ import { Typography, ButtonGroup, Button } from '@material-ui/core'
 import { useParams } from 'react-router-dom'
 import AddOutlinedIcon from '@material-ui/icons/AddOutlined'
 import CheckOutlinedIcon from '@material-ui/icons/CheckOutlined'
+import { addFavoriteWriter } from '../reducers/readersReducer'
+// import { addReaderToFollowers } from '../reducers/writersReducer'
 
 const useStyles = makeStyles(theme => ({
 	profileContaner: {
@@ -33,14 +36,22 @@ const useStyles = makeStyles(theme => ({
 
 const WriterPage = () => {
 	const classes = useStyles()
-	const [favorited, setFavorited] = useState(false)
+	const dispatch = useDispatch()
 	// const [subscribed, setSubscribed] = useState(false)
 	let { author } = useParams()
-	const writers = useSelector(state => state.writers)
-	const filteredWriter = writers.filter(writer => writer.id === author)[0]
+	const filteredWriter = useSelector(state => state.writers.filter(writer => writer.id === author)[0])
+	const loggedInReader = useSelector(state => state.reader)
+	const currentReader = useSelector(state => state.readers.filter(reader => reader.id === loggedInReader.id)[0])
 
-	const handleFavorites = () => {
-		setFavorited(!favorited)
+	const isInFavotrites = currentReader.favoritewriters.some(writer => writer.id === author)
+
+	const handleAddToFavorites = () => {
+		dispatch(addFavoriteWriter(filteredWriter, currentReader))
+		// dispatch(addReaderToFollowers(currentReader, filteredWriter))
+	}
+	
+	const handleRemoveFromFavorites = () => {
+		console.log('remove')
 	}
 	
 	// const handleSubscribe = () => {
@@ -64,17 +75,31 @@ const WriterPage = () => {
 					</Typography>
 					{filteredWriter.writerGenres.map(genre => 
 						<Typography key={genre} className={classes.textGenres} clasvariant='caption'>{genre}</Typography>
-					)}
+					)}					
 					<ButtonGroup color="primary" aria-label="outlined primary button group">
-						<Button
-							variant="contained"
-							color="primary"
-							className={classes.button}
-							endIcon={favorited ? <CheckOutlinedIcon /> : <AddOutlinedIcon /> }
-							onClick={handleFavorites}
-						>
-							{favorited ? 'Added to favorites' : 'Add to favorites' }
-						</Button>
+						{isInFavotrites 
+							?
+							<Button
+								variant="contained"
+								color="primary"
+								className={classes.button}
+								endIcon={<CheckOutlinedIcon />}
+								onClick={handleRemoveFromFavorites}
+							>
+								Added to favorites
+							</Button>
+							: 
+							<Button
+								variant="contained"
+								color="primary"
+								className={classes.button}
+								endIcon={<AddOutlinedIcon />}
+								onClick={handleAddToFavorites}
+							>
+								Add to favorites
+							</Button>
+						}
+						
 						{/* <Button
 							variant="contained"
 							color="primary"
@@ -97,3 +122,6 @@ const WriterPage = () => {
 }
 
 export default WriterPage
+
+
+// TODO fix multiple genres not in one line

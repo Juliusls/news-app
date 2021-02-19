@@ -43,7 +43,7 @@ const ArticlePage = ({ setArticlesFetchInProgress }) => {
 				</Typography>
 				<br/>
 				{filteredArticle.content.map(content => 
-					<div key={content.id} >
+					<div key={content} >
 						<Typography >
 							{content}
 						</Typography>

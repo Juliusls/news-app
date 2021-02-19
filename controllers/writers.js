@@ -8,6 +8,7 @@ writersRouter.get('/', async (request, response) => {
 		.find({})
 		.populate('article')
 		.populate('readers')
+		.populate('followers')
 	response.json(writers)
 })
 
@@ -59,33 +60,8 @@ writersRouter.post('/', async (request, response) => {
 writersRouter.put('/:id', (request, response) => {
 	const body = request.body
 
-	if (body.firstName === undefined) {
-		return response.status(400).json({error: 'First name missing'})
-	}
-	if (body.lastName === undefined) {
-		return response.status(400).json({error: 'Last name missing'})
-	}
-	if (body.writerGenres === undefined) {
-		return response.status(400).json({error: 'Genres missing'})
-	}
-	if (body.earnings === undefined) {
-		return response.status(400).json({error: 'Earinings missing'})
-	}
-	if (body.totalViews === undefined) {
-		return response.status(400).json({error: 'Total views missing'})
-	}
-	if (body.writerDescription === undefined) {
-		return response.status(400).json({error: 'Writer description missing'})
-	}
-
 	const writer = {
-		firstName: body.firstName,
-		lastName: body.lastName,
-		writerGenres: body.writerGenres,
-		earnings: body.earnings,
-		totalViews: body.totalViews,
-		writerDescription: body.writerDescription,
-
+		followers: body.followers
 	}
 
 	Writer.findByIdAndUpdate(request.params.id, writer, { new: true })
