@@ -28,4 +28,4 @@ Readers will be able to read the news by selecting categories or selecting/filte
 | 18.2 | 4 | Working on ability to add writers to favorites list, and readers apear on writers follower list |
 | 19.2 | 6 | Refactoring writers and readers reducer, adding ability to add and remove writers to and from favorite list |
 |  | 2 | Adding ability to select category My favorites |
-| Total  | 58 | | 
+| Total  | 64 | | 
