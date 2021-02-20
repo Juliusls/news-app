@@ -25,7 +25,7 @@ const ArticlePage = () => {
 	const articles = useSelector(state => state.articles)
 
 	if (!articles) {
-		return <p>no data</p>
+		return <p>Loading...</p>
 	}
 
 	const filteredArticle = articles.filter(article => article.id === id)[0]

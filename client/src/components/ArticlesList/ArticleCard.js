@@ -43,7 +43,7 @@ const useStyles = makeStyles(theme => ({
 const ArticleCard = ({ article }) => {
 
 	if (!article) {
-		return <p>No data</p>
+		return <p>Loading...</p>
 	}
 
 	const classes = useStyles()

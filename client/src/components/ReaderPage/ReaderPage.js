@@ -45,7 +45,7 @@ const ReaderPage = () => {
 	const date = filteredReader.joined !== undefined ? filteredReader.joined : 'No data'
 
 	if (!readers) {
-		return <p>No data</p>
+		return <p>Loading...</p>
 	}
 
 	return (

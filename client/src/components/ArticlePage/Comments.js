@@ -73,7 +73,7 @@ const Comments = () => {
 	const filteredArticle = articles.filter(article => article.id === id)[0]
 
 	if (!articles) {
-		return <p>No data</p>
+		return <p>Loading...</p>
 	}
 
 	const onChangeComment = event => {

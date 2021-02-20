@@ -1,5 +1,4 @@
-const newsCategories = ['Business', 'Cars', 'Entertainment', 'Family', 'Health', 'Politics', 'Religion', 'Science', 'Sport', 'Technology', 'Travel', 'World']
-const latestFavoritesCategories = ['My Favorites']
-const allCategories = latestFavoritesCategories.concat(newsCategories)
+export const newsCategories = ['Business', 'Cars', 'Entertainment', 'Family', 'Health', 'Politics', 'Religion', 'Science', 'Sport', 'Technology', 'Travel', 'World']
+const loggedInReaderCategories = ['My Favorites']
+export const allCategories = loggedInReaderCategories.concat(newsCategories)
 
-export default allCategories

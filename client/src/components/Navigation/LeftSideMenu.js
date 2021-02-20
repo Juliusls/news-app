@@ -1,4 +1,5 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles'
 import Drawer from '@material-ui/core/Drawer'
 import IconButton from '@material-ui/core/IconButton'
@@ -7,7 +8,8 @@ import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import CloseIcon from '@material-ui/icons/Close'
 import Divider from '@material-ui/core/Divider'
-import allCategories from '../data/data'
+import { allCategories } from '../../data/data'
+import { newsCategories } from '../../data/data'
 import { Link } from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
@@ -46,6 +48,10 @@ const useStyles = makeStyles(theme => ({
 
 const LeftSideMenu = ({ leftSideMenuIsOpen, setLeftSideMenuIsOpenIsOpen }) => {
 	const classes = useStyles()
+	const reader = useSelector(state => state.reader)
+
+	const categories = reader ? allCategories : newsCategories
+
 
 	const list = () => (
 		<div
@@ -60,7 +66,7 @@ const LeftSideMenu = ({ leftSideMenuIsOpen, setLeftSideMenuIsOpenIsOpen }) => {
 						<CloseIcon className={classes.icon} />
 					</IconButton>
 				</div>
-				{allCategories.map((text) => (
+				{categories.map((text) => (
 					<Link style={{ textDecoration: 'none', color: 'inherit' }} key={text} to={`/genres/${text}`}>
 						<ListItem  button href={`/${text}`}>
 							<ListItemText primary={text} className={classes.listItemText}/>

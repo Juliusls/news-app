@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { makeStyles, Button, Menu, MenuItem, IconButton, Typography, Toolbar, AppBar } from '@material-ui/core/'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import MenuIcon from '@material-ui/icons/Menu'
-import SearchField from './SearchField'
+import SearchField from '../SearchField'
 import LeftSideMenu from './LeftSideMenu'
-import { removeReader } from '../reducers/loginReaderReducer'
+import { removeReader } from '../../reducers/loginReaderReducer'
 import { useCookies } from 'react-cookie'
 
 const useStyles = makeStyles(theme => ({

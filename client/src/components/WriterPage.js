@@ -52,7 +52,7 @@ const WriterPage = () => {
 	let currentReader = loggedInReader && useSelector(state => state.readers.filter(reader => reader.id === loggedInReader.id)[0])
 
 	if (!filteredWriter) {
-		return <p>No data</p>
+		return <p>Loading...</p>
 	}
 
 	let isInFavotrites = currentReader && currentReader.favoritewriters.some(writer => writer.id === author)

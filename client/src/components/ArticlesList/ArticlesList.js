@@ -18,20 +18,26 @@ const useStyles = makeStyles({
 })
 
 const ArticlesList = () => {
-	const articles = useSelector(state => state.articles)
 	const classes = useStyles()
 	const { genre } = useParams()
 	const { searchResult } = useParams()
 	let { author } = useParams()
+	const articles = useSelector(state => state.articles)
+	const loggedInReader = useSelector(state => state.reader)
+	const readersList = useSelector(state => state.readers)
+	const readerFavorites = loggedInReader && readersList.filter(readerFromList => readerFromList.id === loggedInReader.id)[0].favoritewriters.map(favoritewriter => favoritewriter.id)
+	
 	let articlesFiltered = articles
 	let allength = null
 
 	if (!articles) {
-		return <p>No data</p>
+		return <p>Loading...</p>
 	}
 
-
-	if (genre) {
+	if (genre === 'My Favorites') {
+		articlesFiltered = articles.filter(article => readerFavorites.includes(article.author.id))
+		console.log(articlesFiltered)
+	} else if (genre !== undefined) {
 		articlesFiltered = articles.filter(article => article.genres.includes(genre))
 	}
     

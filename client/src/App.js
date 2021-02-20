@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import Navbar from './components/Navbar'
+import Navbar from './components/Navigation/Navbar'
 import { useDispatch } from 'react-redux'
 import { initArticles } from './reducers/articlesReducer'
 import { initWriters } from './reducers/writersReducer'
@@ -76,10 +76,11 @@ const App = () => {
 
 export default App
 
-// TODO Create db model so that article can have multiple paragrahs and map them in this component
+// TODO add new data
+
 // TODO show my favorites for only logged in users
-// TODO Check ArticlePage
 // TODO Ability to search also by text content
 // TODO All writers component
+// TODO Token lifetime
 // TODO Add fields to side menu: Writers, Become a writer, Login as writer
 // TODO Fix project theme https://bareynol.github.io/mui-theme-creator/
