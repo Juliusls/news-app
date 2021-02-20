@@ -41,6 +41,11 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const ArticleCard = ({ article }) => {
+
+	if (!article) {
+		return <p>No data</p>
+	}
+
 	const classes = useStyles()
 	return (
 		<Card className={classes.root} >

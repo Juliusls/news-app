@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
-import articlesService from '../../services/articles'
 import AccordionDetails from '@material-ui/core/AccordionDetails'
 import AccordionSummary from '@material-ui/core/AccordionSummary'
 import AccordionActions from '@material-ui/core/AccordionActions'
@@ -10,6 +9,7 @@ import Typography from '@material-ui/core/Typography'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import Button from '@material-ui/core/Button'
 import { TextField, Accordion, makeStyles, Card, CardContent } from '@material-ui/core'
+import { addComment } from '../../reducers/articlesReducer'
 
 const useStyles = makeStyles(theme => ({
 	text: {
@@ -60,13 +60,21 @@ const useStyles = makeStyles(theme => ({
 	},
 }))
 
-const Comments = ({ setArticlesFetchInProgress }) => {
+const Comments = () => {
 	const classes = useStyles()
+	const dispatch = useDispatch()
 	const [commentValue, setCommentValue] = useState('')
 	const articles = useSelector(state => state.articles)
 	const reader = useSelector(state => state.reader)
+	const readers = useSelector(state => state.readers)
+	const commentator = reader && readers.filter(readerOne => readerOne.id === reader.id)[0]
+
 	let { id } = useParams()
 	const filteredArticle = articles.filter(article => article.id === id)[0]
+
+	if (!articles) {
+		return <p>No data</p>
+	}
 
 	const onChangeComment = event => {
 		setCommentValue(event.target.value)
@@ -75,8 +83,7 @@ const Comments = ({ setArticlesFetchInProgress }) => {
 	const handleSubmit = (event) => {
 		event.preventDefault()
 		const newComment = { comment: commentValue }
-		articlesService.postComment(newComment, id)
-		setArticlesFetchInProgress(true)
+		dispatch(addComment(newComment, id, commentator))
 		setCommentValue('')
 	}
 	

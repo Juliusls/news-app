@@ -26,6 +26,11 @@ const ArticlesList = () => {
 	let articlesFiltered = articles
 	let allength = null
 
+	if (!articles) {
+		return <p>No data</p>
+	}
+
+
 	if (genre) {
 		articlesFiltered = articles.filter(article => article.genres.includes(genre))
 	}

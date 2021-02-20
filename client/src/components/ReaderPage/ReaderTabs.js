@@ -2,7 +2,10 @@ import React, { useState } from 'react'
 import { AppBar, Tabs, Tab, Typography, Box, ListItem, ListItemText, List, makeStyles, Button } from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/Delete'
 import { Link } from 'react-router-dom'
-
+import { useDispatch } from 'react-redux'
+import { removeFavoriteWriter } from '../../reducers/readersReducer'
+import { removeReaderFromFollowers } from '../../reducers/writersReducer'
+ 
 const useStyles = makeStyles(theme => ({
 	text: {
 		color: theme.palette.text.secondary
@@ -54,8 +57,16 @@ const ListItemLink = (props) => {
 const ReaderTabs = ({ reader }) => {
 	const [value, setValue] = useState(0)
 	const classes = useStyles()
+	const dispatch = useDispatch()
+
 	const handleChange = (event, newValue) => {
 		setValue(newValue)
+	}
+
+	const handleRemove = (favoriteWriter) => {
+		dispatch(removeFavoriteWriter(favoriteWriter, reader))
+		dispatch(removeReaderFromFollowers(reader, favoriteWriter))
+
 	}
 
 	return (
@@ -81,6 +92,7 @@ const ReaderTabs = ({ reader }) => {
 									color="secondary"
 									className={classes.button}
 									startIcon={<DeleteIcon />}
+									onClick={() => handleRemove(favoriteWriter)}
 								>
 									Remove
 								</Button>

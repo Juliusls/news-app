@@ -19,10 +19,14 @@ const useStyles = makeStyles({
 	}
 })
 
-const ArticlePage = ({ setArticlesFetchInProgress }) => {
+const ArticlePage = () => {
 	const classes = useStyles()
 	let { id } = useParams()
 	const articles = useSelector(state => state.articles)
+
+	if (!articles) {
+		return <p>no data</p>
+	}
 
 	const filteredArticle = articles.filter(article => article.id === id)[0]
 
@@ -51,7 +55,7 @@ const ArticlePage = ({ setArticlesFetchInProgress }) => {
 					</div>
 				)}
 			</div>
-			<Comments setArticlesFetchInProgress={setArticlesFetchInProgress} />
+			<Comments />
 		</div>
 	)
 }

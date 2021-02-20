@@ -1,14 +1,15 @@
+/* eslint-disable no-fallthrough */
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles, withStyles } from '@material-ui/core/styles'
 import { useSelector } from 'react-redux'
 import ArticlesList from './ArticlesList/ArticlesList'
-import { Typography, ButtonGroup, Button } from '@material-ui/core'
+import { Typography, ButtonGroup, Button, Tooltip, Fade } from '@material-ui/core'
 import { useParams } from 'react-router-dom'
 import AddOutlinedIcon from '@material-ui/icons/AddOutlined'
 import CheckOutlinedIcon from '@material-ui/icons/CheckOutlined'
-import { addFavoriteWriter } from '../reducers/readersReducer'
-// import { addReaderToFollowers } from '../reducers/writersReducer'
+import { addFavoriteWriter, removeFavoriteWriter } from '../reducers/readersReducer'
+import { addReaderToFollowers, removeReaderFromFollowers } from '../reducers/writersReducer'
 
 const useStyles = makeStyles(theme => ({
 	profileContaner: {
@@ -34,6 +35,13 @@ const useStyles = makeStyles(theme => ({
 	},
 }))
 
+const BigTooltip = withStyles((theme) => ({
+	tooltip: {
+		backgroundColor: theme.palette.primary.main,
+		fontSize: 15,
+	},
+}))(Tooltip)
+
 const WriterPage = () => {
 	const classes = useStyles()
 	const dispatch = useDispatch()
@@ -41,22 +49,73 @@ const WriterPage = () => {
 	let { author } = useParams()
 	const filteredWriter = useSelector(state => state.writers.filter(writer => writer.id === author)[0])
 	const loggedInReader = useSelector(state => state.reader)
-	const currentReader = useSelector(state => state.readers.filter(reader => reader.id === loggedInReader.id)[0])
+	let currentReader = loggedInReader && useSelector(state => state.readers.filter(reader => reader.id === loggedInReader.id)[0])
 
-	const isInFavotrites = currentReader.favoritewriters.some(writer => writer.id === author)
+	if (!filteredWriter) {
+		return <p>No data</p>
+	}
+
+	let isInFavotrites = currentReader && currentReader.favoritewriters.some(writer => writer.id === author)
 
 	const handleAddToFavorites = () => {
 		dispatch(addFavoriteWriter(filteredWriter, currentReader))
-		// dispatch(addReaderToFollowers(currentReader, filteredWriter))
+		dispatch(addReaderToFollowers(currentReader, filteredWriter))
 	}
 	
 	const handleRemoveFromFavorites = () => {
-		console.log('remove')
+		dispatch(removeFavoriteWriter(filteredWriter, currentReader))
+		dispatch(removeReaderFromFollowers(currentReader, filteredWriter))
 	}
 	
 	// const handleSubscribe = () => {
 	// 	setSubscribed(!subscribed)
 	// }
+
+	const button = () => {
+		switch (isInFavotrites) {
+		case true:
+			return (
+				<Button
+					variant="contained"
+					color="primary"
+					className={classes.button}
+					endIcon={<CheckOutlinedIcon />}
+					onClick={handleRemoveFromFavorites}
+				>
+					Added to favorites
+				</Button>
+			)
+		case false:
+			return (
+				<Button
+					variant="contained"
+					color="primary"
+					className={classes.button}
+					endIcon={<AddOutlinedIcon />}
+					onClick={handleAddToFavorites}
+				>
+					Add to favorites
+				</Button>
+			)
+		case null:
+			return (
+				<BigTooltip TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title="Log In to add to favorites">
+					<div>
+						<Button
+							variant="contained"
+							disabled
+							className={classes.button}
+							endIcon={<AddOutlinedIcon />}
+						>
+								Add to favorites
+						</Button>
+					</div>
+				</BigTooltip>
+			)
+		default:
+			<p>Erorr</p>
+		}
+	}
 
 	return (
 		<div>
@@ -77,7 +136,7 @@ const WriterPage = () => {
 						<Typography key={genre} className={classes.textGenres} clasvariant='caption'>{genre}</Typography>
 					)}					
 					<ButtonGroup color="primary" aria-label="outlined primary button group">
-						{isInFavotrites 
+						{/* {isInFavotrites 
 							?
 							<Button
 								variant="contained"
@@ -98,7 +157,9 @@ const WriterPage = () => {
 							>
 								Add to favorites
 							</Button>
-						}
+						} */}
+						{button()}
+						
 						
 						{/* <Button
 							variant="contained"

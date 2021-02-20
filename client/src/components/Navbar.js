@@ -86,6 +86,7 @@ const Navbar = () =>  {
 		dispatch(removeReader())
 		removeCookie('authCookie')
 		history.push('/')
+		setProfileMenu(false)
 	}
 
 	return (
@@ -128,7 +129,7 @@ const Navbar = () =>  {
 									open={open}
 									onClose={handleProfileMenuClose}
 								>
-									<MenuItem component={ Link } to={`/reader/profile/${reader.id}`} classes={{ root: classes.menuItem }}>Profile</MenuItem>
+									<MenuItem component={ Link } to={`/reader/profile/${reader.id}`} onClick={() => setProfileMenu(false)} classes={{ root: classes.menuItem }}>Profile</MenuItem>
 									<MenuItem component={ Button } onClick={handleLogout} classes={{ root: classes.menuItem }}>Log Out</MenuItem>
 								</Menu>
 							</div>

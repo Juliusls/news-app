@@ -11,7 +11,7 @@ const useStyles = makeStyles(theme => ({
 	},
 }))
 
-const AddFundsDialog = ({ openDialog, setOpenDialog, reader, setReadersFetchInProgress }) => {
+const AddFundsDialog = ({ openDialog, setOpenDialog, reader }) => {
 	const [fundsValue, setFundsValue] = useState(0)
 	const classes = useStyles()
 	const dispatch = useDispatch()
@@ -24,7 +24,6 @@ const AddFundsDialog = ({ openDialog, setOpenDialog, reader, setReadersFetchInPr
 		event.preventDefault()
 		const fundsToAdd = Number(fundsValue)
 		dispatch(updateReaderFunds(fundsToAdd, reader))
-		setReadersFetchInProgress(true)
 		setFundsValue(0)
 		setOpenDialog(false)
 	}

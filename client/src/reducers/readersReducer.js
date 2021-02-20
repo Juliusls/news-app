@@ -7,9 +7,16 @@ const readersReducer = (state = [], action) => {
 	case 'CREATE_READER':
 		return state.concat(action.data)
 	case 'UPDATE_READERS_FUNDS':
-		return state.filter(reader => reader.id !== action.data.id ? reader : action.data)
+		return state.map(reader => {
+			if (reader.id === action.data.id) {
+				return { ...reader, funds: action.data.funds }
+			}
+			return reader
+		})
 	case 'ADD_FAVORITE_WRITER':
-		return state.filter(reader => reader.id !== action.data.id ? reader : action.data) 
+		return state.map(reader => reader.id === action.data.id ? action.data : reader)
+	case 'REMOVE_FAVORITE_WRITER': 
+		return state.map(reader => reader.id === action.data.id ? action.data : reader )
 	default:
 		return state
 	}
@@ -37,8 +44,7 @@ export const createReader = (newReader) => {
 
 export const updateReaderFunds = (fundsToAdd, reader) => {
 	return async dispatch => {
-		const readerToUpdate = { ...reader, funds: reader.funds + fundsToAdd }
-		console.log('readerToUpdate', readerToUpdate)
+		const readerToUpdate = { favoritewriters: reader.favoritewriters.map(writer => writer.id) , funds: reader.funds + fundsToAdd }
 		const updatedReader = await readersService.update(readerToUpdate, reader.id)
 		dispatch ({
 			type: 'UPDATE_READERS_FUNDS',
@@ -49,13 +55,24 @@ export const updateReaderFunds = (fundsToAdd, reader) => {
 
 export const addFavoriteWriter = (writerToAdd, reader) => {
 	return async dispatch => {
-		console.log(reader.favoritewriters)
-		const readerToUpdate = { ...reader, favoritewriters: reader.favoritewriters.map(favoritewriter => favoritewriter.id).concat((writerToAdd.id)) }
-		console.log('readerToUpdate', readerToUpdate)
-		const updatedReader = await readersService.update(readerToUpdate, reader.id)
+		const readerToUpdate = { funds: reader.funds, favoritewriters: reader.favoritewriters.map(favoritewriter => favoritewriter.id).concat(writerToAdd.id) }
+		await readersService.update(readerToUpdate, reader.id)
+		const readerForDispatch = { ...reader, favoritewriters: reader.favoritewriters.concat(writerToAdd) }
 		dispatch ({
 			type: 'ADD_FAVORITE_WRITER',
-			data: updatedReader
+			data: readerForDispatch
+		})
+	}
+}
+
+export const removeFavoriteWriter = (writerToRemove, reader) => {
+	return async dispatch => {
+		const readerToUpdate = { favoritewriters: reader.favoritewriters.map(favoritewriter => favoritewriter.id).filter(id => id !== writerToRemove.id) }
+		await readersService.update(readerToUpdate, reader.id)
+		const readerForDispatch = { ...reader, favoritewriters: reader.favoritewriters.filter(writer => writer.id !== writerToRemove.id) }
+		dispatch ({
+			type: 'REMOVE_FAVORITE_WRITER',
+			data: readerForDispatch
 		})
 	}
 }

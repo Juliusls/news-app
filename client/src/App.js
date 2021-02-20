@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import Navbar from './components/Navbar'
 import { useDispatch } from 'react-redux'
 import { initArticles } from './reducers/articlesReducer'
@@ -15,30 +15,29 @@ import ReaderPage from './components/ReaderPage/ReaderPage'
 
 const App = () => {
 	const dispatch = useDispatch()
-	const [articlesFetchInProgress, setArticlesFetchInProgress] = useState(true)
-	const [readersFetchInProgress, setReadersFetchInProgress] = useState(true)
+	// const [articlesFetchInProgress, setArticlesFetchInProgress] = useState(true)
+	// const [readersFetchInProgress, setReadersFetchInProgress] = useState(true)
+
 	useEffect(() => {
 		async function getAllArticles() {
 			await dispatch(initArticles())
-			setArticlesFetchInProgress(false)
 		}
 		getAllArticles()
-	}, [articlesFetchInProgress])
+	})
 
 	useEffect(() => {
 		async function getAllWriters() {
 			await dispatch(initWriters())
 		}
 		getAllWriters()
-	}, [])
+	})
 	
 	useEffect(() => {
 		async function getAllReaders() {
 			await dispatch(initReaders())
-			setReadersFetchInProgress(false)
 		}
 		getAllReaders()
-	}, [readersFetchInProgress])
+	})
 
 	return (
 		<Router>
@@ -46,7 +45,7 @@ const App = () => {
 			<Container>
 				<Switch>
 					<Route exact path='/article/:id'>
-						<ArticlePage setArticlesFetchInProgress={setArticlesFetchInProgress} />
+						<ArticlePage />
 					</Route>
 					<Route exact path='/genres/:genre'>
 						<ArticlesList />
@@ -64,7 +63,7 @@ const App = () => {
 						<SignUpReader />
 					</Route>
 					<Route exact path='/reader/profile/:id'>
-						<ReaderPage setReadersFetchInProgress={setReadersFetchInProgress} />
+						<ReaderPage />
 					</Route>
 					<Route exact path='/'>
 						<ArticlesList />
@@ -78,10 +77,6 @@ const App = () => {
 export default App
 
 // TODO Create db model so that article can have multiple paragrahs and map them in this component
-//  Add new data with description and add it to writer page
-// remove readingHistory from reader
-
-
 // TODO show my favorites for only logged in users
 // TODO Check ArticlePage
 // TODO Ability to search also by text content

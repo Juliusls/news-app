@@ -5,7 +5,11 @@ const writersReducer = (state = [], action) => {
 	case 'INIT_WRITERS':
 		return action.data
 	case 'ADD_READER_TO_FOLLOWERS':
-		return state.filter(writer => writer.id !== action.data.id ? writer : action.data)
+		return state.map(writer => writer.id === action.data.id ? action.data : writer)
+	case 'REMOVE_READER_FROM_FOLLOWERS':
+		// return state.map(writer => writer.id !== action.data.id ? writer : action.data)
+		return state.map(writer => writer.id === action.data ? action.data : writer)
+
 	default:
 		return state
 	}
@@ -21,14 +25,26 @@ export const initWriters = () => {
 	}
 }
 
-
 export const addReaderToFollowers = (readerToAdd, writer) => {
 	return async dispatch => {
-		const writerToUpdate = { ...writer, followers: writer.followers.concat(readerToAdd.id) }
-		const updatedWriter = await writersService.update(writerToUpdate, writer.id)
+		const writerToUpdate = { followers: writer.followers.map(follower => follower.id).concat(readerToAdd.id) }
+		await writersService.update(writerToUpdate, writer.id)
+		const writerForDispatch = { ...writer, followers: writer.followers.concat(readerToAdd) }
 		dispatch ({
 			type: 'ADD_READER_TO_FOLLOWERS',
-			data: updatedWriter
+			data: writerForDispatch
+		})
+	}
+}
+
+export const removeReaderFromFollowers = (readerToRemove, writer) => {
+	return async dispatch => {
+		const writerToUpdate = { ...writer, followers: writer.followers.map(follower => follower.id).filter(id => id !== readerToRemove.id) }
+		await writersService.update(writerToUpdate, writer.id)
+		const writerForDispatch = { ...writer, followers: writer.followers.filter(writer => writer.id !== readerToRemove.id) }
+		dispatch ({
+			type: 'REMOVE_READER_FROM_FOLLOWERS',
+			data: writerForDispatch
 		})
 	}
 }

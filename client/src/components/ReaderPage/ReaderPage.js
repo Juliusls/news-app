@@ -36,13 +36,17 @@ const useStyles = makeStyles({
 	}
 })
 
-const ReaderPage = ({ setReadersFetchInProgress }) => {
+const ReaderPage = () => {
 	const classes = useStyles()
 	const [openDialog, setOpenDialog] = useState(false)
 	const { id } = useParams()
 	const readers = useSelector(state => state.readers)
 	const filteredReader = readers.filter(reader => reader.id === id)[0]
 	const date = filteredReader.joined !== undefined ? filteredReader.joined : 'No data'
+
+	if (!readers) {
+		return <p>No data</p>
+	}
 
 	return (
 		<div>
@@ -70,7 +74,7 @@ const ReaderPage = ({ setReadersFetchInProgress }) => {
 				</div>
 			</div>
 			<ReaderTabs reader={filteredReader} />
-			<AddFundsDialog openDialog={openDialog} setOpenDialog={setOpenDialog} reader={filteredReader} setReadersFetchInProgress={setReadersFetchInProgress} />
+			<AddFundsDialog openDialog={openDialog} setOpenDialog={setOpenDialog} reader={filteredReader} />
 		</div>
 	)
 }
