@@ -2,8 +2,11 @@ post http://localhost:3001/api/writers/
 Content-Type: application/json
 
 {
-    "firstName": "Donna",
-    "lastName": "Paulses",
-    "writerGenres": ["Family"],
-    "writerDescription": "I am family relationships expert"
+    "firstName": "Harvey",
+    "lastName": "Specter",
+    "writerGenres": ["Business", "Cars"],
+    "writerDescription": "Car fan, hedge fund investor",
+	"oneArticlePrice": 1,
+	"montlySubscriptionPrice": 10,
+	"yearlySubscriptionPrice": 100
 }

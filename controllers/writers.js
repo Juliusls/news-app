@@ -33,18 +33,34 @@ writersRouter.post('/', async (request, response) => {
 	if (body.lastName === undefined) {
 		return response.status(400).json({error: 'Last name missing'})
 	}
+	if (body.userName === undefined) {
+		return response.status(400).json({error: 'User name missing'})
+	}
 	if (body.writerGenres === undefined) {
 		return response.status(400).json({error: 'Genres missing'})
 	}
 	if (body.writerDescription === undefined) {
 		return response.status(400).json({error: 'Writer description missing'})
 	}
+	if (body.oneArticlePrice === undefined) {
+		return response.status(400).json({error: 'One Article Price missing'})
+	}
+	if (body.montlySubscriptionPrice === undefined) {
+		return response.status(400).json({error: 'Montly Subscription Price missing'})
+	}
+	if (body.yearlySubscriptionPrice === undefined) {
+		return response.status(400).json({error: 'Yearly Subscription Price missing'})
+	}
 
 	const writer = new Writer({
 		firstName: body.firstName,
 		lastName: body.lastName,
+		userName: body.userName,
 		writerGenres: body.writerGenres,
 		writerDescription: body.writerDescription,
+		oneArticlePrice: body.oneArticlePrice,
+		montlySubscriptionPrice: body.montlySubscriptionPrice,
+		yearlySubscriptionPrice: body.yearlySubscriptionPrice,
 		joined: getDate(),
 		earnings: 0,
 		totalViews: 0,

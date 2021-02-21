@@ -5,11 +5,15 @@ mongoose.set('useFindAndModify', false)
 const writerSchema = new mongoose.Schema({
 	firstName: String,
 	lastName: String,
+	userName: String,
 	earnings: Number,
 	totalViews: Number,
 	joined: String,
 	writerDescription: String,
 	writerGenres: [String],
+	oneArticlePrice: Number,
+	montlySubscriptionPrice: Number,
+	yearlySubscriptionPrice: Number,
 	myarticles: [
 		{
 			type: mongoose.Schema.Types.ObjectId,

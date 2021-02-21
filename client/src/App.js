@@ -7,6 +7,7 @@ import Container  from '@material-ui/core/Container'
 import ArticlesList from './components/ArticlesList/ArticlesList'
 import ArticlePage from './components/ArticlePage/ArticlePage'
 import WriterPage from './components/WriterPage'
+import WriterSignUp from './components/WriterSection/WriterSignUp'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import LoginReader from './components/LoginReader'
 import SignUpReader from './components/SignUpReader'
@@ -65,6 +66,9 @@ const App = () => {
 					<Route exact path='/reader/profile/:id'>
 						<ReaderPage />
 					</Route>
+					<Route exact path='/writerssection/signup'>
+						<WriterSignUp />
+					</Route>
 					<Route exact path='/'>
 						<ArticlesList />
 					</Route>
@@ -76,8 +80,7 @@ const App = () => {
 
 export default App
 
-// TODO add new data
-
+// TODO unique usernameCheck for writer and user
 // TODO show my favorites for only logged in users
 // TODO Ability to search also by text content
 // TODO All writers component

@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { makeStyles, Button, Menu, MenuItem, IconButton, Typography, Toolbar, AppBar } from '@material-ui/core/'
+import { withStyles, makeStyles, Button, IconButton, Typography, Toolbar, AppBar, Tooltip, Fade } from '@material-ui/core/'
+import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import AccountCircle from '@material-ui/icons/AccountCircle'
+import EditIcon from '@material-ui/icons/Edit'
 import MenuIcon from '@material-ui/icons/Menu'
 import SearchField from '../SearchField'
 import LeftSideMenu from './LeftSideMenu'
@@ -16,6 +18,7 @@ const useStyles = makeStyles(theme => ({
 	},
 	root: {
 		flexGrow: 1,
+		marginBottom: 100
 	},
 	leftElement: {
 		flex: 1,
@@ -59,24 +62,22 @@ const useStyles = makeStyles(theme => ({
 	}
 }))
 
+const BigTooltip = withStyles((theme) => ({
+	tooltip: {
+		backgroundColor: theme.palette.primary.main,
+		fontSize: 15,
+	},
+}))(Tooltip)
+
 const Navbar = () =>  {
 	const dispatch = useDispatch()
 	const history = useHistory()
 	const reader = useSelector(state => state.reader)
 	const classes = useStyles()
-	const [profileMenu, setProfileMenu] = useState(null)
-	const open = Boolean(profileMenu)
 	const [leftSideMenuIsOpen, setLeftSideMenuIsOpenIsOpen] = useState(false)
 	// eslint-disable-next-line no-unused-vars
 	const [cookies, setCookie, removeCookie] = useCookies(['authCookie'])
-
-	const handleProfileMenu = (event) => {
-		setProfileMenu(event.currentTarget)
-	}
-
-	const handleProfileMenuClose = () => {
-		setProfileMenu(null)
-	}
+	const writerValue = false
 
 	const handleLeftSideMenuIsOpen = () => {
 		setLeftSideMenuIsOpenIsOpen(true)
@@ -86,7 +87,6 @@ const Navbar = () =>  {
 		dispatch(removeReader())
 		removeCookie('authCookie')
 		history.push('/')
-		setProfileMenu(false)
 	}
 
 	return (
@@ -105,52 +105,86 @@ const Navbar = () =>  {
 					{reader ? (
 						<div className={classes.rightElement} >
 							<div className={classes.rightElementChild}>
-								<SearchField />
-								<IconButton
-									aria-label="account of current user"
-									aria-controls="menu-appbar"
-									aria-haspopup="true"
-									onClick={handleProfileMenu}
-								>
-									<AccountCircle className={classes.accountIcon}/>
-								</IconButton>
-								<Menu
-									id="menu-appbar"
-									anchorEl={profileMenu}
-									anchorOrigin={{
-										vertical: 'top',
-										horizontal: 'right',
-									}}
-									keepMounted
-									transformOrigin={{
-										vertical: 'top',
-										horizontal: 'right',
-									}}
-									open={open}
-									onClose={handleProfileMenuClose}
-								>
-									<MenuItem component={ Link } to={`/reader/profile/${reader.id}`} onClick={() => setProfileMenu(false)} classes={{ root: classes.menuItem }}>Profile</MenuItem>
-									<MenuItem component={ Button } onClick={handleLogout} classes={{ root: classes.menuItem }}>Log Out</MenuItem>
-								</Menu>
+								<BigTooltip TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title="Search">
+									<SearchField />
+								</BigTooltip>
+								<BigTooltip TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title="Profile">
+									<IconButton
+										aria-label="account of current user"
+										aria-controls="menu-appbar"
+										aria-haspopup="true"
+										onClick={() => console.log('Write an article')}
+										component={ Link }
+										to={`/reader/profile/${reader.id}`}
+									>
+										<AccountCircle className={classes.accountIcon}/>
+									</IconButton>
+								</BigTooltip>
+								<BigTooltip TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title="Log out">
+									<IconButton
+										aria-label="account of current user"
+										aria-controls="menu-appbar"
+										aria-haspopup="true"
+										onClick={handleLogout}
+									>
+										<ExitToAppIcon className={classes.accountIcon}/>
+									</IconButton>
+								</BigTooltip>
 							</div>
 						</div>
-					) : (
-						<div className={classes.rightElement}>
-							<div className={classes.rightElementChild}>
-								<SearchField />
-								<Button color="inherit" to='/reader/login' component={ Link } className={classes.button}>
-                                    Log in
-								</Button>
-								<Button variant="contained" to='/reader/signup' component={ Link } className={classes.signUpButton}>
-									Sign Up
-								</Button>
+					) :
+						(writerValue) ? (
+							<div className={classes.rightElement}>
+								<div className={classes.rightElementChild}>
+									<BigTooltip TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title="Write an article">
+										<IconButton
+											aria-label="account of current user"
+											aria-controls="menu-appbar"
+											aria-haspopup="true"
+											onClick={() => console.log('Write an article')}
+										>
+											<EditIcon className={classes.accountIcon}/>
+										</IconButton>
+									</BigTooltip>
+									<BigTooltip TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title="Profile">
+										<IconButton
+											aria-label="account of current user"
+											aria-controls="menu-appbar"
+											aria-haspopup="true"
+											onClick={() => console.log('profile')}
+										>
+											<AccountCircle className={classes.accountIcon}/>
+										</IconButton>
+									</BigTooltip>
+									<BigTooltip TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title="Log out">
+										<IconButton
+											aria-label="account of current user"
+											aria-controls="menu-appbar"
+											aria-haspopup="true"
+											onClick={() => console.log('Log out')}
+										>
+											<ExitToAppIcon className={classes.accountIcon}/>
+										</IconButton>
+									</BigTooltip>
+								</div>
 							</div>
-						</div>
-					)}
+						) :
+							(
+								<div className={classes.rightElement}>
+									<div className={classes.rightElementChild}>
+										<SearchField />
+										<Button color="inherit" to='/reader/login' component={ Link } className={classes.button}>
+											Log in
+										</Button>
+										<Button variant="contained" to='/reader/signup' component={ Link } className={classes.signUpButton}>
+											Sign Up
+										</Button>
+									</div>
+								</div>
+							)
+					}
 				</Toolbar>
 			</AppBar>
-			<Toolbar />
-			<Toolbar />
 		</div>
 	)
 }

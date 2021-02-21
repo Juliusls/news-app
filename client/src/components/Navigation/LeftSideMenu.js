@@ -10,6 +10,7 @@ import CloseIcon from '@material-ui/icons/Close'
 import Divider from '@material-ui/core/Divider'
 import { allCategories } from '../../data/data'
 import { newsCategories } from '../../data/data'
+import { sideMenuWriterSection } from '../../data/data'
 import { Link } from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
@@ -52,7 +53,6 @@ const LeftSideMenu = ({ leftSideMenuIsOpen, setLeftSideMenuIsOpenIsOpen }) => {
 
 	const categories = reader ? allCategories : newsCategories
 
-
 	const list = () => (
 		<div
 			className={classes.list}
@@ -68,12 +68,19 @@ const LeftSideMenu = ({ leftSideMenuIsOpen, setLeftSideMenuIsOpenIsOpen }) => {
 				</div>
 				{categories.map((text) => (
 					<Link style={{ textDecoration: 'none', color: 'inherit' }} key={text} to={`/genres/${text}`}>
-						<ListItem  button href={`/${text}`}>
+						<ListItem  button>
 							<ListItemText primary={text} className={classes.listItemText}/>
 						</ListItem>
 					</Link>
 				))}
 				<Divider light classes={{ light: classes.divider }}/>
+				{sideMenuWriterSection.map(value => (
+					<Link style={{ textDecoration: 'none', color: 'grey' }} key={value.linkText} to={`/writerssection/${value.linkText}`}>
+						<ListItem  button>
+							<ListItemText primary={value.text} className={classes.listItemText}/>
+						</ListItem>
+					</Link>
+				))}
 			</List>
 		</div>
 	)
