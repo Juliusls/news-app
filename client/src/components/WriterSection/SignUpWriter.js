@@ -1,8 +1,12 @@
 import React from 'react'
 import { Formik, Field } from 'formik'
+import { useDispatch } from 'react-redux'
 import * as yup from 'yup'
-import { makeStyles, TextField, FormControl, Typography, FormControlLabel, FormGroup } from '@material-ui/core'
+import { makeStyles, TextField, FormControl, Typography, FormControlLabel, FormGroup, Button } from '@material-ui/core'
 import { newsCategories } from '../../data/data'
+import { createWriter } from '../../reducers/writersReducer'
+import { useHistory } from 'react-router-dom'
+
 const useStyles = makeStyles(theme => ({
 	inputColor:{
 		color: theme.palette.text.secondary
@@ -101,6 +105,7 @@ const WriterSignUpForm = ({ values, errors, touched, handleChange, handleBlur, h
 	return (
 		<div className={classes.container}>
 			<div className={classes.item}>
+				<Typography variant='h4' style={{ textAlign: 'center', marginTop: 20 }}>Writer registration form</Typography>
 				<form onSubmit={handleSubmit} className={classes.form}>
 					<TextField
 						onChange={handleChange}
@@ -169,15 +174,6 @@ const WriterSignUpForm = ({ values, errors, touched, handleChange, handleBlur, h
 							className: classes.inputColor
 						}}
 					/>
-
-					{/* <div>
-						{newsCategories.map(category => 
-							<label key={category}>
-								<Field type="checkbox" name="writerGenres" value={category} />
-								{category}
-							</label>
-						)}
-					</div> */}
 					<FormControl component="fieldset" className={classes.formControl}>
 						<Typography variant='subtitle1'>Categories</Typography>
 						{errors.writerGenres && touched.writerGenres && 
@@ -287,18 +283,27 @@ const WriterSignUpForm = ({ values, errors, touched, handleChange, handleBlur, h
 							className: classes.inputColor
 						}}
 					/>
-					<button type="submit">
-						Submit
-					</button>
+					<Button color="primary" variant="contained" type="submit" className={classes.button}>
+                        Sign Up
+					</Button>
 				</form>
 			</div>
 		</div>
 	)
 }
 
-const WriterSignUp = () => {
-	const handleSubmit = (values) => {
-		console.log(values)
+const SignUpWriter = () => {
+	const history = useHistory()
+	const dispatch = useDispatch()
+
+
+	const handleSubmit = async (values) => {
+		try {
+			dispatch(createWriter(values))
+			history.push('/writerssection/login')
+		} catch (error) {
+			console.log(error)
+		}
 	}
 
 	return (
@@ -322,6 +327,6 @@ const WriterSignUp = () => {
 	)
 }
 
-export default WriterSignUp
+export default SignUpWriter
 
 // TODO username unique validator

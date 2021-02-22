@@ -29,4 +29,5 @@ Readers will be able to read the news by selecting categories or selecting/filte
 | 19.2 | 6 | Refactoring writers and readers reducer, adding ability to add and remove writers to and from favorite list |
 |  | 2 | Adding ability to select category My favorites |
 | 20.2 | 6 | Updating Navbar to work with logged in Writer, creating Writer register form with formik |
-| Total  | 70 | | 
+| 21.2 | 2 | Connecting Writer signup form to back end, and fully implementing writer login |
+| Total  | 72 | | 

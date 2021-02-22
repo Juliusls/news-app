@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
 import articlesReducer from './reducers/articlesReducer'
 import writersReducer from './reducers/writersReducer'
+import loginWriterReducer from './reducers/loginWriterReducer'
 import loginReaderReducer from './reducers/loginReaderReducer'
 import readersReducer from './reducers/readersReducer'
 import thunk from 'redux-thunk'
@@ -10,6 +11,7 @@ import { persistReducer } from 'redux-persist'
 
 const reducers = combineReducers({
 	articles: articlesReducer,
+	writer: loginWriterReducer,
 	writers: writersReducer,
 	reader: loginReaderReducer,
 	readers: readersReducer

@@ -4,12 +4,13 @@ const writersReducer = (state = [], action) => {
 	switch(action.type) {
 	case 'INIT_WRITERS':
 		return action.data
+	case 'ADD_NEW_WRITER':
+		return state.concat(action.data)
 	case 'ADD_READER_TO_FOLLOWERS':
 		return state.map(writer => writer.id === action.data.id ? action.data : writer)
 	case 'REMOVE_READER_FROM_FOLLOWERS':
 		// return state.map(writer => writer.id !== action.data.id ? writer : action.data)
 		return state.map(writer => writer.id === action.data ? action.data : writer)
-
 	default:
 		return state
 	}
@@ -21,6 +22,16 @@ export const initWriters = () => {
 		dispatch ({
 			type: 'INIT_WRITERS',
 			data: writers
+		})
+	}
+}
+
+export const createWriter = (newWriter) => {
+	return async dispatch => {
+		const writerToAdd = await writersService.create(newWriter)
+		dispatch({
+			type: 'ADD_NEW_WRITER',
+			data: writerToAdd
 		})
 	}
 }

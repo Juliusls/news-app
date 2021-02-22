@@ -12,6 +12,8 @@ const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const loginReaderRouter = require('./controllers/loginReader')
 // const refreshReader = require('./controllers/refreshReader')
+const loginWriterRouter = require('./controllers/loginWriter')
+// const refreshWriter = require('./controllers/refreshWriter')
 
 mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
 	.then(() => {
@@ -30,6 +32,7 @@ app.use('/api/articles', articlesRouter)
 app.use('/api/writers', writersRouter)
 app.use('/api/readers', readersRouter)
 app.use('/api/reader/login', loginReaderRouter)
+app.use('/api/writer/login', loginWriterRouter)
 app.get('/*',(req, res) => {
 	res.sendFile(path.join(__dirname + '/build/index.html'))
 })

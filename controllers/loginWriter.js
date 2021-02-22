@@ -1,10 +1,10 @@
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
-const loginReaderRouter = require('express').Router()
-const User = require('../models/reader')
+const loginWriterRouter = require('express').Router()
+const User = require('../models/writer')
 const config = require('../utils/config')
 
-loginReaderRouter.post('/', async (request, response) => {
+loginWriterRouter.post('/', async (request, response) => {
 	const body = request.body
 
 	const user = await User.findOne({ userName: body.userName })
@@ -23,7 +23,7 @@ loginReaderRouter.post('/', async (request, response) => {
 		id: user._id,
 	}
 
-	let accessToken = jwt.sign(userForToken, config.READER_ACCESS_TOKEN_SECRET, {
+	let accessToken = jwt.sign(userForToken, config.WRITER_ACCESS_TOKEN_SECRET, {
 		algorithm: 'HS256',
 		expiresIn: 60 * 60
 	})
@@ -36,9 +36,9 @@ loginReaderRouter.post('/', async (request, response) => {
 	// user.refreshToken = refreshToken
 	// await user.save()
 
-	response.cookie('readerAuthCookie', accessToken)
-	// TODO response.cookie('readerAuthCookie', accessToken, {secure: true, httpOnly: true})
+	response.cookie('writerAuthCookie', accessToken)
+	// TODO response.cookie('writerAuthCookie', accessToken, {secure: true, httpOnly: true})
 	response.status(200).send({ userName: user.userName, id: user._id })
 })
 
-module.exports = loginReaderRouter
+module.exports = loginWriterRouter

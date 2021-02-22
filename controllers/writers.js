@@ -1,4 +1,5 @@
 const writersRouter = require('express').Router()
+const bcrypt = require('bcrypt')
 const Writer = require('../models/writer')
 const logger = require('../utils/logger')
 const { getDate } = require('../utils/helpers')
@@ -51,6 +52,13 @@ writersRouter.post('/', async (request, response) => {
 	if (body.yearlySubscriptionPrice === undefined) {
 		return response.status(400).json({error: 'Yearly Subscription Price missing'})
 	}
+	if (body.password === undefined) {
+		return response.status(400).json({error: 'password missing'})
+	}
+
+	const saltRounds = 12
+	const passwordHash = await bcrypt.hash(body.password, saltRounds)
+
 
 	const writer = new Writer({
 		firstName: body.firstName,
@@ -61,6 +69,7 @@ writersRouter.post('/', async (request, response) => {
 		oneArticlePrice: body.oneArticlePrice,
 		montlySubscriptionPrice: body.montlySubscriptionPrice,
 		yearlySubscriptionPrice: body.yearlySubscriptionPrice,
+		passwordHash,
 		joined: getDate(),
 		earnings: 0,
 		totalViews: 0,

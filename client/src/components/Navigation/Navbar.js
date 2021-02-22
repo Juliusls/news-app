@@ -10,6 +10,7 @@ import SearchField from '../SearchField'
 import LeftSideMenu from './LeftSideMenu'
 import { removeReader } from '../../reducers/loginReaderReducer'
 import { useCookies } from 'react-cookie'
+import { removeWriter } from '../../reducers/loginWriterReducer'
 
 const useStyles = makeStyles(theme => ({
 	appbar: {
@@ -73,19 +74,25 @@ const Navbar = () =>  {
 	const dispatch = useDispatch()
 	const history = useHistory()
 	const reader = useSelector(state => state.reader)
+	const writer = useSelector(state => state.writer)
 	const classes = useStyles()
 	const [leftSideMenuIsOpen, setLeftSideMenuIsOpenIsOpen] = useState(false)
 	// eslint-disable-next-line no-unused-vars
-	const [cookies, setCookie, removeCookie] = useCookies(['authCookie'])
-	const writerValue = false
+	const [cookies, setCookie, removeCookie] = useCookies(['readerAuthCookie', 'writerAuthCookie'])
 
 	const handleLeftSideMenuIsOpen = () => {
 		setLeftSideMenuIsOpenIsOpen(true)
 	}
 
-	const handleLogout = () => {
+	const handleReaderLogout = () => {
 		dispatch(removeReader())
-		removeCookie('authCookie')
+		removeCookie('readerAuthCookie')
+		history.push('/')
+	}
+	
+	const handleWriterLogout = () => {
+		dispatch(removeWriter())
+		removeCookie('writerAuthCookie')
 		history.push('/')
 	}
 
@@ -102,7 +109,7 @@ const Navbar = () =>  {
 					<Typography component={ Link } to='/' variant="h6" className={classes.titleText}>
                         News App
 					</Typography>
-					{reader ? (
+					{(reader && !writer) ? (
 						<div className={classes.rightElement} >
 							<div className={classes.rightElementChild}>
 								<BigTooltip TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title="Search">
@@ -110,7 +117,6 @@ const Navbar = () =>  {
 								</BigTooltip>
 								<BigTooltip TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title="Profile">
 									<IconButton
-										aria-label="account of current user"
 										aria-controls="menu-appbar"
 										aria-haspopup="true"
 										onClick={() => console.log('Write an article')}
@@ -122,10 +128,9 @@ const Navbar = () =>  {
 								</BigTooltip>
 								<BigTooltip TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title="Log out">
 									<IconButton
-										aria-label="account of current user"
 										aria-controls="menu-appbar"
 										aria-haspopup="true"
-										onClick={handleLogout}
+										onClick={handleReaderLogout}
 									>
 										<ExitToAppIcon className={classes.accountIcon}/>
 									</IconButton>
@@ -133,12 +138,11 @@ const Navbar = () =>  {
 							</div>
 						</div>
 					) :
-						(writerValue) ? (
+						(writer && !reader) ? (
 							<div className={classes.rightElement}>
 								<div className={classes.rightElementChild}>
 									<BigTooltip TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title="Write an article">
 										<IconButton
-											aria-label="account of current user"
 											aria-controls="menu-appbar"
 											aria-haspopup="true"
 											onClick={() => console.log('Write an article')}
@@ -148,7 +152,6 @@ const Navbar = () =>  {
 									</BigTooltip>
 									<BigTooltip TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title="Profile">
 										<IconButton
-											aria-label="account of current user"
 											aria-controls="menu-appbar"
 											aria-haspopup="true"
 											onClick={() => console.log('profile')}
@@ -158,10 +161,9 @@ const Navbar = () =>  {
 									</BigTooltip>
 									<BigTooltip TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title="Log out">
 										<IconButton
-											aria-label="account of current user"
 											aria-controls="menu-appbar"
 											aria-haspopup="true"
-											onClick={() => console.log('Log out')}
+											onClick={handleWriterLogout}
 										>
 											<ExitToAppIcon className={classes.accountIcon}/>
 										</IconButton>

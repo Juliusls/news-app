@@ -7,9 +7,10 @@ import Container  from '@material-ui/core/Container'
 import ArticlesList from './components/ArticlesList/ArticlesList'
 import ArticlePage from './components/ArticlePage/ArticlePage'
 import WriterPage from './components/WriterPage'
-import WriterSignUp from './components/WriterSection/WriterSignUp'
+import SignUpWriter from './components/WriterSection/SignUpWriter'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import LoginReader from './components/LoginReader'
+import LoginWriter from './components/WriterSection/LoginWriter'
 import SignUpReader from './components/SignUpReader'
 import { initReaders } from './reducers/readersReducer'
 import ReaderPage from './components/ReaderPage/ReaderPage'
@@ -67,7 +68,10 @@ const App = () => {
 						<ReaderPage />
 					</Route>
 					<Route exact path='/writerssection/signup'>
-						<WriterSignUp />
+						<SignUpWriter />
+					</Route>
+					<Route exact path='/writerssection/login'>
+						<LoginWriter />
 					</Route>
 					<Route exact path='/'>
 						<ArticlesList />
@@ -80,6 +84,7 @@ const App = () => {
 
 export default App
 
+// TODO create message component
 // TODO unique usernameCheck for writer and user
 // TODO show my favorites for only logged in users
 // TODO Ability to search also by text content

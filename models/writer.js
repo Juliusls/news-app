@@ -6,6 +6,7 @@ const writerSchema = new mongoose.Schema({
 	firstName: String,
 	lastName: String,
 	userName: String,
+	passwordHash: String,
 	earnings: Number,
 	totalViews: Number,
 	joined: String,

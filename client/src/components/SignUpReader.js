@@ -71,7 +71,7 @@ const SignUpReader = () => {
 	const handleSubmit = async (values) => {
 		try {
 			dispatch(createReader(values))
-			hisotry.push('/')
+			hisotry.push('/reader/login')
 		} catch (error) {
 			console.log(error)
 		}
@@ -94,7 +94,7 @@ const SignUpReader = () => {
 			<div className={classes.item}>
 				<form onSubmit={formik.handleSubmit} className={classes.form}>
 					<Typography variant='h4' className={classes.loginText}>
-                        Log In
+                        Sign Up
 					</Typography>
 					<TextField
 						className={classes.paddings}

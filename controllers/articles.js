@@ -98,11 +98,11 @@ articlesRouter.delete('/:id', async (request, response) => {
 
 articlesRouter.post('/:id/comments', async (request, response) => {
 	const body = request.body
-	let accessToken = request.cookies.authCookie
+	let accessToken = request.cookies.readerAuthCookie
 
-	const decodedToken = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET)
+	const decodedToken = jwt.verify(accessToken, process.env.READER_ACCESS_TOKEN_SECRET)
 
-	if (!request.cookies.authCookie || !decodedToken.id) {
+	if (!request.cookies.readerAuthCookie || !decodedToken.id) {
 		return response.status(401).json({ error: 'token missing or invalid' })
 	}
 
