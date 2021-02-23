@@ -24,7 +24,7 @@ const writerSchema = new mongoose.Schema({
 	subscribers: [
 		{
 			type: mongoose.Schema.Types.ObjectId,
-			ref: 'Reader'
+			ref: 'Subscription'
 		}
 	],
 	followers: [

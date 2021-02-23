@@ -77,4 +77,15 @@ export const removeFavoriteWriter = (writerToRemove, reader) => {
 	}
 }
 
+
+export const addSubscription = (newSubscription, id) => {
+	return async dispatch => {
+		const savedSubscription = await readersService.postSubscription(newSubscription, id)
+		dispatch ({
+			type: 'ADD_SUBSCRIPTION',
+			data: savedSubscription
+		})
+	}
+}
+
 export default readersReducer

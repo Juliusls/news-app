@@ -2,7 +2,7 @@ const writersRouter = require('express').Router()
 const bcrypt = require('bcrypt')
 const Writer = require('../models/writer')
 const logger = require('../utils/logger')
-const { getDate } = require('../utils/helpers')
+const { getDateFormated } = require('../utils/helpers')
 
 writersRouter.get('/', async (request, response) => {
 	const writers = await Writer
@@ -10,6 +10,22 @@ writersRouter.get('/', async (request, response) => {
 		.populate('article')
 		.populate('readers')
 		.populate('followers')
+		.populate({
+			path: 'subscribers',
+			model: 'Subscription',
+			populate: {
+				path: 'subscriber',
+				model: 'Reader'
+			},		
+		})
+		.populate({
+			path: 'subscribers',
+			model: 'Subscription',
+			populate: {
+				path: 'recipient',
+				model: 'Writer'
+			}
+		})
 	response.json(writers)
 })
 
@@ -70,7 +86,7 @@ writersRouter.post('/', async (request, response) => {
 		montlySubscriptionPrice: body.montlySubscriptionPrice,
 		yearlySubscriptionPrice: body.yearlySubscriptionPrice,
 		passwordHash,
-		joined: getDate(),
+		joined: getDateFormated(true),
 		earnings: 0,
 		totalViews: 0,
 	})

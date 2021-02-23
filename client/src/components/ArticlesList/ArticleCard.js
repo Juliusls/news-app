@@ -9,9 +9,9 @@ import { Link } from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
 	root: {
-		maxWidth: 345,
-		borderRadius: 10,
-		margin: 20,
+		maxWidth: 380,
+		borderRadius: 5,
+		margin: 5,
 	},
 	media: {
 		height: 140,

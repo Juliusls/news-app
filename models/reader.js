@@ -32,7 +32,7 @@ const readerSchema = new mongoose.Schema({
 	subscriptions: [
 		{
 			type: mongoose.Schema.Types.ObjectId,
-			ref: 'Writer'
+			ref: 'Subscription'
 		}
 	],
 	favoritewriters: [

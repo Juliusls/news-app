@@ -2,13 +2,13 @@ post http://localhost:3001/api/writers/
 Content-Type: application/json
 
 {
-    "firstName": "Dummy",
-    "lastName": "Dummy",
-    "userName": "DummyD",
+    "firstName": "Mike",
+    "lastName": "Ross",
+    "userName": "MikeR",
     "writerGenres": ["Business", "Cars"],
     "writerDescription": "lorem ipsum, lorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsum",
 	"oneArticlePrice": 1,
 	"montlySubscriptionPrice": 10,
 	"yearlySubscriptionPrice": 100,
-	"password": "dummydummy"
+	"password": "mikeross"
 }

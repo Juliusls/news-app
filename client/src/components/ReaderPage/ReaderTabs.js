@@ -108,10 +108,11 @@ const ReaderTabs = ({ reader }) => {
 					(<List component="div">
 						{reader.subscriptions.map(subscription => 
 							<ListItem button key={subscription.id}>
-								<ListItemLink component={ Link } to={`/author/${subscription.id}`} >
-									<ListItemText primary={`${subscription.firstName} ${subscription.lastName}`} classes={{ root: classes.root }} />
+								<ListItemLink component={ Link } to={`/author/${subscription.recipient[0].id}`} >
+									<ListItemText primary={`${subscription.recipient[0].firstName} ${subscription.recipient[0].lastName}`} classes={{ root: classes.root }} />
+									<Typography className={classes.text} variant='subtitle1'>{`Duration: ${subscription.startDate.slice(0, -5)} - ${subscription.endDate.slice(0, -5)}`}</Typography>
 								</ListItemLink>
-								<Button>Unsubscribe</Button>
+								{/* <Button>Unsubscribe</Button> */}
 							</ListItem>
 						)}
 					</List>) 

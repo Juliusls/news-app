@@ -3,7 +3,7 @@ const Comment = require('../models/comment')
 const Article = require('../models/article')
 const Writer = require('../models/writer')
 const Reader = require('../models/reader')
-const { getDate } = require('../utils/helpers')
+const { getDateFormated } = require('../utils/helpers')
 const logger = require('../utils/logger')
 const jwt = require('jsonwebtoken')
 
@@ -48,12 +48,12 @@ articlesRouter.post('/', async (request, response) => {
 	} 
 
 	try {
-		const writer = await Writer.findById('603236c6701d1e8260168b41')
+		const writer = await Writer.findById('6035455fff1b01e60da55f9f')
   
 		const article = new Article({
 			title: body.title,
 			content: body.content,
-			published: getDate(),
+			published: getDateFormated(true),
 			author: writer._id,
 			views: 0,
 			paid: body.paid || 'no',
@@ -78,7 +78,7 @@ articlesRouter.put('/:id', async (request, response) => {
 	const article = {
 		title: body.title,
 		content: body.content,
-		published: getDate(),
+		published: getDateFormated(TextTrackCue),
 		views: 0,
 		author: writer._id,
 		paid: body.paid,
@@ -119,7 +119,7 @@ articlesRouter.post('/:id/comments', async (request, response) => {
 
 		const comment = new Comment({
 			comment: body.comment,
-			date: getDate(),
+			date: getDateFormated(true),
 			article: article._id,
 			commentator: reader._id
 		})

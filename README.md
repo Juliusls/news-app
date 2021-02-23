@@ -24,10 +24,11 @@ Readers will be able to read the news by selecting categories or selecting/filte
 | 16.2 | 2 | Fixing token issue while creating new comments, comments to articles are possible only for logged in users |
 | | 1 | Creating Sign up component and connecting it to backend. Fixing issue of page not re-loading while running static file |
 | | 4 | Creating Reader component, adding ability to add funds |
-| 17.2 | 3 | Adding favorite writers, subscriptions and comments to readers page. Renewing db models and adding new data |
-| 18.2 | 4 | Working on ability to add writers to favorites list, and readers apear on writers follower list |
-| 19.2 | 6 | Refactoring writers and readers reducer, adding ability to add and remove writers to and from favorite list |
-|  | 2 | Adding ability to select category My favorites |
-| 20.2 | 6 | Updating Navbar to work with logged in Writer, creating Writer register form with formik |
-| 21.2 | 2 | Connecting Writer signup form to back end, and fully implementing writer login |
-| Total  | 72 | | 
+| 18.2 | 3 | Adding favorite writers, subscriptions and comments to readers page. Renewing db models and adding new data |
+| 19.2 | 4 | Working on ability to add writers to favorites list, and readers apear on writers follower list |
+| 20.2 | 6 | Refactoring writers and readers reducer, adding ability to add and remove writers to and from favorite list |
+| | 2 | Adding ability to select category My favorites |
+| 21.2 | 6 | Updating Navbar to work with logged in Writer, creating Writer register form with formik |
+| 22.2 | 2 | Connecting Writer signup form to back end, and fully implementing writer login |
+| 23 | 7 | Creating subscription ability in the back end, implementing in the front end |
+| Total  | 79 | | 

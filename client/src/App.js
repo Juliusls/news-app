@@ -84,10 +84,12 @@ const App = () => {
 
 export default App
 
+// TODO work on subscription expires
+// TODO work on subscription button if it is subscribed other is disabled
+// TODO add actual prices to plan cards
+
 // TODO create message component
-// TODO unique usernameCheck for writer and user
-// TODO show my favorites for only logged in users
-// TODO Ability to search also by text content
+// TODO unique usernameCheck for writer and reader
 // TODO All writers component
 // TODO Token lifetime
 // TODO Add fields to side menu: Writers, Become a writer, Login as writer

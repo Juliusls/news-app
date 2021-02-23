@@ -1,0 +1,7 @@
+post http://localhost:3001/api/readers/6035458bff1b01e60da55fa0/subscriptions
+Content-Type: application/json
+
+{
+    "type": "montly",
+	"writerId": "6035455fff1b01e60da55f9f"
+}

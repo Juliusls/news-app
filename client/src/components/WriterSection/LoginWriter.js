@@ -116,7 +116,7 @@ const LoginWriter = () => {
 						error={formik.touched.password && Boolean(formik.errors.password)}
 						helperText={formik.touched.password && formik.errors.password}
 					/>
-					{!reader
+					{reader
 						? (
 							<div>
 								<Button color="primary" variant="contained" disabled type="submit" className={classes.button}>

@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 import { makeStyles, withStyles } from '@material-ui/core/styles'
 import { useSelector } from 'react-redux'
 import ArticlesList from './ArticlesList/ArticlesList'
-import { Typography, ButtonGroup, Button, Tooltip, Fade } from '@material-ui/core'
+import { Typography, ButtonGroup, Button, Tooltip, Fade, CardContent, Card, CardActions } from '@material-ui/core'
 import { useParams } from 'react-router-dom'
 import AddOutlinedIcon from '@material-ui/icons/AddOutlined'
 import CheckOutlinedIcon from '@material-ui/icons/CheckOutlined'
@@ -23,9 +23,26 @@ const useStyles = makeStyles(theme => ({
 		justifyContent: 'flex-start',
 		paddingLeft: 10
 	},
+	subscriptionOptionsContainer: {
+		display: 'flex',
+		flexDirection: 'row',
+		justifyContent: 'flex-start',
+		paddingLeft: 50
+	},
+	subscriptionCard: {
+		margin: 5,
+		minWidth: 130,
+		borderRadius: 10,
+		borderWidth: 1,
+		border: 'solid',
+		borderColor: theme.palette.primary.main
+	},
 	text: {
 		textAlign: 'center',
 		paddingTop: 50
+	},
+	subText: {
+		textAlign: 'center'
 	},
 	textGenres: {
 		color: 'grey'
@@ -33,6 +50,10 @@ const useStyles = makeStyles(theme => ({
 	button: {
 		margin: theme.spacing(1),
 	},
+	cardButton: {
+		display: 'flex',
+		justifyContent: 'center'
+	}
 }))
 
 const BigTooltip = withStyles((theme) => ({
@@ -56,6 +77,8 @@ const WriterPage = () => {
 	}
 
 	let isInFavotrites = currentReader && currentReader.favoritewriters.some(writer => writer.id === author)
+	let isInSubscriptions = currentReader && currentReader.subscriptions.some(subscription => subscription.recipient.some(reciepent => reciepent.id === author))
+	console.log(isInSubscriptions)
 
 	const handleAddToFavorites = () => {
 		dispatch(addFavoriteWriter(filteredWriter, currentReader))
@@ -66,34 +89,26 @@ const WriterPage = () => {
 		dispatch(removeFavoriteWriter(filteredWriter, currentReader))
 		dispatch(removeReaderFromFollowers(currentReader, filteredWriter))
 	}
+
+	const handleSubscirbe = () => {
+		console.log('subsribing')
+	}
 	
 	// const handleSubscribe = () => {
 	// 	setSubscribed(!subscribed)
 	// }
 
-	const button = () => {
+	const addToFavoritesButton = () => {
 		switch (isInFavotrites) {
 		case true:
 			return (
-				<Button
-					variant="contained"
-					color="primary"
-					className={classes.button}
-					endIcon={<CheckOutlinedIcon />}
-					onClick={handleRemoveFromFavorites}
-				>
+				<Button variant="contained" color="primary" className={classes.button} endIcon={<CheckOutlinedIcon />} onClick={handleRemoveFromFavorites}>
 					Added to favorites
 				</Button>
 			)
 		case false:
 			return (
-				<Button
-					variant="contained"
-					color="primary"
-					className={classes.button}
-					endIcon={<AddOutlinedIcon />}
-					onClick={handleAddToFavorites}
-				>
+				<Button variant="contained" color="primary" className={classes.button} endIcon={<AddOutlinedIcon />} onClick={handleAddToFavorites}>
 					Add to favorites
 				</Button>
 			)
@@ -101,13 +116,37 @@ const WriterPage = () => {
 			return (
 				<BigTooltip TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title="Log In to add to favorites">
 					<div>
-						<Button
-							variant="contained"
-							disabled
-							className={classes.button}
-							endIcon={<AddOutlinedIcon />}
-						>
+						<Button variant="contained" disabled className={classes.button} endIcon={<AddOutlinedIcon />}>
 								Add to favorites
+						</Button>
+					</div>
+				</BigTooltip>
+			)
+		default:
+			<p>Erorr</p>
+		}
+	}
+
+	const subscribeButton = () => {
+		switch (isInSubscriptions) {
+		case true:
+			return (
+				<Button size="small" color="primary" variant="contained" endIcon={<CheckOutlinedIcon />}>
+					Subscribed
+				</Button>
+			)
+		case false:
+			return (
+				<Button size="small" color="primary" variant="contained" endIcon={<AddOutlinedIcon />} onClick={handleSubscirbe}>
+					Subscribe
+				</Button>
+			)
+		case null:
+			return (
+				<BigTooltip TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title="Login to subscribe">
+					<div>
+						<Button variant="contained" disabled endIcon={<AddOutlinedIcon />}>
+							Subscribe
 						</Button>
 					</div>
 				</BigTooltip>
@@ -136,46 +175,50 @@ const WriterPage = () => {
 						<Typography key={genre} className={classes.textGenres} clasvariant='caption'>{genre}</Typography>
 					)}					
 					<ButtonGroup color="primary" aria-label="outlined primary button group">
-						{/* {isInFavotrites 
-							?
-							<Button
-								variant="contained"
-								color="primary"
-								className={classes.button}
-								endIcon={<CheckOutlinedIcon />}
-								onClick={handleRemoveFromFavorites}
-							>
-								Added to favorites
-							</Button>
-							: 
-							<Button
-								variant="contained"
-								color="primary"
-								className={classes.button}
-								endIcon={<AddOutlinedIcon />}
-								onClick={handleAddToFavorites}
-							>
-								Add to favorites
-							</Button>
-						} */}
-						{button()}
-						
-						
-						{/* <Button
-							variant="contained"
-							color="primary"
-							className={classes.button}
-							endIcon={subscribed ? <CheckOutlinedIcon /> : <AddOutlinedIcon />}
-							onClick={handleSubscribe}
-
-						>
-							{subscribed ? 'Subscribed' : 'Subscribe' }
-						</Button> */}
+						{addToFavoritesButton()}
 					</ButtonGroup>
 				</div>
+				<div className={classes.subscriptionOptionsContainer}>
+					<Card className={classes.subscriptionCard} variant="outlined">
+						<CardContent>
+							<Typography color="textSecondary" gutterBottom className={classes.subText}>
+								1 Article
+							</Typography>
+							<Typography variant="h5" color="textSecondary" className={classes.subText}>
+								1 €
+							</Typography>
+						</CardContent>
+					</Card>
+					<Card className={classes.subscriptionCard} variant="outlined">
+						<CardContent>
+							<Typography color="textSecondary" gutterBottom className={classes.subText}>
+								1 Month
+							</Typography>
+							<Typography variant="h5" color="textSecondary" className={classes.subText}>
+								10 €
+							</Typography>
+						</CardContent>
+						<CardActions className={classes.cardButton}>
+							{subscribeButton('montly')}
+						</CardActions>
+					</Card>
+					<Card className={classes.subscriptionCard} variant="outlined">
+						<CardContent>
+							<Typography color="textSecondary" gutterBottom className={classes.subText}>
+								1 Year
+							</Typography>
+							<Typography variant="h5" color="textSecondary" className={classes.subText}>
+								100 €
+							</Typography>
+						</CardContent>
+						<CardActions className={classes.cardButton}>
+							{subscribeButton('yearly')}
+						</CardActions>
+					</Card>
+				</div>
 			</div>
-			<Typography variant='h5' className={classes.text}>
-				My Articles
+			<Typography variant='h5' color="primary" className={classes.text}>
+				Articles
 			</Typography>
 			<ArticlesList />
 		</div>
