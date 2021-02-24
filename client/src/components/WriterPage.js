@@ -66,19 +66,23 @@ const BigTooltip = withStyles((theme) => ({
 const WriterPage = () => {
 	const classes = useStyles()
 	const dispatch = useDispatch()
-	// const [subscribed, setSubscribed] = useState(false)
 	let { author } = useParams()
-	const filteredWriter = useSelector(state => state.writers.filter(writer => writer.id === author)[0])
 	const loggedInReader = useSelector(state => state.reader)
-	let currentReader = loggedInReader && useSelector(state => state.readers.filter(reader => reader.id === loggedInReader.id)[0])
+	// const currentSubscription = useSelector(state => state.subscription)
+
+
+	const filteredWriter = useSelector(state => state.writers.filter(writer => writer.id === author)[0])
+	const currentReader = loggedInReader && useSelector(state => state.readers.filter(reader => reader.id === loggedInReader.id)[0])
 
 	if (!filteredWriter) {
 		return <p>Loading...</p>
 	}
 
-	let isInFavotrites = currentReader && currentReader.favoritewriters.some(writer => writer.id === author)
-	let isInSubscriptions = currentReader && currentReader.subscriptions.some(subscription => subscription.recipient.some(reciepent => reciepent.id === author))
-	console.log(isInSubscriptions)
+	const isInFavotrites = currentReader && currentReader.favoritewriters.some(writer => writer.id === author)
+	const isInSubscriptions = currentReader && currentReader.subscriptions.some(subscription => subscription.recipient.some(reciepent => reciepent.id === author))
+	const matchingSubs = isInSubscriptions && filteredWriter.subscribers.filter(suber => currentReader.subscriptions.some(sub => sub.id === suber.id))
+
+	console.log(matchingSubs)
 
 	const handleAddToFavorites = () => {
 		dispatch(addFavoriteWriter(filteredWriter, currentReader))
@@ -117,7 +121,7 @@ const WriterPage = () => {
 				<BigTooltip TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title="Log In to add to favorites">
 					<div>
 						<Button variant="contained" disabled className={classes.button} endIcon={<AddOutlinedIcon />}>
-								Add to favorites
+								dd to favorites
 						</Button>
 					</div>
 				</BigTooltip>
@@ -185,7 +189,7 @@ const WriterPage = () => {
 								1 Article
 							</Typography>
 							<Typography variant="h5" color="textSecondary" className={classes.subText}>
-								1 €
+								{`${filteredWriter.oneArticlePrice} €`}
 							</Typography>
 						</CardContent>
 					</Card>
@@ -195,7 +199,7 @@ const WriterPage = () => {
 								1 Month
 							</Typography>
 							<Typography variant="h5" color="textSecondary" className={classes.subText}>
-								10 €
+								{`${filteredWriter.montlySubscriptionPrice} €`}
 							</Typography>
 						</CardContent>
 						<CardActions className={classes.cardButton}>
@@ -208,7 +212,7 @@ const WriterPage = () => {
 								1 Year
 							</Typography>
 							<Typography variant="h5" color="textSecondary" className={classes.subText}>
-								100 €
+								{`${filteredWriter.yearlySubscriptionPrice} €`}
 							</Typography>
 						</CardContent>
 						<CardActions className={classes.cardButton}>

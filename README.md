@@ -30,5 +30,6 @@ Readers will be able to read the news by selecting categories or selecting/filte
 | | 2 | Adding ability to select category My favorites |
 | 21.2 | 6 | Updating Navbar to work with logged in Writer, creating Writer register form with formik |
 | 22.2 | 2 | Connecting Writer signup form to back end, and fully implementing writer login |
-| 23 | 7 | Creating subscription ability in the back end, implementing in the front end |
-| Total  | 79 | | 
+| 23.2 | 7 | Creating subscription ability in the back end, implementing in the front end |
+| 24.2 | 2 | Planing how subscription model should look and work in the front end |
+| Total  | 81 | | 

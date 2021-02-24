@@ -84,9 +84,11 @@ const App = () => {
 
 export default App
 
+// TODO When user makes one subscription, panel of plans changes into information of subscription
 // TODO work on subscription expires
-// TODO work on subscription button if it is subscribed other is disabled
-// TODO add actual prices to plan cards
+// TODO do not allow same person to subscribe twice
+
+
 
 // TODO create message component
 // TODO unique usernameCheck for writer and reader

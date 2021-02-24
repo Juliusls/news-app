@@ -1,4 +1,4 @@
-post http://localhost:3001/api/readers/6035458bff1b01e60da55fa0/subscriptions
+post http://localhost:3001/api/readers/6036630fdbe0850169ba2328/subscriptions
 Content-Type: application/json
 
 {
