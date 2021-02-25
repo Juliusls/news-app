@@ -119,7 +119,6 @@ const Navbar = () =>  {
 									<IconButton
 										aria-controls="menu-appbar"
 										aria-haspopup="true"
-										onClick={() => console.log('Write an article')}
 										component={ Link }
 										to={`/reader/profile/${reader.id}`}
 									>

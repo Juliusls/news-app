@@ -16,8 +16,8 @@ const update = async (updatedReader, id) => {
 	return response.data
 }
 
-const createSubscribtion = async (newSubscription, id) => {
-	const response = await axios.post(`${baseUrl}/${id}/subscriptions`, newSubscription)
+const createSubscribtion = async (newSubscription, readerId) => {
+	const response = await axios.post(`${baseUrl}/${readerId}/subscriptions`, newSubscription)
 	return response.data
 }
 

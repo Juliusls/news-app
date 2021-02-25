@@ -4,12 +4,14 @@ import { useDispatch } from 'react-redux'
 import { makeStyles, withStyles } from '@material-ui/core/styles'
 import { useSelector } from 'react-redux'
 import ArticlesList from './ArticlesList/ArticlesList'
-import { Typography, ButtonGroup, Button, Tooltip, Fade, CardContent, Card, CardActions } from '@material-ui/core'
+import SubscriptionPlans from './SubscriptionPlans'
+import { Typography, ButtonGroup, Button, Tooltip, Fade, Card, CardContent, List } from '@material-ui/core'
 import { useParams } from 'react-router-dom'
 import AddOutlinedIcon from '@material-ui/icons/AddOutlined'
 import CheckOutlinedIcon from '@material-ui/icons/CheckOutlined'
-import { addFavoriteWriter, removeFavoriteWriter } from '../reducers/readersReducer'
-import { addReaderToFollowers, removeReaderFromFollowers } from '../reducers/writersReducer'
+import { addFavoriteWriter, removeFavoriteWriter, substractReaderFunds, addSubscriptionToReader } from '../reducers/readersReducer'
+import { addReaderToFollowers, removeReaderFromFollowers, addEarningsToWriter, addSubscriptionToWriter } from '../reducers/writersReducer'
+import readersService from '../services/readers'
 
 const useStyles = makeStyles(theme => ({
 	profileContaner: {
@@ -37,18 +39,40 @@ const useStyles = makeStyles(theme => ({
 		border: 'solid',
 		borderColor: theme.palette.primary.main
 	},
+	subscribedCard: {
+		margin: 5,
+		minWidth: 390,
+		borderRadius: 10,
+		borderWidth: 1,
+		border: 'solid',
+		borderColor: theme.palette.primary.main
+	},
 	text: {
 		textAlign: 'center',
 		paddingTop: 50
 	},
 	subText: {
-		textAlign: 'center'
+		textAlign: 'center',
+		textTransform: 'uppercase'
+	},
+	genresList: {
+		display: 'flex',
+		flexDirection: 'row',
+		justifyContent: 'flex-start',
 	},
 	textGenres: {
-		color: 'grey'
+		color: 'grey',
+		flex: 0,
+		paddingRight: 10
 	},
 	button: {
 		margin: theme.spacing(1),
+	},
+	disabledButton: {
+		margin: theme.spacing(1),
+		backgroundColor: '#E5E5E5',
+		color: '#CCCCCC',
+		boxShadow: 'none'
 	},
 	cardButton: {
 		display: 'flex',
@@ -68,7 +92,6 @@ const WriterPage = () => {
 	const dispatch = useDispatch()
 	let { author } = useParams()
 	const loggedInReader = useSelector(state => state.reader)
-	// const currentSubscription = useSelector(state => state.subscription)
 
 
 	const filteredWriter = useSelector(state => state.writers.filter(writer => writer.id === author)[0])
@@ -77,13 +100,15 @@ const WriterPage = () => {
 	if (!filteredWriter) {
 		return <p>Loading...</p>
 	}
-
 	const isInFavotrites = currentReader && currentReader.favoritewriters.some(writer => writer.id === author)
-	const isInSubscriptions = currentReader && currentReader.subscriptions.some(subscription => subscription.recipient.some(reciepent => reciepent.id === author))
-	const matchingSubs = isInSubscriptions && filteredWriter.subscribers.filter(suber => currentReader.subscriptions.some(sub => sub.id === suber.id))
 
-	console.log(matchingSubs)
+	const writersSubs = filteredWriter.subscribers.map(subscriber => subscriber)
+	const readersSubs = (currentReader && currentReader.subscriptions.length !== 0) && currentReader.subscriptions.map(subscription => subscription)
 
+
+	const matchingSub = (currentReader && currentReader.subscriptions.length !== 0) && writersSubs.filter(suber => readersSubs.some(sub => sub.id === suber.id))[0]
+	console.log('matchingSub', matchingSub)
+		
 	const handleAddToFavorites = () => {
 		dispatch(addFavoriteWriter(filteredWriter, currentReader))
 		dispatch(addReaderToFollowers(currentReader, filteredWriter))
@@ -94,13 +119,21 @@ const WriterPage = () => {
 		dispatch(removeReaderFromFollowers(currentReader, filteredWriter))
 	}
 
-	const handleSubscirbe = () => {
-		console.log('subsribing')
+	const handleSubscirbe = async (value) => {
+		if (currentReader.funds < filteredWriter[value]) {
+			window.alert('Not enought funds')
+		} else if (window.confirm('Confirm Subscription')) {
+			dispatch(addEarningsToWriter(filteredWriter[value], filteredWriter))
+			dispatch(substractReaderFunds(filteredWriter[value], currentReader))
+			let typeForSub = value === 'montlySubscriptionPrice' ? 'montly' : 'yearly'
+			const newSubscription = { type: typeForSub, writerId: filteredWriter.id }
+			const savedSubscription = await readersService.createSubscribtion(newSubscription, currentReader.id)
+			const subscriptionForDispatch = { ...savedSubscription, subscriber: currentReader, recipient: filteredWriter }
+			dispatch(addSubscriptionToReader(subscriptionForDispatch))
+			dispatch(addSubscriptionToWriter(subscriptionForDispatch))
+		}
 	}
-	
-	// const handleSubscribe = () => {
-	// 	setSubscribed(!subscribed)
-	// }
+
 
 	const addToFavoritesButton = () => {
 		switch (isInFavotrites) {
@@ -118,42 +151,13 @@ const WriterPage = () => {
 			)
 		case null:
 			return (
-				<BigTooltip TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title="Log In to add to favorites">
-					<div>
-						<Button variant="contained" disabled className={classes.button} endIcon={<AddOutlinedIcon />}>
-								dd to favorites
+				<div>
+					<BigTooltip TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title="Login to add to favorites">
+						<Button variant="contained" endIcon={<AddOutlinedIcon />}>
+							Add to favorites
 						</Button>
-					</div>
-				</BigTooltip>
-			)
-		default:
-			<p>Erorr</p>
-		}
-	}
-
-	const subscribeButton = () => {
-		switch (isInSubscriptions) {
-		case true:
-			return (
-				<Button size="small" color="primary" variant="contained" endIcon={<CheckOutlinedIcon />}>
-					Subscribed
-				</Button>
-			)
-		case false:
-			return (
-				<Button size="small" color="primary" variant="contained" endIcon={<AddOutlinedIcon />} onClick={handleSubscirbe}>
-					Subscribe
-				</Button>
-			)
-		case null:
-			return (
-				<BigTooltip TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title="Login to subscribe">
-					<div>
-						<Button variant="contained" disabled endIcon={<AddOutlinedIcon />}>
-							Subscribe
-						</Button>
-					</div>
-				</BigTooltip>
+					</BigTooltip>
+				</div>
 			)
 		default:
 			<p>Erorr</p>
@@ -175,53 +179,39 @@ const WriterPage = () => {
 					<Typography>
 						{filteredWriter.writerDescription}
 					</Typography>
-					{filteredWriter.writerGenres.map(genre => 
-						<Typography key={genre} className={classes.textGenres} clasvariant='caption'>{genre}</Typography>
-					)}					
+					<List className={classes.genresList}>
+						{filteredWriter.writerGenres.map(genre => 
+							<Typography key={genre} className={classes.textGenres} clasvariant='caption'>
+								{genre}
+							</Typography>
+						)}	
+					</List>				
 					<ButtonGroup color="primary" aria-label="outlined primary button group">
 						{addToFavoritesButton()}
 					</ButtonGroup>
 				</div>
-				<div className={classes.subscriptionOptionsContainer}>
-					<Card className={classes.subscriptionCard} variant="outlined">
-						<CardContent>
-							<Typography color="textSecondary" gutterBottom className={classes.subText}>
-								1 Article
-							</Typography>
-							<Typography variant="h5" color="textSecondary" className={classes.subText}>
-								{`${filteredWriter.oneArticlePrice} €`}
-							</Typography>
-						</CardContent>
-					</Card>
-					<Card className={classes.subscriptionCard} variant="outlined">
-						<CardContent>
-							<Typography color="textSecondary" gutterBottom className={classes.subText}>
-								1 Month
-							</Typography>
-							<Typography variant="h5" color="textSecondary" className={classes.subText}>
-								{`${filteredWriter.montlySubscriptionPrice} €`}
-							</Typography>
-						</CardContent>
-						<CardActions className={classes.cardButton}>
-							{subscribeButton('montly')}
-						</CardActions>
-					</Card>
-					<Card className={classes.subscriptionCard} variant="outlined">
-						<CardContent>
-							<Typography color="textSecondary" gutterBottom className={classes.subText}>
-								1 Year
-							</Typography>
-							<Typography variant="h5" color="textSecondary" className={classes.subText}>
-								{`${filteredWriter.yearlySubscriptionPrice} €`}
-							</Typography>
-						</CardContent>
-						<CardActions className={classes.cardButton}>
-							{subscribeButton('yearly')}
-						</CardActions>
-					</Card>
-				</div>
 			</div>
-			<Typography variant='h5' color="primary" className={classes.text}>
+			<div>
+				{matchingSub !== false && matchingSub !== null
+					? (
+						<Card className={classes.subscribedCard} variant="outlined">
+							<CardContent>
+								<Typography color="textSecondary" gutterBottom className={classes.subText}>
+										Subscribed
+								</Typography>
+								<Typography color="textSecondary" gutterBottom className={classes.subText}>
+										Type: {matchingSub.type}
+								</Typography>
+								<Typography color="textSecondary" gutterBottom className={classes.subText}>
+										Period: {matchingSub.startDate.slice(0, -6)} - {matchingSub.endDate.slice(0, -6)}
+								</Typography>
+							</CardContent>
+						</Card>
+					)
+					: <SubscriptionPlans handleSubscirbe={handleSubscirbe} filteredWriter={filteredWriter} matchingSub={matchingSub} />
+				}
+			</div>
+			<Typography variant='h4' color="primary" className={classes.text}>
 				Articles
 			</Typography>
 			<ArticlesList />

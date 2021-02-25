@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { DialogActions, DialogTitle, Dialog, Button, makeStyles } from '@material-ui/core/'
 import NumberFormat from 'react-number-format'
 import { useDispatch } from 'react-redux'
-import { updateReaderFunds } from '../reducers/readersReducer'
+import { addReaderFunds } from '../reducers/readersReducer'
 
 
 const useStyles = makeStyles(theme => ({
@@ -23,7 +23,7 @@ const AddFundsDialog = ({ openDialog, setOpenDialog, reader }) => {
 	const handleSubmit = event => {
 		event.preventDefault()
 		const fundsToAdd = Number(fundsValue)
-		dispatch(updateReaderFunds(fundsToAdd, reader))
+		dispatch(addReaderFunds(fundsToAdd, reader))
 		setFundsValue(0)
 		setOpenDialog(false)
 	}

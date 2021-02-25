@@ -48,7 +48,7 @@ articlesRouter.post('/', async (request, response) => {
 	} 
 
 	try {
-		const writer = await Writer.findById('6035455fff1b01e60da55f9f')
+		const writer = await Writer.findById('6037aea66d28582227c90bd9')
   
 		const article = new Article({
 			title: body.title,

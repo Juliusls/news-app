@@ -102,7 +102,8 @@ writersRouter.put('/:id', (request, response) => {
 	const body = request.body
 
 	const writer = {
-		followers: body.followers
+		followers: body.followers,
+		earnings: body.earnings
 	}
 
 	Writer.findByIdAndUpdate(request.params.id, writer, { new: true })

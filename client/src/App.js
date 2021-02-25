@@ -84,10 +84,9 @@ const App = () => {
 
 export default App
 
-// TODO When user makes one subscription, panel of plans changes into information of subscription
 // TODO work on subscription expires
-// TODO do not allow same person to subscribe twice
-
+// TODO fix console errors
+// TODO cant add 1.000 to funds
 
 
 // TODO create message component

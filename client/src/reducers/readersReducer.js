@@ -17,6 +17,13 @@ const readersReducer = (state = [], action) => {
 		return state.map(reader => reader.id === action.data.id ? action.data : reader)
 	case 'REMOVE_FAVORITE_WRITER': 
 		return state.map(reader => reader.id === action.data.id ? action.data : reader )
+	case 'ADD_SUBSCRIPTION': 
+		return state.map(reader => {
+			if (reader.id === action.data.subscriber.id) {
+				return { ...reader, subscriptions: reader.subscriptions.concat(action.data) }
+			}
+			return reader
+		})
 	default:
 		return state
 	}
@@ -38,17 +45,6 @@ export const createReader = (newReader) => {
 		dispatch ({
 			type: 'CREATE_READER',
 			data: reader
-		})
-	}
-}
-
-export const updateReaderFunds = (fundsToAdd, reader) => {
-	return async dispatch => {
-		const readerToUpdate = { favoritewriters: reader.favoritewriters.map(writer => writer.id) , funds: reader.funds + fundsToAdd }
-		const updatedReader = await readersService.update(readerToUpdate, reader.id)
-		dispatch ({
-			type: 'UPDATE_READERS_FUNDS',
-			data: updatedReader
 		})
 	}
 }
@@ -78,12 +74,33 @@ export const removeFavoriteWriter = (writerToRemove, reader) => {
 }
 
 
-export const addSubscription = (newSubscription, id) => {
+export const addSubscriptionToReader = (newSubscription) => {
 	return async dispatch => {
-		const savedSubscription = await readersService.postSubscription(newSubscription, id)
 		dispatch ({
 			type: 'ADD_SUBSCRIPTION',
-			data: savedSubscription
+			data: newSubscription
+		})
+	}
+}
+
+export const addReaderFunds = (fundsToAdd, reader) => {
+	return async dispatch => {
+		const readerToUpdate = { favoritewriters: reader.favoritewriters.map(writer => writer.id) , funds: reader.funds + fundsToAdd }
+		const updatedReader = await readersService.update(readerToUpdate, reader.id)
+		dispatch ({
+			type: 'UPDATE_READERS_FUNDS',
+			data: updatedReader
+		})
+	}
+}
+
+export const substractReaderFunds = (fundsToSubstract, reader) => {
+	return async dispatch => {
+		const readerToUpdate = { favoritewriters: reader.favoritewriters.map(writer => writer.id) , funds: reader.funds - fundsToSubstract }
+		const updatedReader = await readersService.update(readerToUpdate, reader.id)
+		dispatch ({
+			type: 'UPDATE_READERS_FUNDS',
+			data: updatedReader
 		})
 	}
 }

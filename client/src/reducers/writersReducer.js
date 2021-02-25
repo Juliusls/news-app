@@ -6,11 +6,25 @@ const writersReducer = (state = [], action) => {
 		return action.data
 	case 'ADD_NEW_WRITER':
 		return state.concat(action.data)
+	case 'UPDATE_WRITER_EARNINGS':
+		return state.map(writer => {
+			if (writer.id === action.data.id) {
+				return { ...writer, earnings: action.data.earnings }
+			}
+			return writer
+		})
 	case 'ADD_READER_TO_FOLLOWERS':
 		return state.map(writer => writer.id === action.data.id ? action.data : writer)
 	case 'REMOVE_READER_FROM_FOLLOWERS':
 		// return state.map(writer => writer.id !== action.data.id ? writer : action.data)
 		return state.map(writer => writer.id === action.data ? action.data : writer)
+	case 'ADD_SUBSCRIPTION': 
+		return state.map(writer => {
+			if (writer.id === action.data.recipient.id) {
+				return { ...writer, subscribers: writer.subscribers.concat(action.data) }
+			}
+			return writer
+		})
 	default:
 		return state
 	}
@@ -59,5 +73,26 @@ export const removeReaderFromFollowers = (readerToRemove, writer) => {
 		})
 	}
 }
+
+export const addEarningsToWriter = (earningsToAdd, writer) => {
+	return async dispatch => {
+		const writerToUpdate = { followers: writer.followers.map(follower => follower.id) , earnings: writer.earnings + earningsToAdd }
+		const updatedWriter = await writersService.update(writerToUpdate, writer.id)
+		dispatch ({
+			type: 'UPDATE_WRITER_EARNINGS',
+			data: updatedWriter
+		})
+	}
+}
+
+export const addSubscriptionToWriter = (newSubscription) => {
+	return async dispatch => {
+		dispatch ({
+			type: 'ADD_SUBSCRIPTION',
+			data: newSubscription
+		})
+	}
+}
+
 
 export default writersReducer
