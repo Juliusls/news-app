@@ -8,7 +8,8 @@ import { removeReaderFromFollowers } from '../../reducers/writersReducer'
  
 const useStyles = makeStyles(theme => ({
 	text: {
-		color: theme.palette.text.secondary
+		color: theme.palette.text.secondary,
+		textTransform: 'uppercase'
 	},
 	root: {
 		color: theme.palette.text.blueish,
@@ -58,6 +59,9 @@ const ReaderTabs = ({ reader }) => {
 	const [value, setValue] = useState(0)
 	const classes = useStyles()
 	const dispatch = useDispatch()
+	console.log('reader from Reader Tabs', reader)
+	console.log('reader.subscriptions from Reader Tabs', reader.subscriptions)
+
 
 	const handleChange = (event, newValue) => {
 		setValue(newValue)
@@ -107,12 +111,12 @@ const ReaderTabs = ({ reader }) => {
 					? 
 					(<List component="div">
 						{reader.subscriptions.map(subscription => 
-							<ListItem button key={subscription.id}>
+							<ListItem button key={subscription.id} className={classes.listItem}>
 								<ListItemLink component={ Link } to={`/author/${subscription.recipient[0].id}`} >
 									<ListItemText primary={`${subscription.recipient[0].firstName} ${subscription.recipient[0].lastName}`} classes={{ root: classes.root }} />
+									<Typography className={classes.text} style={{ paddingRight: 30 }}  variant='subtitle1'>{`type: ${subscription.type}`}</Typography>
 									<Typography className={classes.text} variant='subtitle1'>{`Duration: ${subscription.startDate.slice(0, -5)} - ${subscription.endDate.slice(0, -5)}`}</Typography>
 								</ListItemLink>
-								{/* <Button>Unsubscribe</Button> */}
 							</ListItem>
 						)}
 					</List>) 
@@ -141,4 +145,4 @@ const ReaderTabs = ({ reader }) => {
 
 export default ReaderTabs
 
-
+// to={`/author/${subscription.recipient[0].id}`}

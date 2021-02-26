@@ -18,13 +18,13 @@ const writersReducer = (state = [], action) => {
 	case 'REMOVE_READER_FROM_FOLLOWERS':
 		// return state.map(writer => writer.id !== action.data.id ? writer : action.data)
 		return state.map(writer => writer.id === action.data ? action.data : writer)
-	case 'ADD_SUBSCRIPTION': 
-		return state.map(writer => {
-			if (writer.id === action.data.recipient.id) {
-				return { ...writer, subscribers: writer.subscribers.concat(action.data) }
-			}
-			return writer
-		})
+	// case 'ADD_SUBSCRIPTION_TO_WRITER': 
+	// 	return state.map(writer => {
+	// 		if (writer.id === action.data.recipient.id) {
+	// 			return { ...writer, subscribers: writer.subscribers.concat(action.data) }
+	// 		}
+	// 		return writer
+	// 	})
 	default:
 		return state
 	}
@@ -85,14 +85,14 @@ export const addEarningsToWriter = (earningsToAdd, writer) => {
 	}
 }
 
-export const addSubscriptionToWriter = (newSubscription) => {
-	return async dispatch => {
-		dispatch ({
-			type: 'ADD_SUBSCRIPTION',
-			data: newSubscription
-		})
-	}
-}
+// export const addSubscriptionToWriter = (newSubscription) => {
+// 	return async dispatch => {
+// 		dispatch ({
+// 			type: 'ADD_SUBSCRIPTION_TO_WRITER',
+// 			data: newSubscription
+// 		})
+// 	}
+// }
 
 
 export default writersReducer

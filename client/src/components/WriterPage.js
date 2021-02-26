@@ -9,8 +9,8 @@ import { Typography, ButtonGroup, Button, Tooltip, Fade, Card, CardContent, List
 import { useParams } from 'react-router-dom'
 import AddOutlinedIcon from '@material-ui/icons/AddOutlined'
 import CheckOutlinedIcon from '@material-ui/icons/CheckOutlined'
-import { addFavoriteWriter, removeFavoriteWriter, substractReaderFunds, addSubscriptionToReader } from '../reducers/readersReducer'
-import { addReaderToFollowers, removeReaderFromFollowers, addEarningsToWriter, addSubscriptionToWriter } from '../reducers/writersReducer'
+import { addFavoriteWriter, removeFavoriteWriter, substractReaderFunds, initReaders } from '../reducers/readersReducer'
+import { addReaderToFollowers, removeReaderFromFollowers, addEarningsToWriter, initWriters } from '../reducers/writersReducer'
 import readersService from '../services/readers'
 
 const useStyles = makeStyles(theme => ({
@@ -127,10 +127,9 @@ const WriterPage = () => {
 			dispatch(substractReaderFunds(filteredWriter[value], currentReader))
 			let typeForSub = value === 'montlySubscriptionPrice' ? 'montly' : 'yearly'
 			const newSubscription = { type: typeForSub, writerId: filteredWriter.id }
-			const savedSubscription = await readersService.createSubscribtion(newSubscription, currentReader.id)
-			const subscriptionForDispatch = { ...savedSubscription, subscriber: currentReader, recipient: filteredWriter }
-			dispatch(addSubscriptionToReader(subscriptionForDispatch))
-			dispatch(addSubscriptionToWriter(subscriptionForDispatch))
+			await readersService.createSubscribtion(newSubscription, currentReader.id)
+			dispatch(initReaders())
+			dispatch(initWriters())
 		}
 	}
 
@@ -192,7 +191,7 @@ const WriterPage = () => {
 				</div>
 			</div>
 			<div>
-				{matchingSub !== false && matchingSub !== null
+				{matchingSub !== false && matchingSub !== null && matchingSub !== undefined
 					? (
 						<Card className={classes.subscribedCard} variant="outlined">
 							<CardContent>

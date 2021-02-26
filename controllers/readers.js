@@ -40,6 +40,31 @@ readersRouter.get('/', async (request, response) => {
 
 readersRouter.get('/:id', async (request, response) => {
 	const reader = await Reader.findById(request.params.id)
+		.populate({
+			path: 'readerComments',
+			model: 'Comment',
+			populate: {
+				path: 'article',
+				model: 'Article'
+			}
+		})
+		.populate('favoritewriters')
+		.populate({
+			path: 'subscriptions',
+			model: 'Subscription',
+			populate: {
+				path: 'subscriber',
+				model: 'Reader'
+			},		
+		})
+		.populate({
+			path: 'subscriptions',
+			model: 'Subscription',
+			populate: {
+				path: 'recipient',
+				model: 'Writer'
+			}
+		})
 	if (reader) {
 		response.json(reader)
 	} else {

@@ -36,7 +36,6 @@ const ArticlesList = () => {
 
 	if (genre === 'My Favorites') {
 		articlesFiltered = articles.filter(article => readerFavorites.includes(article.author.id))
-		console.log(articlesFiltered)
 	} else if (genre !== undefined) {
 		articlesFiltered = articles.filter(article => article.genres.includes(genre))
 	}

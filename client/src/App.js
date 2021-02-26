@@ -14,6 +14,7 @@ import LoginWriter from './components/WriterSection/LoginWriter'
 import SignUpReader from './components/SignUpReader'
 import { initReaders } from './reducers/readersReducer'
 import ReaderPage from './components/ReaderPage/ReaderPage'
+import AllWriters from './components/AllWriters'
 
 const App = () => {
 	const dispatch = useDispatch()
@@ -73,6 +74,9 @@ const App = () => {
 					<Route exact path='/writerssection/login'>
 						<LoginWriter />
 					</Route>
+					<Route exact path='/allwriters'>
+						<AllWriters />
+					</Route>
 					<Route exact path='/'>
 						<ArticlesList />
 					</Route>
@@ -85,12 +89,12 @@ const App = () => {
 export default App
 
 // TODO work on subscription expires
-// TODO fix console errors
 // TODO cant add 1.000 to funds
 
 
 // TODO create message component
 // TODO unique usernameCheck for writer and reader
+
 // TODO All writers component
 // TODO Token lifetime
 // TODO Add fields to side menu: Writers, Become a writer, Login as writer

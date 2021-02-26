@@ -16,14 +16,14 @@ const readersReducer = (state = [], action) => {
 	case 'ADD_FAVORITE_WRITER':
 		return state.map(reader => reader.id === action.data.id ? action.data : reader)
 	case 'REMOVE_FAVORITE_WRITER': 
-		return state.map(reader => reader.id === action.data.id ? action.data : reader )
-	case 'ADD_SUBSCRIPTION': 
-		return state.map(reader => {
-			if (reader.id === action.data.subscriber.id) {
-				return { ...reader, subscriptions: reader.subscriptions.concat(action.data) }
-			}
-			return reader
-		})
+		return state.map(reader => reader.id === action.data.id ? action.data : reader)
+	// case 'ADD_SUBSCRIPTION_TO_READER': 
+	// 	return state.map(reader => {
+	// 		if (reader.id === action.data.subscriber.id) {
+	// 			return { ...reader, subscriptions: reader.subscriptions.concat(action.data) }
+	// 		}
+	// 		return reader
+	// 	})
 	default:
 		return state
 	}
@@ -74,14 +74,17 @@ export const removeFavoriteWriter = (writerToRemove, reader) => {
 }
 
 
-export const addSubscriptionToReader = (newSubscription) => {
-	return async dispatch => {
-		dispatch ({
-			type: 'ADD_SUBSCRIPTION',
-			data: newSubscription
-		})
-	}
-}
+// export const addSubscriptionToReader = (newSubscription) => {
+// 	return async dispatch => {
+// 		dispatch ({
+// 			type: 'ADD_SUBSCRIPTION_TO_READER',
+// 			data: newSubscription
+// 		})
+// 	}
+// }
+
+
+
 
 export const addReaderFunds = (fundsToAdd, reader) => {
 	return async dispatch => {

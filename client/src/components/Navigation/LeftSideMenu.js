@@ -74,6 +74,12 @@ const LeftSideMenu = ({ leftSideMenuIsOpen, setLeftSideMenuIsOpenIsOpen }) => {
 					</Link>
 				))}
 				<Divider light classes={{ light: classes.divider }}/>
+				<Link style={{ textDecoration: 'none', color: 'inherit' }} to='/allwriters'>
+					<ListItem  button>
+						<ListItemText primary='All Writers' className={classes.listItemText}/>
+					</ListItem>
+				</Link>
+				<Divider light classes={{ light: classes.divider }}/>
 				{sideMenuWriterSection.map(value => (
 					<Link style={{ textDecoration: 'none', color: 'grey' }} key={value.linkText} to={`/writerssection/${value.linkText}`}>
 						<ListItem  button>

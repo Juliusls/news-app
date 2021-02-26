@@ -1,15 +1,12 @@
 import React from 'react'
 import { makeStyles, withStyles, Typography, CardContent, Card, CardActions, Tooltip, Button, Fade } from '@material-ui/core'
 import AddOutlinedIcon from '@material-ui/icons/AddOutlined'
-// import CheckOutlinedIcon from '@material-ui/icons/CheckOutlined'
 
-// TODO remove non needed
 const useStyles = makeStyles(theme => ({
 	subscriptionOptionsContainer: {
 		display: 'flex',
 		flexDirection: 'row',
 		justifyContent: 'center',
-		paddingLeft: 50,
 	},
 	subscriptionCard: {
 		margin: 5,

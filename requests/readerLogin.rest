@@ -2,6 +2,6 @@ post http://localhost:3001/api/reader/login
 Content-Type: application/json
 
 {
-    "userName": "RossG",
-    "password": "rossgeller"
+    "userName": "ChandlerB",
+    "password": "chandler"
 }

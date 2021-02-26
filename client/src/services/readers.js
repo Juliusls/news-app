@@ -6,6 +6,11 @@ const getAll = async () => {
 	return response.data
 }
 
+const getOne = async (id) => {
+	const response = await axios.get(`${baseUrl}/${id}`)
+	return response.data
+}
+
 const create = async (newReader) => {
 	const response = await axios.post(baseUrl, newReader)
 	return response.data
@@ -24,6 +29,7 @@ const createSubscribtion = async (newSubscription, readerId) => {
 export default { 
 	create,
 	getAll,
+	getOne,
 	update,
 	createSubscribtion
 }

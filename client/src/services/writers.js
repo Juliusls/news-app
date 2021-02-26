@@ -6,6 +6,11 @@ const getAll = async () => {
 	return response.data
 }
 
+const getOne = async (id) => {
+	const response = await axios.get(`${baseUrl}/${id}`)
+	return response.data
+}
+
 const create = async (newWriter) => {
 	const response = await axios.post(baseUrl, newWriter)
 	return response.data
@@ -16,4 +21,4 @@ const update = async (updatedWriter, id) => {
 	return response.data
 }
 
-export default { getAll, create, update }
+export default { getAll, getOne, create, update }

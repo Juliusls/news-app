@@ -34,6 +34,23 @@ writersRouter.get('/:id', async (request, response) => {
 		.findById(request.params.id)
 		.populate('article')
 		.populate('readers')
+		.populate('followers')
+		.populate({
+			path: 'subscribers',
+			model: 'Subscription',
+			populate: {
+				path: 'subscriber',
+				model: 'Reader'
+			},		
+		})
+		.populate({
+			path: 'subscribers',
+			model: 'Subscription',
+			populate: {
+				path: 'recipient',
+				model: 'Writer'
+			}
+		})
 	if (writer) {
 		response.json(writer)
 	} else {
