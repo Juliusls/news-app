@@ -15,6 +15,7 @@ import SignUpReader from './components/SignUpReader'
 import { initReaders } from './reducers/readersReducer'
 import ReaderPage from './components/ReaderPage/ReaderPage'
 import AllWriters from './components/AllWriters'
+import WriterAdminPage from './components/WriterSection/WriterAdminPage'
 
 const App = () => {
 	const dispatch = useDispatch()
@@ -74,6 +75,9 @@ const App = () => {
 					<Route exact path='/writerssection/login'>
 						<LoginWriter />
 					</Route>
+					<Route exact path='/writerssection/profile/'>
+						<WriterAdminPage />
+					</Route>
 					<Route exact path='/allwriters'>
 						<AllWriters />
 					</Route>
@@ -90,12 +94,15 @@ export default App
 
 // TODO work on subscription expires
 // TODO cant add 1.000 to funds
-
-
-// TODO create message component
 // TODO unique usernameCheck for writer and reader
 
-// TODO All writers component
-// TODO Token lifetime
-// TODO Add fields to side menu: Writers, Become a writer, Login as writer
+
+// TODO create message component with material ui snackbar
+// TODO create writers admin page
+// TODO create writers new article page
+// TODO funcionality for paying for individual articles
+
+// TODO Expiration time for login token
+// TODO Expiration time for subscription
+
 // TODO Fix project theme https://bareynol.github.io/mui-theme-creator/

@@ -26,12 +26,18 @@ const useStyles = makeStyles(theme => ({
 	},
 	text: {
 		color: '#6A6A6A',
+		paddingRight: 10
 	},
 	cardInfoContainer: {
 		display: 'flex',
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 		paddingTop: 10
+	},
+	cardInfoCategories: {
+		display: 'flex',
+		flexDirection: 'row',
+		justifyContent: 'space-between',
 	},
 	cardContent: {
 		display: 'flex',
@@ -64,11 +70,13 @@ const ArticleCard = ({ article }) => {
 							By {article.author.firstName} {article.author.lastName}
 						</Typography>
 						<div className={classes.cardInfoContainer}>
-							{article.genres.map(genre => 
-								<Typography key={genre} className={classes.text}>
-									{genre}
-								</Typography>
-							)}
+							<div className={classes.cardInfoCategories}>
+								{article.genres.map(genre => 
+									<Typography key={genre} className={classes.text}>
+										{genre}
+									</Typography>
+								)}
+							</div>
 							<Typography className={classes.text} variant='caption'>
 								{article.paid === 'yes' ? 'Paid' : 'Free'}
 							</Typography>

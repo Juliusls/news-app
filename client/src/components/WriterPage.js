@@ -180,7 +180,7 @@ const WriterPage = () => {
 					</Typography>
 					<List className={classes.genresList}>
 						{filteredWriter.writerGenres.map(genre => 
-							<Typography key={genre} className={classes.textGenres} clasvariant='caption'>
+							<Typography key={genre} className={classes.textGenres} variant='caption'>
 								{genre}
 							</Typography>
 						)}	
@@ -219,6 +219,3 @@ const WriterPage = () => {
 }
 
 export default WriterPage
-
-
-// TODO fix multiple genres not in one line

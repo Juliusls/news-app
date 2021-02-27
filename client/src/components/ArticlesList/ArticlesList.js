@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 import ArticleCard from './ArticleCard'
+import ArticlesFilter from './ArticlesFilter'
 import { useParams } from 'react-router-dom'
 
 
@@ -19,6 +20,7 @@ const useStyles = makeStyles({
 
 const ArticlesList = () => {
 	const classes = useStyles()
+	const [filterValue, setFilterValue] = useState('all')
 	const { genre } = useParams()
 	const { searchResult } = useParams()
 	let { author } = useParams()
@@ -49,8 +51,26 @@ const ArticlesList = () => {
 		articlesFiltered = articles.filter(article => article.author.id === author)
 	}
 
+	let articlesForList = articlesFiltered
+
+	switch (filterValue) {
+	case 'all':
+		articlesForList
+		break
+	case 'free':
+		articlesForList = articlesFiltered.filter(article => article.paid === 'no')
+		break
+	case 'paid':
+		articlesForList = articlesFiltered.filter(article => article.paid === 'yes')
+		break
+	default:
+		articlesForList
+	}
+
+	console.log(articlesForList)
 	return (
 		<div>
+			<ArticlesFilter setFilterValue={setFilterValue}/>
 			<Typography className={classes.textWithPadding} variant='h3' style={{ display: genre === undefined ? 'none' : 'block' }}>
 				{genre}
 			</Typography>
@@ -66,7 +86,7 @@ const ArticlesList = () => {
 				container
 				justify="center"
 			>
-				{articlesFiltered.map(article =>
+				{articlesForList.map(article =>
 					<ArticleCard key={article.id} article={article} />
 				)}
 			</Grid>

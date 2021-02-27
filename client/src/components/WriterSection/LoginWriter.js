@@ -55,7 +55,6 @@ const validationSchema = yup.object().shape({
 const LoginWriter = () => {
 	const classes = useStyles()
 	const reader = useSelector(state => state.reader)
-	console.log(reader)
 	const dispatch = useDispatch()
 	let hisotry = useHistory()
 
@@ -63,7 +62,8 @@ const LoginWriter = () => {
 
 		try {
 			dispatch(addWriter(values))
-			hisotry.push('/')
+
+			hisotry.push('/writerssection/profile/')
 		} catch (error) {
 			console.log(error)
 		}

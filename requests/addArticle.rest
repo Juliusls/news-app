@@ -5,5 +5,5 @@ Content-Type: application/json
     "title": "The Final Fantasy VII Remake with a free PS5 upgrade is $30",
     "content": ["Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam non augue velit. In imperdiet tellus quis felis aliquam, a tincidunt tortor sagittis. Aenean sodales magna sit amet ligula sagittis, id lacinia ligula dapibus. Integer viverra, orci vitae finibus sollicitudin, eros quam luctus dui, fringilla semper lectus nisl ut ex. Maecenas at volutpat sem. Sed cursus erat non faucibus lobortis. Quisque at lorem eu turpis tincidunt dapibus. Curabitur eu sagittis mi. Suspendisse vestibulum enim metus, vel placerat nibh gravida vel. In congue neque a felis aliquam imperdiet. Suspendisse in aliquam odio.", "Praesent dignissim cursus viverra. Ut faucibus varius ligula vitae dignissim. Cras aliquam elit gravida, aliquet massa ac, tempus enim. Aliquam mollis enim sit amet volutpat sollicitudin. Aliquam in lectus sit amet ante condimentum interdum vitae nec felis. Morbi scelerisque viverra justo, eu ultrices orci molestie at. Etiam id orci mi. Sed at magna accumsan, auctor ipsum ut, porttitor dolor. Donec ac mauris pretium, placerat nisl finibus, iaculis urna. Nam imperdiet tellus vel blandit scelerisque."],
     "genres": ["Cars", "Business"],
-	"paid": "yes"
+	"paid": "no"
 }

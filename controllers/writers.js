@@ -7,7 +7,7 @@ const { getDateFormated } = require('../utils/helpers')
 writersRouter.get('/', async (request, response) => {
 	const writers = await Writer
 		.find({})
-		.populate('article')
+		.populate('myarticles')
 		.populate('readers')
 		.populate('followers')
 		.populate({

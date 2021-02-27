@@ -15,11 +15,11 @@ import { removeWriter } from '../../reducers/loginWriterReducer'
 const useStyles = makeStyles(theme => ({
 	appbar: {
 		background: theme.primary,
-		marginBottom: 100
+		// marginBottom: 100
 	},
 	root: {
 		flexGrow: 1,
-		marginBottom: 100
+		marginBottom: 25
 	},
 	leftElement: {
 		flex: 1,
@@ -60,7 +60,8 @@ const useStyles = makeStyles(theme => ({
 	},
 	linkNoDecoration: {
 		textDecoration: 'none',
-	}
+	},
+	toolbar: theme.mixins.toolbar,
 }))
 
 const BigTooltip = withStyles((theme) => ({
@@ -102,13 +103,23 @@ const Navbar = () =>  {
 			<AppBar position="fixed" className={classes.appbar}>
 				<Toolbar>
 					<div className={classes.leftElement}>
-						<IconButton className={classes.leftElementChild} color="inherit" aria-label="menu" onClick={handleLeftSideMenuIsOpen}>
+						<IconButton className={classes.leftElementChild} color="inherit" aria-label="menu" onClick={handleLeftSideMenuIsOpen} style={{ display: writer ? 'none' : 'block' }}>
 							<MenuIcon className={classes.menuIcon} />
 						</IconButton>
 					</div>
-					<Typography component={ Link } to='/' variant="h6" className={classes.titleText}>
-                        News App
-					</Typography>
+					{writer 
+						? (
+							<Typography variant="h6" className={classes.titleText}>
+								News App
+							</Typography>
+						)
+						: (
+							<Typography component={ Link } to='/' variant="h6" className={classes.titleText}>
+								News App
+							</Typography>
+						)
+					
+					}
 					{(reader && !writer) ? (
 						<div className={classes.rightElement} >
 							<div className={classes.rightElementChild}>
@@ -153,7 +164,8 @@ const Navbar = () =>  {
 										<IconButton
 											aria-controls="menu-appbar"
 											aria-haspopup="true"
-											onClick={() => console.log('profile')}
+											component={ Link }
+											to='/writerssection/profile'
 										>
 											<AccountCircle className={classes.accountIcon}/>
 										</IconButton>
@@ -186,6 +198,7 @@ const Navbar = () =>  {
 					}
 				</Toolbar>
 			</AppBar>
+			<div className={classes.toolbar} />
 		</div>
 	)
 }

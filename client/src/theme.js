@@ -16,7 +16,8 @@ const theme = createMuiTheme({
 		text: {
 			primary: '#FCFCFC',
 			secondary: '#181616',
-			blueish: '#731DD8'
+			blueish: '#731DD8',
+			grey: '#606060'
 		}
 	},
 	icons: {

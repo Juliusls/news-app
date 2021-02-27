@@ -35,4 +35,5 @@ Readers will be able to read the news by selecting categories or selecting/filte
 | 25.2 | 7 | Working on reducers and and writer component to implement subscription functionality |
 | 26.2 | 2.5 | Finilizing montly or yearly subscriptions functionality, started to work on all writers component |
 | 27.2 | 1.5 | Finilizing all writers component |
-| Total  | 92 | | 
+| | 3.5 | Adding filter for all, paid, free articles, working on creating writers admin page |
+| Total  | 95.5 | | 
