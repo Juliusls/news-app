@@ -34,4 +34,5 @@ Readers will be able to read the news by selecting categories or selecting/filte
 | 24.2 | 2 | Planing how subscription model should look and work in the front end |
 | 25.2 | 7 | Working on reducers and and writer component to implement subscription functionality |
 | 26.2 | 2.5 | Finilizing montly or yearly subscriptions functionality, started to work on all writers component |
-| Total  | 90.5 | | 
+| 27.2 | 1.5 | Finilizing all writers component |
+| Total  | 92 | | 
