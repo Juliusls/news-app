@@ -59,9 +59,6 @@ const ReaderTabs = ({ reader }) => {
 	const [value, setValue] = useState(0)
 	const classes = useStyles()
 	const dispatch = useDispatch()
-	console.log('reader from Reader Tabs', reader)
-	console.log('reader.subscriptions from Reader Tabs', reader.subscriptions)
-
 
 	const handleChange = (event, newValue) => {
 		setValue(newValue)

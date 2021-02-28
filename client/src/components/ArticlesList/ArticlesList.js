@@ -67,7 +67,6 @@ const ArticlesList = () => {
 		articlesForList
 	}
 
-	console.log(articlesForList)
 	return (
 		<div>
 			<ArticlesFilter setFilterValue={setFilterValue}/>

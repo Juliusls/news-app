@@ -75,7 +75,7 @@ const App = () => {
 					<Route exact path='/writerssection/login'>
 						<LoginWriter />
 					</Route>
-					<Route exact path='/writerssection/profile/'>
+					<Route exact path='/writerssection/profile'>
 						<WriterAdminPage />
 					</Route>
 					<Route exact path='/allwriters'>
@@ -96,13 +96,15 @@ export default App
 // TODO cant add 1.000 to funds
 // TODO unique usernameCheck for writer and reader
 
-
+// TODO Edit article functionality
 // TODO create message component with material ui snackbar
 // TODO create writers admin page
 // TODO create writers new article page
 // TODO funcionality for paying for individual articles
+// TODO Implement loading circle
 
 // TODO Expiration time for login token
 // TODO Expiration time for subscription
+// TODO date value trough entire project
 
 // TODO Fix project theme https://bareynol.github.io/mui-theme-creator/

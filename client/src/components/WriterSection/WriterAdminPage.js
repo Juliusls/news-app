@@ -1,8 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { makeStyles, Typography, List } from '@material-ui/core'
 import WritersDashboard from './WritersDashboard'
 import ArticlesStatistics from './ArticlesStatistics'
+import WritersFollowers from './WritersFollowers'
+import WritersSubscribers from './WritersSubscribers'
+import WritersPrices from './WritersPrices'
 
 const useStyles = makeStyles({
 	profileContaner: {
@@ -26,9 +29,40 @@ const useStyles = makeStyles({
 const WriterAdminPage = () => {
 	const classes = useStyles()
 	const writerId = useSelector(state => state.writer)
+
+	if (!writerId ) { 
+		return <p>loading</p>
+		// <Backdrop open={true}>
+		// 	<CircularProgress color="inherit" />
+		// </Backdrop>
+	}
+	
+	console.log('writerId', writerId)
 	const loggedInWritter = useSelector(state => state.writers.filter(writer => writer.id === writerId.id))[0]
 
-	console.log('leggedInWritter', loggedInWritter)
+	if (!loggedInWritter ) {
+		return <p>Loading...</p>
+	}
+	console.log('loggedInWritter', loggedInWritter)
+
+	const [componentToOpen, setComponentToOpen] = useState('articles')
+	
+	
+
+	const tabToOpen = () => {
+		switch (componentToOpen) {
+		case 'articles':
+			return <ArticlesStatistics articles={loggedInWritter.myarticles} />
+		case 'followers':
+			return <WritersFollowers followers={loggedInWritter.followers} />
+		case 'subscribers':
+			return <WritersSubscribers subscribers={loggedInWritter.subscribers} />
+		case 'prices':
+			return <WritersPrices writer={loggedInWritter} />		
+		default:
+			break
+		}
+	}
 
 	return (
 		<div>
@@ -57,8 +91,8 @@ const WriterAdminPage = () => {
 					</Typography>				
 				</div>
 			</div>
-			<WritersDashboard writer={loggedInWritter} />
-			<ArticlesStatistics articles={loggedInWritter.myarticles} />
+			<WritersDashboard writer={loggedInWritter} setComponentToOpen={setComponentToOpen} />
+			{tabToOpen()}			
 		</div>
 	)
 }

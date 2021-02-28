@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, {  } from 'react'
 import { makeStyles, Grid, Card, Typography, CardContent, CardActionArea } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
@@ -30,21 +30,8 @@ const useStyles = makeStyles((theme) => ({
 	}
 }))
 
-const WritersDashboard = ({ writer }) => {
+const WritersDashboard = ({ writer, setComponentToOpen }) => {
 	const classes = useStyles()
-	const [componentToOpen, setComponentToOpen] = useState('articles')
-
-	console.log(componentToOpen)
-
-	// switch (componentToOpen) {
-	// 	case value:
-			
-	// 		break;
-	
-	// 	default:
-	// 		break;
-	// }
-
 
 	return (
 		<div className={classes.root}>
@@ -65,39 +52,10 @@ const WritersDashboard = ({ writer }) => {
 				</Grid>
 				<Grid item xs={2}>
 					<Card variant="outlined" className={classes.card}>
-						<CardActionArea onClick={() => setComponentToOpen('views')} classes={{ root: classes.actionArea, focusHighlight: classes.focusHighlight }}>
-							<CardContent>
-								<Typography className={classes.titleText} gutterBottom>
-								Total Views
-								</Typography>
-								<Typography className={classes.infoText} variant='h4'>
-									{writer.totalViews}
-								</Typography>
-							</CardContent>
-						</CardActionArea>
-					</Card>				
-				</Grid>
-				<Grid item xs={2}>
-					<Card variant="outlined" className={classes.card}>
-						<CardActionArea onClick={() => setComponentToOpen('earnings')} classes={{ root: classes.actionArea, focusHighlight: classes.focusHighlight }}>
-							<CardContent>
-								<Typography className={classes.titleText} gutterBottom>
-								Earnings, €
-								</Typography>
-								<Typography className={classes.infoText} variant='h4'>
-									{writer.earnings ? writer.earnings : 0}
-								</Typography>
-							</CardContent>
-						</CardActionArea>
-
-					</Card>
-				</Grid>
-				<Grid item xs={2}>
-					<Card variant="outlined" className={classes.card}>
 						<CardActionArea onClick={() => setComponentToOpen('subscribers')} classes={{ root: classes.actionArea, focusHighlight: classes.focusHighlight }}>
 							<CardContent>
 								<Typography className={classes.titleText} gutterBottom>
-								Subscribers
+									Subscribers
 								</Typography>
 								<Typography className={classes.infoText} variant='h4'>
 									{writer.subscribers.length}
@@ -113,7 +71,7 @@ const WritersDashboard = ({ writer }) => {
 
 							<CardContent>
 								<Typography className={classes.titleText} gutterBottom>
-								Followers
+									Followers
 								</Typography>
 								<Typography className={classes.infoText} variant='h4'>
 									{writer.followers.length}
@@ -128,7 +86,7 @@ const WritersDashboard = ({ writer }) => {
 						<CardActionArea onClick={() => setComponentToOpen('prices')} classes={{ root: classes.actionArea, focusHighlight: classes.focusHighlight }}>
 							<CardContent>
 								<Typography className={classes.titleText} gutterBottom variant='body2'>
-								My prices, €
+									My prices, €
 								</Typography>
 								<Typography className={classes.infoText} variant='h4'>
 									{writer.oneArticlePrice}, {writer.montlySubscriptionPrice}, {writer.yearlySubscriptionPrice}
@@ -136,6 +94,34 @@ const WritersDashboard = ({ writer }) => {
 							</CardContent>
 						</CardActionArea>
 
+					</Card>
+				</Grid>
+				<Grid item xs={2}>
+					<Card variant="outlined" className={classes.card}>
+						<CardActionArea>
+							<CardContent>
+								<Typography className={classes.titleText} gutterBottom>
+									Total Views
+								</Typography>
+								<Typography className={classes.infoText} variant='h4'>
+									{writer.totalViews}
+								</Typography>
+							</CardContent>
+						</CardActionArea>
+					</Card>				
+				</Grid>
+				<Grid item xs={2}>
+					<Card variant="outlined" className={classes.card}>
+						<CardActionArea>
+							<CardContent>
+								<Typography className={classes.titleText} gutterBottom>
+									Earnings, €
+								</Typography>
+								<Typography className={classes.infoText} variant='h4'>
+									{writer.earnings ? writer.earnings : 0}
+								</Typography>
+							</CardContent>
+						</CardActionArea>
 					</Card>
 				</Grid>
 			</Grid>

@@ -107,7 +107,6 @@ const WriterPage = () => {
 
 
 	const matchingSub = (currentReader && currentReader.subscriptions.length !== 0) && writersSubs.filter(suber => readersSubs.some(sub => sub.id === suber.id))[0]
-	console.log('matchingSub', matchingSub)
 		
 	const handleAddToFavorites = () => {
 		dispatch(addFavoriteWriter(filteredWriter, currentReader))

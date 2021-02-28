@@ -42,7 +42,6 @@ const ReaderPage = () => {
 	const { id } = useParams()
 	const readers = useSelector(state => state.readers)
 	const filteredReader = readers.filter(reader => reader.id === id)[0]
-	console.log('filteredReader from Reader Page', filteredReader)
 	const date = filteredReader.joined !== undefined ? filteredReader.joined : 'No data'
 
 	if (!readers) {

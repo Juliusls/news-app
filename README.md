@@ -36,4 +36,5 @@ Readers will be able to read the news by selecting categories or selecting/filte
 | 26.2 | 2.5 | Finilizing montly or yearly subscriptions functionality, started to work on all writers component |
 | 27.2 | 1.5 | Finilizing all writers component |
 | | 3.5 | Adding filter for all, paid, free articles, working on creating writers admin page |
-| Total  | 95.5 | | 
+| 28.2 | 3.5 | Created writer admin page |
+| Total  | 99 | | 

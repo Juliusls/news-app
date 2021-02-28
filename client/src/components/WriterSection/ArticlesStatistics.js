@@ -32,8 +32,6 @@ const StyledTableCell = withStyles((theme) => ({
 const ArticlesStatistics = ({ articles }) => {
 	const classes = useStyles()
 
-	console.log()
-
 	return (
 		<TableContainer component={Paper} className={classes.main}>
 			<Table className={classes.table} aria-label="simple table">
