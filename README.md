@@ -37,4 +37,5 @@ Readers will be able to read the news by selecting categories or selecting/filte
 | 27.2 | 1.5 | Finilizing all writers component |
 | | 3.5 | Adding filter for all, paid, free articles, working on creating writers admin page |
 | 28.2 | 3.5 | Created writer admin page |
-| Total  | 99 | | 
+| 1.3 | 7 | Bug fixes on WriterAdmin components, creating formik-material-ui form in front end |
+| Total  | 106 | | 

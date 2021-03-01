@@ -6,6 +6,7 @@ import ArticlesStatistics from './ArticlesStatistics'
 import WritersFollowers from './WritersFollowers'
 import WritersSubscribers from './WritersSubscribers'
 import WritersPrices from './WritersPrices'
+import { useParams } from 'react-router-dom'
 
 const useStyles = makeStyles({
 	profileContaner: {
@@ -28,26 +29,12 @@ const useStyles = makeStyles({
 
 const WriterAdminPage = () => {
 	const classes = useStyles()
-	const writerId = useSelector(state => state.writer)
-
-	if (!writerId ) { 
-		return <p>loading</p>
-		// <Backdrop open={true}>
-		// 	<CircularProgress color="inherit" />
-		// </Backdrop>
-	}
+	const { id } = useParams()
+	// const writerId = useSelector(state => state.writer)
 	
-	console.log('writerId', writerId)
-	const loggedInWritter = useSelector(state => state.writers.filter(writer => writer.id === writerId.id))[0]
-
-	if (!loggedInWritter ) {
-		return <p>Loading...</p>
-	}
-	console.log('loggedInWritter', loggedInWritter)
+	const loggedInWritter = useSelector(state => state.writers.filter(writer => writer.id === id))[0]
 
 	const [componentToOpen, setComponentToOpen] = useState('articles')
-	
-	
 
 	const tabToOpen = () => {
 		switch (componentToOpen) {

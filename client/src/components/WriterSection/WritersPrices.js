@@ -76,9 +76,9 @@ const WritersPrices = ({ writer }) => {
 	const [isEditMode, setssEditMode] = useState(false)
 
 	const [priceList, setSriceList] = useState({
-		'oneArticlePrice': writer.oneArticlePrice,
-		'montlySubscriptionPrice': writer.montlySubscriptionPrice,
-		'yearlySubscriptionPrice': writer.yearlySubscriptionPrice
+		'oneArticlePrice': writer.oneArticlePrice || 0,
+		'montlySubscriptionPrice': writer.montlySubscriptionPrice || 0,
+		'yearlySubscriptionPrice': writer.yearlySubscriptionPrice || 0
 	})
 
 	const handleSubmit = () => {

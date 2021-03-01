@@ -16,11 +16,10 @@ import { initReaders } from './reducers/readersReducer'
 import ReaderPage from './components/ReaderPage/ReaderPage'
 import AllWriters from './components/AllWriters'
 import WriterAdminPage from './components/WriterSection/WriterAdminPage'
+import NewArticle from './components/WriterSection/NewArticle'
 
 const App = () => {
 	const dispatch = useDispatch()
-	// const [articlesFetchInProgress, setArticlesFetchInProgress] = useState(true)
-	// const [readersFetchInProgress, setReadersFetchInProgress] = useState(true)
 
 	useEffect(() => {
 		async function getAllArticles() {
@@ -75,8 +74,11 @@ const App = () => {
 					<Route exact path='/writerssection/login'>
 						<LoginWriter />
 					</Route>
-					<Route exact path='/writerssection/profile'>
+					<Route exact path='/writerssection/profile/:id'>
 						<WriterAdminPage />
+					</Route>
+					<Route exact path='/writerssection/newarticle'>
+						<NewArticle />
 					</Route>
 					<Route exact path='/allwriters'>
 						<AllWriters />
@@ -98,10 +100,8 @@ export default App
 
 // TODO Edit article functionality
 // TODO create message component with material ui snackbar
-// TODO create writers admin page
 // TODO create writers new article page
 // TODO funcionality for paying for individual articles
-// TODO Implement loading circle
 
 // TODO Expiration time for login token
 // TODO Expiration time for subscription

@@ -89,7 +89,7 @@ const WritersDashboard = ({ writer, setComponentToOpen }) => {
 									My prices, €
 								</Typography>
 								<Typography className={classes.infoText} variant='h4'>
-									{writer.oneArticlePrice}, {writer.montlySubscriptionPrice}, {writer.yearlySubscriptionPrice}
+									{writer.oneArticlePrice || 0}, {writer.montlySubscriptionPrice || 0}, {writer.yearlySubscriptionPrice || 0}
 								</Typography>
 							</CardContent>
 						</CardActionArea>

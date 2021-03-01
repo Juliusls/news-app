@@ -55,15 +55,15 @@ const validationSchema = yup.object().shape({
 const LoginWriter = () => {
 	const classes = useStyles()
 	const reader = useSelector(state => state.reader)
+	const writers = useSelector(state => state.writers)
 	const dispatch = useDispatch()
 	let hisotry = useHistory()
 
 	const handleSubmit = async (values) => {
-
 		try {
-			dispatch(addWriter(values))
-
-			hisotry.push('/writerssection/profile/')
+			await dispatch(addWriter(values))
+			const idForLink = writers.filter(writer => writer.userName === String(values.userName))[0]
+			hisotry.push(`/writerssection/profile/${idForLink.id}`)
 		} catch (error) {
 			console.log(error)
 		}

@@ -155,7 +155,8 @@ const Navbar = () =>  {
 										<IconButton
 											aria-controls="menu-appbar"
 											aria-haspopup="true"
-											onClick={() => console.log('Write an article')}
+											component={ Link }
+											to='/writerssection/newarticle'
 										>
 											<EditIcon className={classes.accountIcon}/>
 										</IconButton>
@@ -165,7 +166,7 @@ const Navbar = () =>  {
 											aria-controls="menu-appbar"
 											aria-haspopup="true"
 											component={ Link }
-											to='/writerssection/profile'
+											to={`/writerssection/profile/${writer.id}`}
 										>
 											<AccountCircle className={classes.accountIcon}/>
 										</IconButton>
