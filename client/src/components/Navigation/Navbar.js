@@ -11,6 +11,7 @@ import LeftSideMenu from './LeftSideMenu'
 import { removeReader } from '../../reducers/loginReaderReducer'
 import { useCookies } from 'react-cookie'
 import { removeWriter } from '../../reducers/loginWriterReducer'
+import { notifySuccess } from '../../reducers/notificationReducer'
 
 const useStyles = makeStyles(theme => ({
 	appbar: {
@@ -87,12 +88,14 @@ const Navbar = () =>  {
 
 	const handleReaderLogout = () => {
 		dispatch(removeReader())
+		dispatch(notifySuccess('Logged out successfully'))
 		removeCookie('readerAuthCookie')
 		history.push('/')
 	}
 	
 	const handleWriterLogout = () => {
 		dispatch(removeWriter())
+		dispatch(notifySuccess('Logged out successfully'))
 		removeCookie('writerAuthCookie')
 		history.push('/')
 	}

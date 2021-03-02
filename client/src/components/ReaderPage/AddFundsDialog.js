@@ -2,7 +2,8 @@ import React, { useState } from 'react'
 import { DialogActions, DialogTitle, Dialog, Button, makeStyles } from '@material-ui/core/'
 import NumberFormat from 'react-number-format'
 import { useDispatch } from 'react-redux'
-import { addReaderFunds } from '../reducers/readersReducer'
+import { addReaderFunds } from '../../reducers/readersReducer'
+import { notifySuccess } from '../../reducers/notificationReducer'
 
 
 const useStyles = makeStyles(theme => ({
@@ -24,6 +25,7 @@ const AddFundsDialog = ({ openDialog, setOpenDialog, reader }) => {
 		event.preventDefault()
 		const fundsToAdd = Number(fundsValue)
 		dispatch(addReaderFunds(fundsToAdd, reader))
+		dispatch(notifySuccess(`${fundsToAdd} € added to your funds`))
 		setFundsValue(0)
 		setOpenDialog(false)
 	}

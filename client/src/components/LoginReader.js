@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux'
 import Button from '@material-ui/core/Button'
 import { makeStyles, TextField, Typography } from '@material-ui/core'
 import { addReader } from '../reducers/loginReaderReducer'
+import { notifySuccess } from '../reducers/notificationReducer'
 // import loginReaderService from '../services/loginReader'
 
 const useStyles = makeStyles(theme => ({
@@ -61,6 +62,7 @@ const LoginReader = () => {
 
 		try {
 			dispatch(addReader(values))
+			dispatch(notifySuccess('Login successful'))
 			hisotry.push('/')
 		} catch (error) {
 			console.log(error)

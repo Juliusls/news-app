@@ -5,6 +5,7 @@ import * as yup from 'yup'
 import { makeStyles, TextField, FormControl, Typography, FormControlLabel, FormGroup, Button } from '@material-ui/core'
 import { newsCategories } from '../../data/data'
 import { createWriter } from '../../reducers/writersReducer'
+import { notifySuccess } from '../../reducers/notificationReducer'
 import { useHistory } from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
@@ -300,6 +301,7 @@ const SignUpWriter = () => {
 	const handleSubmit = async (values) => {
 		try {
 			dispatch(createWriter(values))
+			dispatch(notifySuccess('Registered successfully'))
 			history.push('/writerssection/login')
 		} catch (error) {
 			console.log(error)

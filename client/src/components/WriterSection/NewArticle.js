@@ -11,6 +11,7 @@ import { createArticle } from '../../reducers/articlesReducer'
 import { addArticleToWriter } from '../../reducers/writersReducer'
 import { useHistory } from 'react-router-dom'
 import articlesService from '../../services/articles'
+import { notifySuccess } from '../../reducers/notificationReducer'
 
 const useStyles = makeStyles(theme => ({
 	inputColor:{
@@ -212,6 +213,7 @@ const NewArticle = () => {
 			console.log(article)
 			await dispatch(createArticle(article))
 			await dispatch(addArticleToWriter(article))
+			dispatch(notifySuccess('Article created'))
 			history.push(`/writerssection/profile/${writer.id}`)
 		} catch (error) {
 			console.log(error)

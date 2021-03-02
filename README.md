@@ -39,4 +39,5 @@ Readers will be able to read the news by selecting categories or selecting/filte
 | 28.2 | 3.5 | Created writer admin page |
 | 1.3 | 7 | Bug fixes on WriterAdmin components, creating formik-material-ui form in front end |
 | 2.3 | 2 | Connecting new article creation with back end and with authorization |
+| | 2 | Creating notification component with Mui Snackbar and redux |
 | Total  | 108 | | 

@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { removeFavoriteWriter } from '../../reducers/readersReducer'
 import { removeReaderFromFollowers } from '../../reducers/writersReducer'
+import { notifyError } from '../../reducers/notificationReducer'
  
 const useStyles = makeStyles(theme => ({
 	text: {
@@ -67,7 +68,7 @@ const ReaderTabs = ({ reader }) => {
 	const handleRemove = (favoriteWriter) => {
 		dispatch(removeFavoriteWriter(favoriteWriter, reader))
 		dispatch(removeReaderFromFollowers(reader, favoriteWriter))
-
+		dispatch(notifyError(`${favoriteWriter.firstName} ${favoriteWriter.lastName} removed from favorites`))
 	}
 
 	return (

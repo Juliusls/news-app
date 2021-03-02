@@ -12,6 +12,7 @@ import CheckOutlinedIcon from '@material-ui/icons/CheckOutlined'
 import { addFavoriteWriter, removeFavoriteWriter, substractReaderFunds, initReaders } from '../reducers/readersReducer'
 import { addReaderToFollowers, removeReaderFromFollowers, addEarningsToWriter, initWriters } from '../reducers/writersReducer'
 import readersService from '../services/readers'
+import { notifySuccess, notifyError } from '../reducers/notificationReducer'
 
 const useStyles = makeStyles(theme => ({
 	profileContaner: {
@@ -111,11 +112,13 @@ const WriterPage = () => {
 	const handleAddToFavorites = () => {
 		dispatch(addFavoriteWriter(filteredWriter, currentReader))
 		dispatch(addReaderToFollowers(currentReader, filteredWriter))
+		dispatch(notifySuccess(`${filteredWriter.firstName} ${filteredWriter.lastName} added to favorites`))
 	}
 	
 	const handleRemoveFromFavorites = () => {
 		dispatch(removeFavoriteWriter(filteredWriter, currentReader))
 		dispatch(removeReaderFromFollowers(currentReader, filteredWriter))
+		dispatch(notifyError(`${filteredWriter.firstName} ${filteredWriter.lastName} removed from favorites`))
 	}
 
 	const handleSubscirbe = async (value) => {
@@ -129,6 +132,7 @@ const WriterPage = () => {
 			await readersService.createSubscribtion(newSubscription, currentReader.id)
 			dispatch(initReaders())
 			dispatch(initWriters())
+			dispatch(notifySuccess(`Subsribed ${typeForSub} to ${filteredWriter.firstName} ${filteredWriter.lastName}`))
 		}
 	}
 

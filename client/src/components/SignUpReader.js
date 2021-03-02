@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux'
 import Button from '@material-ui/core/Button'
 import { makeStyles, TextField, Typography } from '@material-ui/core'
 import { createReader } from '../reducers/readersReducer'
+import { notifySuccess } from '../reducers/notificationReducer'
 
 const useStyles = makeStyles(theme => ({
 	inputColor:{
@@ -71,6 +72,7 @@ const SignUpReader = () => {
 	const handleSubmit = async (values) => {
 		try {
 			dispatch(createReader(values))
+			dispatch(notifySuccess('Registration successful'))
 			hisotry.push('/reader/login')
 		} catch (error) {
 			console.log(error)

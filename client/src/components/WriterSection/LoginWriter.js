@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Button from '@material-ui/core/Button'
 import { makeStyles, TextField, Typography } from '@material-ui/core'
 import { addWriter } from '../../reducers/loginWriterReducer'
-// import loginReaderService from '../services/loginReader'
+import { notifySuccess } from '../../reducers/notificationReducer'
 
 const useStyles = makeStyles(theme => ({
 	inputColor:{
@@ -63,6 +63,7 @@ const LoginWriter = () => {
 		try {
 			await dispatch(addWriter(values))
 			const idForLink = writers.filter(writer => writer.userName === String(values.userName))[0]
+			dispatch(notifySuccess('Logged in successfully'))
 			hisotry.push(`/writerssection/profile/${idForLink.id}`)
 		} catch (error) {
 			console.log(error)

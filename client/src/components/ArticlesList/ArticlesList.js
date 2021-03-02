@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
+import Button from '@material-ui/core/Button'
 import { makeStyles } from '@material-ui/core/styles'
 import ArticleCard from './ArticleCard'
 import ArticlesFilter from './ArticlesFilter'
 import { useParams } from 'react-router-dom'
+import { notifySuccess, notifyError } from '../../reducers/notificationReducer'
 
 
 const useStyles = makeStyles({
@@ -28,6 +30,14 @@ const ArticlesList = () => {
 	const loggedInReader = useSelector(state => state.reader)
 	const readersList = useSelector(state => state.readers)
 	const readerFavorites = loggedInReader && readersList.filter(readerFromList => readerFromList.id === loggedInReader.id)[0].favoritewriters.map(favoritewriter => favoritewriter.id)
+
+	const dispatch = useDispatch()
+	const handleOpenGood = () => {
+		dispatch(notifySuccess('Goooooood'))
+	}
+	const handleOpenBad = () => {
+		dispatch(notifyError('Baaaaaaad'))
+	}
 	
 	let articlesFiltered = articles
 	let allength = null
@@ -70,6 +80,8 @@ const ArticlesList = () => {
 	return (
 		<div>
 			<ArticlesFilter setFilterValue={setFilterValue}/>
+			<Button color='primary' onClick={handleOpenGood}>Open Good</Button>
+			<Button color='primary' onClick={handleOpenBad}>Open bad</Button>
 			<Typography className={classes.textWithPadding} variant='h3' style={{ display: genre === undefined ? 'none' : 'block' }}>
 				{genre}
 			</Typography>

@@ -10,6 +10,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import Button from '@material-ui/core/Button'
 import { TextField, Accordion, makeStyles, Card, CardContent } from '@material-ui/core'
 import { addComment } from '../../reducers/articlesReducer'
+import { notifySuccess } from '../../reducers/notificationReducer'
 
 const useStyles = makeStyles(theme => ({
 	text: {
@@ -84,6 +85,7 @@ const Comments = () => {
 		event.preventDefault()
 		const newComment = { comment: commentValue }
 		dispatch(addComment(newComment, id, commentator))
+		dispatch(notifySuccess(`${commentValue} added`))
 		setCommentValue('')
 	}
 	

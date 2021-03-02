@@ -10,6 +10,7 @@ import WriterPage from './components/WriterPage'
 import SignUpWriter from './components/WriterSection/SignUpWriter'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import LoginReader from './components/LoginReader'
+import SnackBar from './components/SnackBar'
 import LoginWriter from './components/WriterSection/LoginWriter'
 import SignUpReader from './components/SignUpReader'
 import { initReaders } from './reducers/readersReducer'
@@ -88,6 +89,7 @@ const App = () => {
 					</Route>
 				</Switch>
 			</Container>
+			<SnackBar />
 		</Router>
 	)
 }
@@ -98,13 +100,12 @@ export default App
 // TODO cant add 1.000 to funds
 // TODO unique usernameCheck for writer and reader
 
-// TODO Edit article functionality
 // TODO create message component with material ui snackbar
-// TODO create writers new article page
 // TODO funcionality for paying for individual articles
 
 // TODO Expiration time for login token
 // TODO Expiration time for subscription
-// TODO date value trough entire project
 
+// TODO date value trough entire project
+// TODO Edit article functionality
 // TODO Fix project theme https://bareynol.github.io/mui-theme-creator/
