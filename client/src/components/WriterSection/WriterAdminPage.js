@@ -30,9 +30,10 @@ const useStyles = makeStyles({
 const WriterAdminPage = () => {
 	const classes = useStyles()
 	const { id } = useParams()
-	// const writerId = useSelector(state => state.writer)
+	const writers = useSelector(state => state.writers)
+	console.log('writers', writers)
 	
-	const loggedInWritter = useSelector(state => state.writers.filter(writer => writer.id === id))[0]
+	const loggedInWritter = writers.filter(writer => writer.id === id)[0]
 
 	const [componentToOpen, setComponentToOpen] = useState('articles')
 
@@ -69,7 +70,7 @@ const WriterAdminPage = () => {
 					<List className={classes.genresList}>
 						{loggedInWritter.writerGenres.map(genre => 
 							<Typography key={genre} variant='body2'>
-								{genre}
+								{`${genre}.`}
 							</Typography>
 						)}	
 					</List>

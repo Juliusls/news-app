@@ -36,6 +36,14 @@ articlesRouter.get('/:id', async (request, response) => {
 
 articlesRouter.post('/', async (request, response) => {
 	const body = request.body
+
+	let accessToken = request.cookies.writerAuthCookie
+
+	const decodedToken = jwt.verify(accessToken, process.env.WRITER_ACCESS_TOKEN_SECRET)
+
+	if (!request.cookies.writerAuthCookie || !decodedToken.id) {
+		return response.status(401).json({ error: 'token missing or invalid' })
+	}
   
 	if (body.title === undefined) {
 		return response.status(400).json({ error: 'title missing' })
@@ -45,10 +53,13 @@ articlesRouter.post('/', async (request, response) => {
 	}
 	if (body.genres === undefined) {
 		return response.status(400).json({ error: 'genres missing' })
+	}
+	if (body.paid === undefined) {
+		return response.status(400).json({ error: 'paid missing' })
 	} 
 
 	try {
-		const writer = await Writer.findById('6039181e3700af514ff1b6af')
+		const writer = await Writer.findById(decodedToken.id)
   
 		const article = new Article({
 			title: body.title,

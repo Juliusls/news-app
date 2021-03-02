@@ -5,6 +5,8 @@ const articlesReducer = (state = [], action) => {
 	switch(action.type) {
 	case 'INIT_ARTICLES':
 		return action.data
+	case 'CREATE_ARTICLE':
+		return [...state, action.data]
 	case 'ADD_COMMENT': {
 		return state.map(article => {
 			if (article.id === action.data.article) {
@@ -28,6 +30,16 @@ export const initArticles = () => {
 		})
 	}
 }
+
+export const createArticle = (newArticle) => {
+	return async dispatch => {
+		dispatch ({
+			type: 'CREATE_ARTICLE',
+			data: newArticle
+		})
+	}
+}
+
 
 export const addComment = (newComment, id, commentator) => {
 	return async dispatch => {

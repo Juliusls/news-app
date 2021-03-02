@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
 	root: {
-		maxWidth: 380,
+		width:380,
 		borderRadius: 5,
 		margin: 5,
 	},

@@ -1,14 +1,16 @@
 import React from 'react'
 import { Formik, Field, FieldArray } from 'formik'
-// import { useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import * as yup from 'yup'
 import { makeStyles, FormControl, Typography, FormControlLabel, FormGroup, Button, Radio, IconButton } from '@material-ui/core'
 import { RadioGroup, CheckboxWithLabel, TextField } from 'formik-material-ui'
 import AddIcon from '@material-ui/icons/Add'
 import RemoveIcon from '@material-ui/icons/Remove'
 import { newsCategories } from '../../data/data'
-// import { createWriter } from '../../reducers/writersReducer'
-// import { useHistory } from 'react-router-dom'
+import { createArticle } from '../../reducers/articlesReducer'
+import { addArticleToWriter } from '../../reducers/writersReducer'
+import { useHistory } from 'react-router-dom'
+import articlesService from '../../services/articles'
 
 const useStyles = makeStyles(theme => ({
 	inputColor:{
@@ -80,11 +82,11 @@ const initialValues = {
 const validationSchema = yup.object().shape({
 	title: yup.string()
 		.min(10, 'Too Short')
-		.max(50, 'Too Long')
+		.max(100, 'Too Long')
 		.required('Required'),
 	content: yup.array()
 		.min(1, 'At least one paragraph required')
-		.of(yup.string().min(2, 'Too Short')),
+		.of(yup.string().min(50, 'Too Short')),
 	genres: yup.array()
 		.min(1, 'Check at least one category'),
 	paid: yup.mixed()
@@ -131,8 +133,6 @@ const NewArticleForm = ({ values, errors, touched, handleChange, handleBlur, han
 											variant="outlined"
 											name={`content.${index}`}
 											type="text"
-											// error={touched.content && Boolean(errors.content)}
-											// helperText={touched.content && errors.content}
 											multiline
 											fullWidth
 											className={classes.contentField}
@@ -192,7 +192,7 @@ const NewArticleForm = ({ values, errors, touched, handleChange, handleBlur, han
 						/>
 					</Field>
 					<Button color="primary" variant="contained" type="submit" className={classes.button}>
-                        Sign Up
+                        Publish
 					</Button>
 				</form>
 			</div>
@@ -201,15 +201,18 @@ const NewArticleForm = ({ values, errors, touched, handleChange, handleBlur, han
 }
 
 const NewArticle = () => {
-	// const history = useHistory()
-	// const dispatch = useDispatch()
+	const history = useHistory()
+	const writer = useSelector(state => state.writer)
+	const dispatch = useDispatch()
 
 
 	const handleSubmit = async (values) => {
 		try {
-			console.log(values)
-			// dispatch(createWriter(values))
-			// history.push('/writerssection/login')
+			const article = await articlesService.create(values)
+			console.log(article)
+			await dispatch(createArticle(article))
+			await dispatch(addArticleToWriter(article))
+			history.push(`/writerssection/profile/${writer.id}`)
 		} catch (error) {
 			console.log(error)
 		}

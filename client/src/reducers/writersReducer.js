@@ -20,6 +20,13 @@ const writersReducer = (state = [], action) => {
 			}
 			return writer
 		})
+	case 'ADD_ARTICLE_TO_WRITER':
+		return state.map(writer => {
+			if (writer.id === action.data.author) {
+				return { ...writer, myarticles: writer.myarticles.concat(action.data) }
+			}
+			return writer
+		})
 	case 'ADD_READER_TO_FOLLOWERS':
 		return state.map(writer => writer.id === action.data.id ? action.data : writer)
 	case 'REMOVE_READER_FROM_FOLLOWERS':
@@ -91,6 +98,16 @@ export const updatePricing = (newValues, writer) => {
 		dispatch ({
 			type: 'UPDATE_PRICING',
 			data: updatedWriter
+		})
+	}
+}
+
+export const addArticleToWriter = (article) => {
+	return async dispatch => {
+		console.log('article from writer reducer', article)
+		dispatch ({
+			type: 'ADD_ARTICLE_TO_WRITER',
+			data: article
 		})
 	}
 }
