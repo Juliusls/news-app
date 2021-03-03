@@ -1,14 +1,27 @@
 const mongoose = require('mongoose')
+var uniqueValidator = require('mongoose-unique-validator')
 
 mongoose.set('useFindAndModify', false)
 
 const writerSchema = new mongoose.Schema({
-	firstName: String,
-	lastName: String,
-	userName: String,
+	firstName: {
+		type: String,
+		required: true,
+		minlength: 2,
+	},
+	lastName: {
+		type: String,
+		required: true,
+		minlength: 2,
+	},
+	userName: {
+		type: String,
+		minlength: 3,
+		required: true,
+		unique: true
+	},
 	passwordHash: String,
 	earnings: Number,
-	totalViews: Number,
 	joined: String,
 	writerDescription: String,
 	writerGenres: [String],
@@ -34,6 +47,8 @@ const writerSchema = new mongoose.Schema({
 		}
 	],
 })
+
+writerSchema.plugin(uniqueValidator)
 
 writerSchema.set('toJSON', {
 	transform: (document, returnedObject) => {

@@ -1,10 +1,11 @@
 import React from 'react'
-import { Formik } from 'formik'
+import { Formik, Field } from 'formik'
 import * as yup from 'yup'
 import { useHistory } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import Button from '@material-ui/core/Button'
-import { makeStyles, TextField, Typography } from '@material-ui/core'
+import { makeStyles, Typography } from '@material-ui/core'
+import { TextField } from 'formik-material-ui'
 import { createReader } from '../reducers/readersReducer'
 import { notifySuccess } from '../reducers/notificationReducer'
 
@@ -72,7 +73,7 @@ const validationSchema = yup.object().shape({
 		.oneOf([yup.ref('password'), null], 'Passwords must match')
 })
 
-const SignUpReaderForm = ({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => {
+const SignUpReaderForm = ({ values, errors, touched, handleChange, handleBlur, handleSubmit, validateUsername }) => {
 	const classes = useStyles()
 
 	return (
@@ -82,7 +83,8 @@ const SignUpReaderForm = ({ values, errors, touched, handleChange, handleBlur, h
 					<Typography variant='h4' className={classes.loginText}>
                         Sign Up
 					</Typography>
-					<TextField
+					<Field
+						component={TextField}
 						value={values.firstName}
 						onChange={handleChange}
 						onBlur={handleBlur}
@@ -99,7 +101,8 @@ const SignUpReaderForm = ({ values, errors, touched, handleChange, handleBlur, h
 						className={classes.paddings}
 						
 					/>
-					<TextField
+					<Field
+						component={TextField}
 						value={values.lastName}
 						onChange={handleChange}
 						onBlur={handleBlur}
@@ -115,7 +118,9 @@ const SignUpReaderForm = ({ values, errors, touched, handleChange, handleBlur, h
 						}}
 						className={classes.paddings}
 					/>
-					<TextField
+					<Field
+						component={TextField}
+						validate={validateUsername}
 						value={values.userName}
 						onChange={handleChange}
 						onBlur={handleBlur}
@@ -131,7 +136,8 @@ const SignUpReaderForm = ({ values, errors, touched, handleChange, handleBlur, h
 						}}
 						className={classes.paddings}
 					/>
-					<TextField
+					<Field
+						component={TextField}
 						value={values.password}
 						onChange={handleChange}
 						onBlur={handleBlur}
@@ -148,7 +154,8 @@ const SignUpReaderForm = ({ values, errors, touched, handleChange, handleBlur, h
 						}}
 						className={classes.paddings}
 					/>
-					<TextField
+					<Field
+						component={TextField}
 						value={values.passwordConfirmation}
 						onChange={handleChange}
 						onBlur={handleBlur}
@@ -177,6 +184,7 @@ const SignUpReaderForm = ({ values, errors, touched, handleChange, handleBlur, h
 const SignUpReader = () => {
 	const history = useHistory()
 	const dispatch = useDispatch()
+	const readers = useSelector(state => state.readers)
 
 	const handleSubmit = async (values) => {
 		try {
@@ -188,6 +196,14 @@ const SignUpReader = () => {
 		}
 	}
 
+	const validateUsername = (newUserName) => {
+		let error
+		if (readers.some(reader => reader.userName === newUserName)) {
+			error = 'Sorry, this username already exists '
+		}
+		return error
+	}
+
 	return (
 		<div>
 			<Formik
@@ -197,6 +213,7 @@ const SignUpReader = () => {
 			>
 				{({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => 
 					<SignUpReaderForm 
+						validateUsername={validateUsername}
 						values={values}
 						errors={errors}
 						touched={touched}

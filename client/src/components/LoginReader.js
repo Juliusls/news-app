@@ -1,10 +1,11 @@
 import React from 'react'
 import * as yup from 'yup'
-import { Formik } from 'formik'
+import { Formik, Field } from 'formik'
 import { useHistory } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import Button from '@material-ui/core/Button'
-import { makeStyles, TextField, Typography } from '@material-ui/core'
+import { makeStyles, Typography } from '@material-ui/core'
+import { TextField } from 'formik-material-ui'
 import { addReader } from '../reducers/loginReaderReducer'
 import { notifySuccess } from '../reducers/notificationReducer'
 
@@ -67,7 +68,8 @@ const LoginReaderForm = ({ values, errors, touched, handleChange, handleBlur, ha
 					<Typography variant='h4' className={classes.loginText}>
                         Log In
 					</Typography>
-					<TextField
+					<Field
+						component={TextField}
 						value={values.userName}
 						onChange={handleChange}
 						onBlur={handleBlur}
@@ -83,7 +85,8 @@ const LoginReaderForm = ({ values, errors, touched, handleChange, handleBlur, ha
 						}}
 						className={classes.paddings}
 					/>
-					<TextField
+					<Field
+						component={TextField}
 						value={values.password}
 						onChange={handleChange}
 						onBlur={handleBlur}

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Formik, Field } from 'formik'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import * as yup from 'yup'
 import { makeStyles, FormControl, Typography, FormControlLabel, FormGroup, Button } from '@material-ui/core'
 import { TextField, CheckboxWithLabel } from 'formik-material-ui'
@@ -18,7 +18,8 @@ const useStyles = makeStyles(theme => ({
 		marginBottom: 30
 	},
 	container: {
-		marginTop: 200,
+		marginTop: 150,
+		marginBottom: 150,
 		display: 'flex',
 		alignItems: 'center',
 		justifyContent: 'center',
@@ -105,7 +106,7 @@ const validationSchema = yup.object().shape({
 		.oneOf([yup.ref('password'), null], 'Passwords must match')
 })
 
-const WriterSignUpForm = ({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => {
+const WriterSignUpForm = ({ validateUsername,  values, errors, touched, handleChange, handleBlur, handleSubmit }) => {
 	const classes = useStyles()
 
 	return (
@@ -149,6 +150,7 @@ const WriterSignUpForm = ({ values, errors, touched, handleChange, handleBlur, h
 
 					/>
 					<Field
+						validate={validateUsername}
 						component={TextField}
 						onChange={handleChange}
 						onBlur={handleBlur}
@@ -314,6 +316,7 @@ const WriterSignUpForm = ({ values, errors, touched, handleChange, handleBlur, h
 const SignUpWriter = () => {
 	const history = useHistory()
 	const dispatch = useDispatch()
+	const writers = useSelector(state => state.writers)
 
 
 	const handleSubmit = async (values) => {
@@ -326,6 +329,14 @@ const SignUpWriter = () => {
 		}
 	}
 
+	const validateUsername = (newUserName) => {
+		let error
+		if (writers.some(writer => writer.userName === newUserName)) {
+			error = 'Sorry, this username already exists '
+		}
+		return error
+	}
+
 	return (
 		<div>
 			<Formik
@@ -335,6 +346,7 @@ const SignUpWriter = () => {
 			>
 				{({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => 
 					<WriterSignUpForm 
+						validateUsername={validateUsername}
 						values={values}
 						errors={errors}
 						touched={touched}

@@ -4,5 +4,4 @@ Content-Type: application/json
 {
     "followers": ["602e8c52cbfac11f842074d7"],
 	"earnings": 0,
-	"totalViews": 0
 }

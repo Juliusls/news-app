@@ -1,10 +1,11 @@
 import React from 'react'
-import { Formik } from 'formik'
+import { Formik, Field } from 'formik'
 import * as yup from 'yup'
 import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import Button from '@material-ui/core/Button'
-import { makeStyles, TextField, Typography } from '@material-ui/core'
+import { makeStyles, Typography } from '@material-ui/core'
+import { TextField } from 'formik-material-ui'
 import { addWriter } from '../../reducers/loginWriterReducer'
 import { notifySuccess } from '../../reducers/notificationReducer'
 
@@ -67,7 +68,8 @@ const LoginWriterForm = ({ reader, values, errors, touched, handleChange, handle
 					<Typography variant='h4' className={classes.loginText}>
                         Writer Log In
 					</Typography>
-					<TextField
+					<Field
+						component={TextField}
 						className={classes.paddings}
 						fullWidth
 						id="userName"
@@ -83,7 +85,8 @@ const LoginWriterForm = ({ reader, values, errors, touched, handleChange, handle
 						error={touched.userName && Boolean(errors.userName)}
 						helperText={touched.userName && errors.userName}
 					/>
-					<TextField
+					<Field
+						component={TextField}
 						className={classes.paddings}
 						fullWidth
 						id="password"

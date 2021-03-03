@@ -105,7 +105,6 @@ writersRouter.post('/', async (request, response) => {
 		passwordHash,
 		joined: getDateFormated(true),
 		earnings: 0,
-		totalViews: 0,
 	})
 
 	writer.save()

@@ -101,7 +101,6 @@ export default App
 // TODO unique usernameCheck for writer and reader
 
 // TODO create error message component with material ui snackbar
-// TODO view count for articles
 // TODO funcionality for paying for individual articles
 
 // TODO Expiration time for login token

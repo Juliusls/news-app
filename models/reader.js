@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+var uniqueValidator = require('mongoose-unique-validator')
 
 mongoose.set('useFindAndModify', false)
 
@@ -42,6 +43,8 @@ const readerSchema = new mongoose.Schema({
 		}
 	]
 })
+
+readerSchema.plugin(uniqueValidator)
 
 readerSchema.set('toJSON', {
 	transform: (document, returnedObject) => {
