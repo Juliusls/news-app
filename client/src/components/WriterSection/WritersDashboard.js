@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
 const WritersDashboard = ({ writer, setComponentToOpen }) => {
 	const classes = useStyles()
 
-	const totalViews = writer.myarticles.map(article => article.views).reduce((value, startingValue) => startingValue + value)
+	const totalViews = writer.myarticles.map(article => article.views).reduce((accumulator, currentValue) => accumulator + currentValue, 0)
 
 	return (
 		<div className={classes.root}>

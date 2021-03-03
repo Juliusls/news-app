@@ -1,5 +1,5 @@
 import React from 'react'
-import { useFormik } from 'formik'
+import { Formik } from 'formik'
 import * as yup from 'yup'
 import { useHistory } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
@@ -43,6 +43,14 @@ const useStyles = makeStyles(theme => ({
 	}
 }))
 
+const initialValues = {
+	firstName: '',
+	lastName: '',
+	userName: '',
+	password: '',
+	passwordConfirmation: ''
+}
+
 const validationSchema = yup.object().shape({
 	firstName: yup.string()
 		.min(2, 'Too Short!')
@@ -64,42 +72,22 @@ const validationSchema = yup.object().shape({
 		.oneOf([yup.ref('password'), null], 'Passwords must match')
 })
 
-const SignUpReader = () => {
+const SignUpReaderForm = ({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => {
 	const classes = useStyles()
-	const dispatch = useDispatch()
-	let hisotry = useHistory()
-
-	const handleSubmit = async (values) => {
-		try {
-			dispatch(createReader(values))
-			dispatch(notifySuccess('Registration successful'))
-			hisotry.push('/reader/login')
-		} catch (error) {
-			console.log(error)
-		}
-	}
-
-	const formik = useFormik({
-		initialValues: {
-			firstName: '',
-			lastName: '',
-			userName: '',
-			password: '',
-			passwordConfirmation: ''
-		},
-		validationSchema: validationSchema,
-		onSubmit: (values) => { handleSubmit(values) }
-	})
 
 	return (
 		<div className={classes.container}>
 			<div className={classes.item}>
-				<form onSubmit={formik.handleSubmit} className={classes.form}>
+				<form onSubmit={handleSubmit} className={classes.form}>
 					<Typography variant='h4' className={classes.loginText}>
                         Sign Up
 					</Typography>
 					<TextField
-						className={classes.paddings}
+						value={values.firstName}
+						onChange={handleChange}
+						onBlur={handleBlur}
+						error={touched.firstName && Boolean(errors.firstName)}
+						helperText={touched.firstName && errors.firstName}
 						fullWidth
 						id="firstName"
 						name="firstName"
@@ -108,13 +96,15 @@ const SignUpReader = () => {
 						InputProps={{
 							className: classes.inputColor
 						}}
-						value={formik.values.firstName}
-						onChange={formik.handleChange}
-						error={formik.touched.firstName && Boolean(formik.errors.firstName)}
-						helperText={formik.touched.firstName && formik.errors.firstName}
+						className={classes.paddings}
+						
 					/>
 					<TextField
-						className={classes.paddings}
+						value={values.lastName}
+						onChange={handleChange}
+						onBlur={handleBlur}
+						error={touched.lastName && Boolean(errors.lastName)}
+						helperText={touched.lastName && errors.lastName}
 						fullWidth
 						id="lastName"
 						name="lastName"
@@ -123,13 +113,14 @@ const SignUpReader = () => {
 						InputProps={{
 							className: classes.inputColor
 						}}
-						value={formik.values.lastName}
-						onChange={formik.handleChange}
-						error={formik.touched.lastName && Boolean(formik.errors.lastName)}
-						helperText={formik.touched.lastName && formik.errors.lastName}
+						className={classes.paddings}
 					/>
 					<TextField
-						className={classes.paddings}
+						value={values.userName}
+						onChange={handleChange}
+						onBlur={handleBlur}
+						error={touched.userName && Boolean(errors.userName)}
+						helperText={touched.userName && errors.userName}
 						fullWidth
 						id="userName"
 						name="userName"
@@ -138,13 +129,14 @@ const SignUpReader = () => {
 						InputProps={{
 							className: classes.inputColor
 						}}
-						value={formik.values.userName}
-						onChange={formik.handleChange}
-						error={formik.touched.userName && Boolean(formik.errors.userName)}
-						helperText={formik.touched.userName && formik.errors.userName}
+						className={classes.paddings}
 					/>
 					<TextField
-						className={classes.paddings}
+						value={values.password}
+						onChange={handleChange}
+						onBlur={handleBlur}
+						error={touched.password && Boolean(errors.password)}
+						helperText={touched.password && errors.password}
 						fullWidth
 						id="password"
 						name="password"
@@ -154,13 +146,14 @@ const SignUpReader = () => {
 						InputProps={{
 							className: classes.inputColor
 						}}
-						value={formik.values.password}
-						onChange={formik.handleChange}
-						error={formik.touched.password && Boolean(formik.errors.password)}
-						helperText={formik.touched.password && formik.errors.password}
+						className={classes.paddings}
 					/>
 					<TextField
-						className={classes.paddings}
+						value={values.passwordConfirmation}
+						onChange={handleChange}
+						onBlur={handleBlur}
+						error={touched.passwordConfirmation && Boolean(errors.passwordConfirmation)}
+						helperText={touched.passwordConfirmation && errors.passwordConfirmation}
 						fullWidth
 						id="passwordConfirmation"
 						name="passwordConfirmation"
@@ -170,10 +163,7 @@ const SignUpReader = () => {
 						InputProps={{
 							className: classes.inputColor
 						}}
-						value={formik.values.passwordConfirmation}
-						onChange={formik.handleChange}
-						error={formik.touched.passwordConfirmation && Boolean(formik.errors.passwordConfirmation)}
-						helperText={formik.touched.passwordConfirmation && formik.errors.passwordConfirmation}
+						className={classes.paddings}
 					/>
 					<Button color="primary" variant="contained" type="submit" className={classes.button}>
                         Sign Up
@@ -184,7 +174,41 @@ const SignUpReader = () => {
 	)
 }
 
-export default SignUpReader
+const SignUpReader = () => {
+	const history = useHistory()
+	const dispatch = useDispatch()
 
+	const handleSubmit = async (values) => {
+		try {
+			dispatch(createReader(values))
+			dispatch(notifySuccess('Registration successful'))
+			history.push('/reader/login')
+		} catch (error) {
+			console.log(error)
+		}
+	}
+
+	return (
+		<div>
+			<Formik
+				initialValues={initialValues}
+				validationSchema={validationSchema}
+				onSubmit={handleSubmit}
+			>
+				{({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => 
+					<SignUpReaderForm 
+						values={values}
+						errors={errors}
+						touched={touched}
+						handleChange={handleChange}
+						handleBlur={handleBlur}
+						handleSubmit={handleSubmit}
+					/>}
+			</Formik>
+		</div>
+	)
+}
+
+export default SignUpReader
 
 // TODO username unique validator

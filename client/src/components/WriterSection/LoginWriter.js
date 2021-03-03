@@ -1,5 +1,5 @@
 import React from 'react'
-import { useFormik } from 'formik'
+import { Formik } from 'formik'
 import * as yup from 'yup'
 import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
@@ -43,6 +43,11 @@ const useStyles = makeStyles(theme => ({
 	}
 }))
 
+const initialValues = {
+	userName: '',
+	password: '',
+}
+
 const validationSchema = yup.object().shape({
 	userName: yup
 		.string()
@@ -52,37 +57,13 @@ const validationSchema = yup.object().shape({
 		.required('Password is required')
 })
 
-const LoginWriter = () => {
+const LoginWriterForm = ({ reader, values, errors, touched, handleChange, handleBlur, handleSubmit }) => {
 	const classes = useStyles()
-	const reader = useSelector(state => state.reader)
-	const writers = useSelector(state => state.writers)
-	const dispatch = useDispatch()
-	let hisotry = useHistory()
-
-	const handleSubmit = async (values) => {
-		try {
-			await dispatch(addWriter(values))
-			const idForLink = writers.filter(writer => writer.userName === String(values.userName))[0]
-			dispatch(notifySuccess('Logged in successfully'))
-			hisotry.push(`/writerssection/profile/${idForLink.id}`)
-		} catch (error) {
-			console.log(error)
-		}
-	}
-
-	const formik = useFormik({
-		initialValues: {
-			userName: '',
-			password: '',
-		},
-		validationSchema: validationSchema,
-		onSubmit: (values) => { handleSubmit(values) }
-	})
 
 	return (
 		<div className={classes.container}>
 			<div className={classes.item}>
-				<form onSubmit={formik.handleSubmit} className={classes.form}>
+				<form onSubmit={handleSubmit} className={classes.form}>
 					<Typography variant='h4' className={classes.loginText}>
                         Writer Log In
 					</Typography>
@@ -96,10 +77,11 @@ const LoginWriter = () => {
 						InputProps={{
 							className: classes.inputColor
 						}}
-						value={formik.values.userName}
-						onChange={formik.handleChange}
-						error={formik.touched.userName && Boolean(formik.errors.userName)}
-						helperText={formik.touched.userName && formik.errors.userName}
+						value={values.userName}
+						onChange={handleChange}
+						onBlur={handleBlur}
+						error={touched.userName && Boolean(errors.userName)}
+						helperText={touched.userName && errors.userName}
 					/>
 					<TextField
 						className={classes.paddings}
@@ -112,10 +94,12 @@ const LoginWriter = () => {
 						InputProps={{
 							className: classes.inputColor
 						}}
-						value={formik.values.password}
-						onChange={formik.handleChange}
-						error={formik.touched.password && Boolean(formik.errors.password)}
-						helperText={formik.touched.password && formik.errors.password}
+						value={values.password}
+						onChange={handleChange}
+						onBlur={handleBlur}
+
+						error={touched.password && Boolean(errors.password)}
+						helperText={touched.password && errors.password}
 					/>
 					{reader
 						? (
@@ -141,4 +125,46 @@ const LoginWriter = () => {
 	)
 }
 
+const LoginWriter = () => {
+	const reader = useSelector(state => state.reader)
+	const writers = useSelector(state => state.writers)
+	const dispatch = useDispatch()
+	let hisotry = useHistory()
+
+
+	const handleSubmit = async (values) => {
+		try {
+			await dispatch(addWriter(values))
+			const idForLink = writers.filter(writer => writer.userName === String(values.userName))[0]
+			dispatch(notifySuccess('Logged in successfully'))
+			hisotry.push(`/writerssection/profile/${idForLink.id}`)
+		} catch (error) {
+			console.log(error)
+		}
+	}
+
+	return (
+		<div>
+			<Formik
+				initialValues={initialValues}
+				validationSchema={validationSchema}
+				onSubmit={handleSubmit}
+			>
+				{({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => 
+					<LoginWriterForm 
+						reader={reader}
+						values={values}
+						errors={errors}
+						touched={touched}
+						handleChange={handleChange}
+						handleBlur={handleBlur}
+						handleSubmit={handleSubmit}
+					/>}
+			</Formik>
+		</div>
+	)
+}
+
 export default LoginWriter
+
+// TODO username unique validator

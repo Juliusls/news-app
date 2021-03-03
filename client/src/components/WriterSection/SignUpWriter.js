@@ -2,7 +2,8 @@ import React from 'react'
 import { Formik, Field } from 'formik'
 import { useDispatch } from 'react-redux'
 import * as yup from 'yup'
-import { makeStyles, TextField, FormControl, Typography, FormControlLabel, FormGroup, Button } from '@material-ui/core'
+import { makeStyles, FormControl, Typography, FormControlLabel, FormGroup, Button } from '@material-ui/core'
+import { TextField, CheckboxWithLabel } from 'formik-material-ui'
 import { newsCategories } from '../../data/data'
 import { createWriter } from '../../reducers/writersReducer'
 import { notifySuccess } from '../../reducers/notificationReducer'
@@ -48,7 +49,11 @@ const useStyles = makeStyles(theme => ({
 	},
 	priceItem: {
 		marginRight: 5
-	}
+	},
+	checkBoxMargins: {
+		marginRight: 0,
+		marginLeft: 0
+	},
 }))
 
 const initialValues = {
@@ -108,7 +113,8 @@ const WriterSignUpForm = ({ values, errors, touched, handleChange, handleBlur, h
 			<div className={classes.item}>
 				<Typography variant='h4' style={{ textAlign: 'center', marginTop: 20 }}>Writer registration form</Typography>
 				<form onSubmit={handleSubmit} className={classes.form}>
-					<TextField
+					<Field
+						component={TextField}
 						onChange={handleChange}
 						onBlur={handleBlur}
 						value={values.firstName}
@@ -124,7 +130,8 @@ const WriterSignUpForm = ({ values, errors, touched, handleChange, handleBlur, h
 							className: classes.inputColor
 						}}
 					/>
-					<TextField
+					<Field
+						component={TextField}
 						onChange={handleChange}
 						onBlur={handleBlur}
 						value={values.lastName}
@@ -141,7 +148,8 @@ const WriterSignUpForm = ({ values, errors, touched, handleChange, handleBlur, h
 						}}
 
 					/>
-					<TextField
+					<Field
+						component={TextField}
 						onChange={handleChange}
 						onBlur={handleBlur}
 						value={values.userName}
@@ -157,7 +165,8 @@ const WriterSignUpForm = ({ values, errors, touched, handleChange, handleBlur, h
 							className: classes.inputColor
 						}}
 					/>
-					<TextField	
+					<Field
+						component={TextField}	
 						onChange={handleChange}
 						onBlur={handleBlur}
 						value={values.writerDescription}
@@ -175,6 +184,7 @@ const WriterSignUpForm = ({ values, errors, touched, handleChange, handleBlur, h
 							className: classes.inputColor
 						}}
 					/>
+
 					<FormControl component="fieldset" className={classes.formControl}>
 						<Typography variant='subtitle1'>Categories</Typography>
 						{errors.writerGenres && touched.writerGenres && 
@@ -182,24 +192,28 @@ const WriterSignUpForm = ({ values, errors, touched, handleChange, handleBlur, h
 						}
 						<FormGroup row>
 							{newsCategories.map(categoryValue =>
-								<FormControlLabel
+								<FormControlLabel classes={{ root: classes.checkBoxMargins }}
 									key={categoryValue}
 									control={
 										<Field
+											component={CheckboxWithLabel}
+											classes={{ root: classes.checkBoxMargins }}
 											type="checkbox"
 											name="writerGenres"
 											value={categoryValue}
+											Label={{ label: `${categoryValue}` }}
 										/>
 									}
-									label={categoryValue}
 								/>
 							)}
 						</FormGroup>
 					</FormControl>
+
 					<FormControl component="fieldset" className={classes.paddings}>
 						<Typography variant='subtitle1' style={{ marginBottom: 10 }}>Pricing</Typography>
 						<div className={classes.priceContainer}>
-							<TextField
+							<Field
+								component={TextField}
 								onChange={handleChange}
 								onBlur={handleBlur}
 								value={values.oneArticlePrice}
@@ -215,7 +229,8 @@ const WriterSignUpForm = ({ values, errors, touched, handleChange, handleBlur, h
 									className: classes.inputColor
 								}}
 							/>
-							<TextField
+							<Field
+								component={TextField}
 								onChange={handleChange}
 								onBlur={handleBlur}
 								value={values.montlySubscriptionPrice}
@@ -232,7 +247,8 @@ const WriterSignUpForm = ({ values, errors, touched, handleChange, handleBlur, h
 									className: classes.inputColor
 								}}
 							/>
-							<TextField
+							<Field
+								component={TextField}
 								onChange={handleChange}
 								onBlur={handleBlur}
 								value={values.yearlySubscriptionPrice}
@@ -250,7 +266,8 @@ const WriterSignUpForm = ({ values, errors, touched, handleChange, handleBlur, h
 							/>
 						</div>
 					</FormControl>
-					<TextField
+					<Field
+						component={TextField}
 						onChange={handleChange}
 						onBlur={handleBlur}
 						value={values.password}
@@ -267,7 +284,8 @@ const WriterSignUpForm = ({ values, errors, touched, handleChange, handleBlur, h
 							className: classes.inputColor
 						}}
 					/>
-					<TextField
+					<Field
+						component={TextField}
 						onChange={handleChange}
 						onBlur={handleBlur}
 						value={values.passwordConfirmation}

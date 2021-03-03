@@ -33,7 +33,6 @@ const WriterAdminPage = () => {
 	const writers = useSelector(state => state.writers)
 	
 	const loggedInWritter = writers.filter(writer => writer.id === id)[0]
-	console.log(loggedInWritter)
 
 	const [componentToOpen, setComponentToOpen] = useState('articles')
 
