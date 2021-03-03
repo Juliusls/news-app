@@ -123,7 +123,7 @@ writersRouter.put('/:id', (request, response) => {
 		earnings: body.earnings, 
 		oneArticlePrice: body.oneArticlePrice,
 		montlySubscriptionPrice: body.montlySubscriptionPrice,
-		yearlySubscriptionPrice: body.yearlySubscriptionPrice
+		yearlySubscriptionPrice: body.yearlySubscriptionPrice,
 	}
 
 	Writer.findByIdAndUpdate(request.params.id, writer, { new: true })

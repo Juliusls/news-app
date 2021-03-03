@@ -82,21 +82,12 @@ articlesRouter.post('/', async (request, response) => {
 
 articlesRouter.put('/:id', async (request, response) => {
 	const body = request.body
-
-	const oldArticle = await Article.findById(request.params.id)
-	const writer = await Writer.findById(oldArticle.author._id)
     
 	const article = {
-		title: body.title,
-		content: body.content,
-		published: getDateFormated(TextTrackCue),
-		views: 0,
-		author: writer._id,
-		paid: body.paid,
-		genres: body.genres
+		views: body.views
 	}
 
-	Article.findByIdAndUpdate(request.params.id, article, {new: true, runValidators: true})
+	Article.findByIdAndUpdate(request.params.id, article, {new: true})
 		.then(updatedArticle => {
 			response.status(200).json(updatedArticle.toJSON())
 		})

@@ -58,7 +58,7 @@ export const createWriter = (newWriter) => {
 
 export const addReaderToFollowers = (readerToAdd, writer) => {
 	return async dispatch => {
-		const writerToUpdate = { followers: writer.followers.map(follower => follower.id).concat(readerToAdd.id) }
+		const writerToUpdate = { ...writer, followers: writer.followers.map(follower => follower.id).concat(readerToAdd.id) }
 		await writersService.update(writerToUpdate, writer.id)
 		const writerForDispatch = { ...writer, followers: writer.followers.concat(readerToAdd) }
 		dispatch ({
@@ -82,7 +82,7 @@ export const removeReaderFromFollowers = (readerToRemove, writer) => {
 
 export const addEarningsToWriter = (earningsToAdd, writer) => {
 	return async dispatch => {
-		const writerToUpdate = { followers: writer.followers.map(follower => follower.id) , earnings: writer.earnings + earningsToAdd }
+		const writerToUpdate = { ...writer, followers: writer.followers.map(follower => follower.id) , earnings: writer.earnings + earningsToAdd }
 		const updatedWriter = await writersService.update(writerToUpdate, writer.id)
 		dispatch ({
 			type: 'UPDATE_WRITER_EARNINGS',
@@ -93,18 +93,18 @@ export const addEarningsToWriter = (earningsToAdd, writer) => {
 
 export const updatePricing = (newValues, writer) => {
 	return async dispatch => {
-		const writerToUpdate = { ...newValues, followers: writer.followers, earning: writer.earnings }
-		const updatedWriter = await writersService.update(writerToUpdate, writer.id)
+		const writerToUpdate = { followers: writer.followers.map(follower => follower.id), earnings: writer.earnings, ...newValues }
+		await writersService.update(writerToUpdate, writer.id)
+		const writerToDispatch = { ...writer, ...newValues }
 		dispatch ({
 			type: 'UPDATE_PRICING',
-			data: updatedWriter
+			data: writerToDispatch
 		})
 	}
 }
 
 export const addArticleToWriter = (article) => {
 	return async dispatch => {
-		console.log('article from writer reducer', article)
 		dispatch ({
 			type: 'ADD_ARTICLE_TO_WRITER',
 			data: article

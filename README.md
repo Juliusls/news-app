@@ -40,4 +40,5 @@ Readers will be able to read the news by selecting categories or selecting/filte
 | 1.3 | 7 | Bug fixes on WriterAdmin components, creating formik-material-ui form in front end |
 | 2.3 | 2 | Connecting new article creation with back end and with authorization |
 | | 2 | Creating notification component with Mui Snackbar and redux |
-| Total  | 108 | | 
+| 3.3 | 1.5 | Adding view count functionality to articles |
+| Total  | 111.5 | | 

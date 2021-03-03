@@ -33,6 +33,8 @@ const useStyles = makeStyles((theme) => ({
 const WritersDashboard = ({ writer, setComponentToOpen }) => {
 	const classes = useStyles()
 
+	const totalViews = writer.myarticles.map(article => article.views).reduce((value, startingValue) => startingValue + value)
+
 	return (
 		<div className={classes.root}>
 			<Grid container spacing={2} >
@@ -104,7 +106,7 @@ const WritersDashboard = ({ writer, setComponentToOpen }) => {
 									Total Views
 								</Typography>
 								<Typography className={classes.infoText} variant='h4'>
-									{writer.totalViews}
+									{totalViews}
 								</Typography>
 							</CardContent>
 						</CardActionArea>

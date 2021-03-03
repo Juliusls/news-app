@@ -7,6 +7,8 @@ const articlesReducer = (state = [], action) => {
 		return action.data
 	case 'CREATE_ARTICLE':
 		return [...state, action.data]
+	case 'ADD_VIEW_TO_ARTICLE':
+		return state.map(article => article.id === action.data ? { ...article, views: article.views + 1 } : article)
 	case 'ADD_COMMENT': {
 		return state.map(article => {
 			if (article.id === action.data.article) {
@@ -15,7 +17,6 @@ const articlesReducer = (state = [], action) => {
 			return article
 		})
 	}
-		
 	default:
 		return state
 	}
@@ -40,6 +41,17 @@ export const createArticle = (newArticle) => {
 	}
 }
 
+export const addViewToArticle = (article) => {
+	return async dispatch => {
+		const articleUpdated = { views: article.views + 1 }
+		await articlesService.update(articleUpdated, article.id)
+		dispatch ({
+			type: 'ADD_VIEW_TO_ARTICLE',
+			data: article.id
+		})
+	}
+}
+
 
 export const addComment = (newComment, id, commentator) => {
 	return async dispatch => {
@@ -51,6 +63,7 @@ export const addComment = (newComment, id, commentator) => {
 		})
 	}
 }
+
 
 
 export default articlesReducer

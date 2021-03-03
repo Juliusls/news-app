@@ -5,7 +5,9 @@ import CardActionArea from '@material-ui/core/CardActionArea'
 import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
 import Typography from '@material-ui/core/Typography'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { addViewToArticle } from '../../reducers/articlesReducer'
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -47,15 +49,22 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const ArticleCard = ({ article }) => {
+	const history = useHistory()
+	const dispatch = useDispatch()
 
 	if (!article) {
 		return <p>Loading...</p>
 	}
 
+	const handleCardPress = (article) => {
+		dispatch(addViewToArticle(article))
+		history.push(`/article/${article.id}`)
+	}
+
 	const classes = useStyles()
 	return (
 		<Card className={classes.root} >
-			<Link style={{ textDecoration: 'none', color: 'inherit' }} to={`/article/${article.id}`}>
+			<Link style={{ textDecoration: 'none', color: 'inherit' }} to="#" onClick={() => handleCardPress(article)}>
 				<CardActionArea>
 					<CardMedia
 						className={classes.media}

@@ -11,9 +11,15 @@ const create = async (newArticle) => {
 	return response.data
 }
 
+const update = async (updatedArticle, id) => {
+	const response = await axios.put(`${baseUrl}/${id}`, updatedArticle)
+	return response.data
+}
+
+
 const postComment = async (newComment, id) => {
 	const response = await axios.post(`${baseUrl}/${id}/comments`, newComment)
 	return response.data
 }
 
-export default { getAll, create, postComment }
+export default { getAll, create, update, postComment }

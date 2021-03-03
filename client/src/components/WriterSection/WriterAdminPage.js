@@ -31,9 +31,9 @@ const WriterAdminPage = () => {
 	const classes = useStyles()
 	const { id } = useParams()
 	const writers = useSelector(state => state.writers)
-	console.log('writers', writers)
 	
 	const loggedInWritter = writers.filter(writer => writer.id === id)[0]
+	console.log(loggedInWritter)
 
 	const [componentToOpen, setComponentToOpen] = useState('articles')
 
