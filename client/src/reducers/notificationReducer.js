@@ -29,7 +29,6 @@ export const notifySuccess = (message) => {
 				data: { 
 					open: false,
 					message: '',
-					messageType: ''
 				}
 			})
 		}, 6000)
@@ -52,7 +51,6 @@ export const notifyError = (message) => {
 				data: { 
 					open: false,
 					message: '',
-					messageType: ''
 				}
 			})
 		}, 6000)

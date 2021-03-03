@@ -360,5 +360,3 @@ const SignUpWriter = () => {
 }
 
 export default SignUpWriter
-
-// TODO username unique validator

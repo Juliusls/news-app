@@ -43,4 +43,5 @@ Readers will be able to read the news by selecting categories or selecting/filte
 | 3.3 | 1.5 | Adding view count functionality to articles |
 | | 1 | Refactoring login/signup forms |
 | | 1 | Unique username validation with formik and in the back end for new writers and readers, minor form improvements |
-| Total  | 113.5 | | 
+| | 2.5 | Working on error handling in the backend and front end |
+| Total  | 116 | | 

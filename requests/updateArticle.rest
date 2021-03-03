@@ -1,0 +1,6 @@
+put http://localhost:3001/api/articles/603918999a12df520270769
+Content-Type: application/json
+
+{
+    "views": 3
+}

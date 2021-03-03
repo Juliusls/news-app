@@ -242,5 +242,3 @@ const NewArticle = () => {
 }
 
 export default NewArticle
-
-// TODO username unique validator

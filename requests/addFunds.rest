@@ -1,6 +1,6 @@
-put http://localhost:3001/api/readers/6027ac051698745b22acf649
+put http://localhost:3001/api/readers/603918f090db115235e7620
 Content-Type: application/json
 
 {
-    "funds": 10
+    "funds": 20
 }

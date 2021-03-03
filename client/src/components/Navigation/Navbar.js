@@ -127,26 +127,32 @@ const Navbar = () =>  {
 						<div className={classes.rightElement} >
 							<div className={classes.rightElementChild}>
 								<BigTooltip TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title="Search">
-									<SearchField />
+									<span>
+										<SearchField />
+									</span>
 								</BigTooltip>
 								<BigTooltip TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title="Profile">
-									<IconButton
-										aria-controls="menu-appbar"
-										aria-haspopup="true"
-										component={ Link }
-										to={`/reader/profile/${reader.id}`}
-									>
-										<AccountCircle className={classes.accountIcon}/>
-									</IconButton>
+									<span>
+										<IconButton
+											aria-controls="menu-appbar"
+											aria-haspopup="true"
+											component={ Link }
+											to={`/reader/profile/${reader.id}`}
+										>
+											<AccountCircle className={classes.accountIcon}/>
+										</IconButton>
+									</span>
 								</BigTooltip>
 								<BigTooltip TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title="Log out">
-									<IconButton
-										aria-controls="menu-appbar"
-										aria-haspopup="true"
-										onClick={handleReaderLogout}
-									>
-										<ExitToAppIcon className={classes.accountIcon}/>
-									</IconButton>
+									<span>
+										<IconButton
+											aria-controls="menu-appbar"
+											aria-haspopup="true"
+											onClick={handleReaderLogout}
+										>
+											<ExitToAppIcon className={classes.accountIcon}/>
+										</IconButton>
+									</span>
 								</BigTooltip>
 							</div>
 						</div>
@@ -155,33 +161,39 @@ const Navbar = () =>  {
 							<div className={classes.rightElement}>
 								<div className={classes.rightElementChild}>
 									<BigTooltip TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title="Write an article">
-										<IconButton
-											aria-controls="menu-appbar"
-											aria-haspopup="true"
-											component={ Link }
-											to='/writerssection/newarticle'
-										>
-											<EditIcon className={classes.accountIcon}/>
-										</IconButton>
+										<span>
+											<IconButton
+												aria-controls="menu-appbar"
+												aria-haspopup="true"
+												component={ Link }
+												to='/writerssection/newarticle'
+											>
+												<EditIcon className={classes.accountIcon}/>
+											</IconButton>
+										</span>
 									</BigTooltip>
 									<BigTooltip TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title="Profile">
-										<IconButton
-											aria-controls="menu-appbar"
-											aria-haspopup="true"
-											component={ Link }
-											to={`/writerssection/profile/${writer.id}`}
-										>
-											<AccountCircle className={classes.accountIcon}/>
-										</IconButton>
+										<span>
+											<IconButton
+												aria-controls="menu-appbar"
+												aria-haspopup="true"
+												component={ Link }
+												to={`/writerssection/profile/${writer.id}`}
+											>
+												<AccountCircle className={classes.accountIcon}/>
+											</IconButton>
+										</span>
 									</BigTooltip>
 									<BigTooltip TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title="Log out">
-										<IconButton
-											aria-controls="menu-appbar"
-											aria-haspopup="true"
-											onClick={handleWriterLogout}
-										>
-											<ExitToAppIcon className={classes.accountIcon}/>
-										</IconButton>
+										<span>
+											<IconButton
+												aria-controls="menu-appbar"
+												aria-haspopup="true"
+												onClick={handleWriterLogout}
+											>
+												<ExitToAppIcon className={classes.accountIcon}/>
+											</IconButton>
+										</span>
 									</BigTooltip>
 								</div>
 							</div>

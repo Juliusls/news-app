@@ -227,5 +227,3 @@ const SignUpReader = () => {
 }
 
 export default SignUpReader
-
-// TODO username unique validator

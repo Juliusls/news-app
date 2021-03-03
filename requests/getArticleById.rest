@@ -1,0 +1,5 @@
+get http://localhost:3001/api/articles/603918c790db115235e756gr
+Content-Type: application/json
+
+
+

@@ -26,8 +26,12 @@ const ArticlesList = () => {
 	let { author } = useParams()
 	const articles = useSelector(state => state.articles)
 	const loggedInReader = useSelector(state => state.reader)
+	console.log('loggedInReader', loggedInReader)
 	const readersList = useSelector(state => state.readers)
-	const readerFavorites = loggedInReader && readersList.filter(readerFromList => readerFromList.id === loggedInReader.id)[0].favoritewriters.map(favoritewriter => favoritewriter.id)
+	const oneReader = loggedInReader && readersList.filter(readerFromList => readerFromList.id === loggedInReader.id)[0]
+	const readerFavorites = loggedInReader && oneReader.favoritewriters.map(favoritewriter => favoritewriter.id)
+
+	
 	
 	let articlesFiltered = articles
 	let allength = null

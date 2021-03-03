@@ -169,5 +169,3 @@ const LoginWriter = () => {
 }
 
 export default LoginWriter
-
-// TODO username unique validator

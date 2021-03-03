@@ -7,7 +7,8 @@ import Button from '@material-ui/core/Button'
 import { makeStyles, Typography } from '@material-ui/core'
 import { TextField } from 'formik-material-ui'
 import { addReader } from '../reducers/loginReaderReducer'
-import { notifySuccess } from '../reducers/notificationReducer'
+import { notifySuccess, notifyError } from '../reducers/notificationReducer'
+import loginReaderService from '../services/loginReader'
 
 const useStyles = makeStyles(theme => ({
 	inputColor:{
@@ -119,9 +120,16 @@ const LoginReader = () => {
 
 	const handleSubmit = async (values) => {
 		try {
-			dispatch(addReader(values))
-			dispatch(notifySuccess('Login successful'))
-			history.push('/')
+			const reader = await loginReaderService.login(values)
+			console.log('reader', reader)
+			if (reader) {
+				console.log('reader second time', reader)
+				await dispatch(addReader(reader))
+				await dispatch(notifySuccess('Login successful'))
+				history.push('/')
+			} else {
+				await dispatch(notifyError('Login Failed'))
+			}
 		} catch (error) {
 			console.log(error)
 		}
@@ -149,5 +157,3 @@ const LoginReader = () => {
 }
 
 export default LoginReader
-
-// TODO username unique validator

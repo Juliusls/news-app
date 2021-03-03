@@ -1,7 +1,6 @@
 const writersRouter = require('express').Router()
 const bcrypt = require('bcrypt')
 const Writer = require('../models/writer')
-const logger = require('../utils/logger')
 const { getDateFormated } = require('../utils/helpers')
 
 writersRouter.get('/', async (request, response) => {
@@ -58,7 +57,7 @@ writersRouter.get('/:id', async (request, response) => {
 	}
 })
 
-writersRouter.post('/', async (request, response) => {
+writersRouter.post('/', async (request, response, next) => {
 	const body = request.body
 
 	if (body.firstName === undefined) {
@@ -111,10 +110,10 @@ writersRouter.post('/', async (request, response) => {
 		.then(savedWriter => {
 			response.json(savedWriter.toJSON())
 		})
-		.catch(error => logger.error(error))
+		.catch(error => next(error))
 })
 
-writersRouter.put('/:id', (request, response) => {
+writersRouter.put('/:id', (request, response, next) => {
 	const body = request.body
 
 	const writer = {
@@ -129,6 +128,7 @@ writersRouter.put('/:id', (request, response) => {
 		.then(updatedWriter => {
 			response.status(200).json(updatedWriter.toJSON())
 		})
+		.catch((error) => next(error))
 })
 
 writersRouter.delete('/:id', async (request, response) => {

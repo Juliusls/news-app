@@ -4,7 +4,6 @@ const Article = require('../models/article')
 const Writer = require('../models/writer')
 const Reader = require('../models/reader')
 const { getDateFormated } = require('../utils/helpers')
-const logger = require('../utils/logger')
 const jwt = require('jsonwebtoken')
 
 articlesRouter.get('/', async (request, response) => {
@@ -34,7 +33,7 @@ articlesRouter.get('/:id', async (request, response) => {
 	}
 })
 
-articlesRouter.post('/', async (request, response) => {
+articlesRouter.post('/', async (request, response, next) => {
 	const body = request.body
 
 	let accessToken = request.cookies.writerAuthCookie
@@ -76,11 +75,11 @@ articlesRouter.post('/', async (request, response) => {
 		await writer.save()
 		response.status(201).json(savedArticle)
 	} catch (error) {
-		logger.error(error)
+		next(error)
 	}
 })
 
-articlesRouter.put('/:id', async (request, response) => {
+articlesRouter.put('/:id', async (request, response, next) => {
 	const body = request.body
     
 	const article = {
@@ -91,14 +90,15 @@ articlesRouter.put('/:id', async (request, response) => {
 		.then(updatedArticle => {
 			response.status(200).json(updatedArticle.toJSON())
 		})
+		.catch(error => next(error))
 })
 
-articlesRouter.delete('/:id', async (request, response) => {
-	await Article.findByIdAndRemove(request.params.id)
-	response.status(204).end()
-})
+// articlesRouter.delete('/:id', async (request, response) => {
+// 	await Article.findByIdAndRemove(request.params.id)
+// 	response.status(204).end()
+// })
 
-articlesRouter.post('/:id/comments', async (request, response) => {
+articlesRouter.post('/:id/comments', async (request, response, next) => {
 	const body = request.body
 	let accessToken = request.cookies.readerAuthCookie
 
@@ -133,7 +133,7 @@ articlesRouter.post('/:id/comments', async (request, response) => {
 		await reader.save()
 		response.status(201).json(savedComment)
 	} catch (error) {
-		logger.error(error)
+		next(error)
 	}
 })
 
