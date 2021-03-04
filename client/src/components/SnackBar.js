@@ -15,7 +15,6 @@ const SnackBar = () => {
 		<Snackbar 
 			anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
 			open={notification.open} 
-			autoHideDuration={5000} 
 			TransitionComponent={Fade}
 		>
 			<Alert severity={notification.messageType}>

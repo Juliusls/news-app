@@ -11,6 +11,11 @@ import Button from '@material-ui/core/Button'
 import { TextField, Accordion, makeStyles, Card, CardContent } from '@material-ui/core'
 import { addComment } from '../../reducers/articlesReducer'
 import { notifySuccess, notifyError } from '../../reducers/notificationReducer'
+import articlesService from '../../services/articles'
+import { useCookies } from 'react-cookie'
+import { removeReader } from '../../reducers/loginReaderReducer'
+import { useHistory } from 'react-router-dom'
+
 
 const useStyles = makeStyles(theme => ({
 	text: {
@@ -69,6 +74,9 @@ const Comments = () => {
 	const reader = useSelector(state => state.reader)
 	const readers = useSelector(state => state.readers)
 	const commentator = reader && readers.filter(readerOne => readerOne.id === reader.id)[0]
+	// eslint-disable-next-line no-unused-vars
+	const [cookies, setCookie, removeCookie] = useCookies(['readerAuthCookie'])
+	const history = useHistory()
 
 	let { id } = useParams()
 	const filteredArticle = articles.filter(article => article.id === id)[0]
@@ -85,15 +93,22 @@ const Comments = () => {
 		event.preventDefault()
 		try {
 			const newComment = { comment: commentValue }
-			await dispatch(addComment(newComment, id, commentator))
+			console.log('newComment', newComment)
+			const savedComment = await articlesService.postComment(newComment, id)
+			dispatch(addComment(savedComment, commentator))
 			dispatch(notifySuccess(`${commentValue} added`))
 			setCommentValue('')
 		} catch (error) {
-			dispatch(notifyError('An error occurred. Please try again'))
+			console.log('error response from catch block', error.response)
+			if (error.response.statusText === 'Unauthorized' && error.response.data.error === 'token expired') {
+				console.log('do action here with expired token')
+				dispatch(notifyError('You session has expired. Please login again'))
+				dispatch(removeReader())
+				removeCookie('readerAuthCookie')
+				history.push('/reader/login')
+			}
 		}
-		
 	}
-	
 
 	return (
 		<div className={classes.accordionMargin}>

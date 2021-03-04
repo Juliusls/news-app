@@ -18,9 +18,12 @@ import ReaderPage from './components/ReaderPage/ReaderPage'
 import AllWriters from './components/AllWriters'
 import WriterAdminPage from './components/WriterSection/WriterAdminPage'
 import NewArticle from './components/WriterSection/NewArticle'
+import { useCookies } from 'react-cookie'
 
 const App = () => {
 	const dispatch = useDispatch()
+	// eslint-disable-next-line no-unused-vars
+	const [cookies, setCookie, removeCookie] = useCookies(['readerAuthCookie', 'writerAuthCookie'])
 
 	useEffect(() => {
 		async function getAllArticles() {
@@ -96,12 +99,11 @@ const App = () => {
 
 export default App
 
-// TODO work on subscription expires
 
-// TODO create error message component with material ui snackbar
 // TODO funcionality for paying for individual articles
 
-// TODO Expiration time for login token
+// TODO Expiration time for login reader and writer tokens
+
 // TODO Expiration time for subscription
 
 // TODO date value trough entire project

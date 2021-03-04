@@ -83,9 +83,6 @@ export const addSubscriptionToReader = (newSubscription) => {
 	}
 }
 
-
-
-
 export const addReaderFunds = (fundsToAdd, reader) => {
 	return async dispatch => {
 		const readerToUpdate = { favoritewriters: reader.favoritewriters.map(writer => writer.id) , funds: reader.funds + fundsToAdd }

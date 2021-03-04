@@ -53,9 +53,8 @@ export const addViewToArticle = (article) => {
 }
 
 
-export const addComment = (newComment, id, commentator) => {
+export const addComment = (savedComment, commentator) => {
 	return async dispatch => {
-		const savedComment = await articlesService.postComment(newComment, id)
 		const commentForDispatch = { ...savedComment, commentator: commentator }
 		dispatch ({
 			type: 'ADD_COMMENT',

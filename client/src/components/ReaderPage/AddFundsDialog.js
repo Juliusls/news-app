@@ -30,6 +30,7 @@ const AddFundsDialog = ({ openDialog, setOpenDialog, reader }) => {
 			setFundsValue(0)
 			setOpenDialog(false)
 		} catch  (error) {
+			console.log('error resonse from submit', error)
 			dispatch(notifyError('An error occurred. Please try again'))
 		}
 		
