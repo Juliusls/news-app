@@ -14,7 +14,7 @@ import CancelIcon from '@material-ui/icons/Cancel'
 import DoneIcon from '@material-ui/icons/Done'
 import TextField from '@material-ui/core/TextField'
 import { updatePricing } from '../../reducers/writersReducer'
-import { notifySuccess } from '../../reducers/notificationReducer'
+import { notifyError, notifySuccess } from '../../reducers/notificationReducer'
 
 const useStyles = makeStyles(theme => ({
 	main: {
@@ -82,10 +82,14 @@ const WritersPrices = ({ writer }) => {
 		'yearlySubscriptionPrice': writer.yearlySubscriptionPrice || 0
 	})
 
-	const handleSubmit = () => {
-		dispatch(updatePricing(priceList, writer))
-		dispatch(notifySuccess('Prices updated'))
-		setssEditMode(false)
+	const handleSubmit = async () => {
+		try {
+			await dispatch(updatePricing(priceList, writer))
+			dispatch(notifySuccess('Prices updated'))
+			setssEditMode(false)
+		} catch (error) {
+			dispatch(notifyError('An error occurred. Please try again'))
+		}
 	}
 
 	const handleCancel = () => {

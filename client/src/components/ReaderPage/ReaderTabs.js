@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { removeFavoriteWriter } from '../../reducers/readersReducer'
 import { removeReaderFromFollowers } from '../../reducers/writersReducer'
-import { notifyError } from '../../reducers/notificationReducer'
+import { notifyError, notifySuccess } from '../../reducers/notificationReducer'
  
 const useStyles = makeStyles(theme => ({
 	text: {
@@ -65,10 +65,14 @@ const ReaderTabs = ({ reader }) => {
 		setValue(newValue)
 	}
 
-	const handleRemove = (favoriteWriter) => {
-		dispatch(removeFavoriteWriter(favoriteWriter, reader))
-		dispatch(removeReaderFromFollowers(reader, favoriteWriter))
-		dispatch(notifyError(`${favoriteWriter.firstName} ${favoriteWriter.lastName} removed from favorites`))
+	const handleRemove = async (favoriteWriter) => {
+		try {
+			await dispatch(removeFavoriteWriter(favoriteWriter, reader))
+			await dispatch(removeReaderFromFollowers(reader, favoriteWriter))
+			dispatch(notifySuccess(`${favoriteWriter.firstName} ${favoriteWriter.lastName} removed from favorites`))
+		} catch (error) {
+			dispatch(notifyError('An error occurred. Please try again'))
+		}
 	}
 
 	return (
@@ -142,5 +146,3 @@ const ReaderTabs = ({ reader }) => {
 }
 
 export default ReaderTabs
-
-// to={`/author/${subscription.recipient[0].id}`}

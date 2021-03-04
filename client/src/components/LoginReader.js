@@ -8,7 +8,6 @@ import { makeStyles, Typography } from '@material-ui/core'
 import { TextField } from 'formik-material-ui'
 import { addReader } from '../reducers/loginReaderReducer'
 import { notifySuccess, notifyError } from '../reducers/notificationReducer'
-import loginReaderService from '../services/loginReader'
 
 const useStyles = makeStyles(theme => ({
 	inputColor:{
@@ -120,18 +119,11 @@ const LoginReader = () => {
 
 	const handleSubmit = async (values) => {
 		try {
-			const reader = await loginReaderService.login(values)
-			console.log('reader', reader)
-			if (reader) {
-				console.log('reader second time', reader)
-				await dispatch(addReader(reader))
-				await dispatch(notifySuccess('Login successful'))
-				history.push('/')
-			} else {
-				await dispatch(notifyError('Login Failed'))
-			}
+			await dispatch(addReader(values))
+			dispatch(notifySuccess('Login successful'))
+			history.push('/')
 		} catch (error) {
-			console.log(error)
+			dispatch(notifyError('Incorrect username or password'))
 		}
 	}
 

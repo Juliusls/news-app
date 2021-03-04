@@ -11,7 +11,7 @@ import { createArticle } from '../../reducers/articlesReducer'
 import { addArticleToWriter } from '../../reducers/writersReducer'
 import { useHistory } from 'react-router-dom'
 import articlesService from '../../services/articles'
-import { notifySuccess } from '../../reducers/notificationReducer'
+import { notifyError, notifySuccess } from '../../reducers/notificationReducer'
 
 const useStyles = makeStyles(theme => ({
 	inputColor:{
@@ -210,13 +210,12 @@ const NewArticle = () => {
 	const handleSubmit = async (values) => {
 		try {
 			const article = await articlesService.create(values)
-			console.log(article)
 			await dispatch(createArticle(article))
 			await dispatch(addArticleToWriter(article))
 			dispatch(notifySuccess('Article created'))
 			history.push(`/writerssection/profile/${writer.id}`)
 		} catch (error) {
-			console.log(error)
+			dispatch(notifyError('An error occurred. Please try again'))
 		}
 	}
 

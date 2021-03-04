@@ -16,7 +16,6 @@ import { notifySuccess } from '../../reducers/notificationReducer'
 const useStyles = makeStyles(theme => ({
 	appbar: {
 		background: theme.primary,
-		// marginBottom: 100
 	},
 	root: {
 		flexGrow: 1,

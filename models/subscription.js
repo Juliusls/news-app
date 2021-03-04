@@ -28,6 +28,3 @@ subscriptionSchema.set('toJSON', {
 })
 
 module.exports = mongoose.model('Subscription', subscriptionSchema)
-
-
-// Type Montly or Yearly

@@ -3,7 +3,7 @@ import { DialogActions, DialogTitle, Dialog, Button, makeStyles } from '@materia
 import NumberFormat from 'react-number-format'
 import { useDispatch } from 'react-redux'
 import { addReaderFunds } from '../../reducers/readersReducer'
-import { notifySuccess } from '../../reducers/notificationReducer'
+import { notifyError, notifySuccess } from '../../reducers/notificationReducer'
 
 
 const useStyles = makeStyles(theme => ({
@@ -21,13 +21,18 @@ const AddFundsDialog = ({ openDialog, setOpenDialog, reader }) => {
 		setFundsValue(event.target.value)
 	}
 	
-	const handleSubmit = event => {
+	const handleSubmit = async (event) => {
 		event.preventDefault()
-		const fundsToAdd = Number(fundsValue)
-		dispatch(addReaderFunds(fundsToAdd, reader))
-		dispatch(notifySuccess(`${fundsToAdd} € added to your funds`))
-		setFundsValue(0)
-		setOpenDialog(false)
+		try {
+			const fundsToAdd = Number(fundsValue)
+			await dispatch(addReaderFunds(fundsToAdd, reader))
+			dispatch(notifySuccess(`${fundsToAdd} € added to your funds`))
+			setFundsValue(0)
+			setOpenDialog(false)
+		} catch  (error) {
+			dispatch(notifyError('An error occurred. Please try again'))
+		}
+		
 	}
 
 	return (
@@ -41,7 +46,6 @@ const AddFundsDialog = ({ openDialog, setOpenDialog, reader }) => {
 			<DialogActions>
 				<NumberFormat
 					onChange={onChangeFunds}
-					thousandSeparator
 					value={fundsValue}
 					isNumericString
 				/>

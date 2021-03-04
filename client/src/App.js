@@ -97,7 +97,6 @@ const App = () => {
 export default App
 
 // TODO work on subscription expires
-// TODO cant add 1.000 to funds
 
 // TODO create error message component with material ui snackbar
 // TODO funcionality for paying for individual articles

@@ -1,4 +1,4 @@
-// import loginReaderService from '../services/loginReader'
+import loginReaderService from '../services/loginReader'
 
 const loginReaderReducer = (state = null, action) => {
 	switch(action.type) {
@@ -13,10 +13,10 @@ const loginReaderReducer = (state = null, action) => {
 
 export const addReader = (newReader) => {
 	return async dispatch => {
-		// const reader = await loginReaderService.login(newReader)
+		const reader = await loginReaderService.login(newReader)
 		dispatch ({
 			type: 'ADD_READER',
-			data: newReader
+			data: reader
 		})
 	}
 }

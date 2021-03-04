@@ -1,6 +1,5 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-// import { Typography, ListItem, ListItemText, List, makeStyles, Link } from '@material-ui/core'
 import { Avatar, ListItemAvatar, ListItemText, ListItemSecondaryAction, ListItem, List, makeStyles, Typography } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 
@@ -26,15 +25,6 @@ const useStyles = makeStyles(theme => ({
 		paddingBottom: 20
 	}
 }))
-
-// const ListItemLink = (props) => {
-// 	return <ListItem button component="a" {...props}/>
-// }
-
-// const genres = (writer) => { 
-// 	return 
-// 	}
-// 	)}
 
 const AllWriters = () => {
 	const classes = useStyles()

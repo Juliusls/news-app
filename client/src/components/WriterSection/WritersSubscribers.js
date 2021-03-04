@@ -7,7 +7,6 @@ import TableContainer from '@material-ui/core/TableContainer'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
-// import { Typography } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
 	main: {
@@ -36,13 +35,6 @@ const StyledTableCell = withStyles((theme) => ({
 
 const WritersSubscribers = ({ subscribers }) => {
 	const classes = useStyles()
-
-
-
-	// if (subscribers.length === 0) {
-	// 	return <Typography className={classes.text} variant='subtitle1'>No subscribers</Typography>
-	// }
-
 
 	const subscribersRows = () => { 
 		return subscribers.map(subscription => (

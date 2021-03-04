@@ -6,7 +6,7 @@ import { makeStyles, FormControl, Typography, FormControlLabel, FormGroup, Butto
 import { TextField, CheckboxWithLabel } from 'formik-material-ui'
 import { newsCategories } from '../../data/data'
 import { createWriter } from '../../reducers/writersReducer'
-import { notifySuccess } from '../../reducers/notificationReducer'
+import { notifySuccess, notifyError } from '../../reducers/notificationReducer'
 import { useHistory } from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
@@ -321,11 +321,11 @@ const SignUpWriter = () => {
 
 	const handleSubmit = async (values) => {
 		try {
-			dispatch(createWriter(values))
+			await dispatch(createWriter(values))
 			dispatch(notifySuccess('Registered successfully'))
 			history.push('/writerssection/login')
 		} catch (error) {
-			console.log(error)
+			dispatch(notifyError('An error occurred. Please try again'))
 		}
 	}
 

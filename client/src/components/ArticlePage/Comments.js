@@ -10,7 +10,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import Button from '@material-ui/core/Button'
 import { TextField, Accordion, makeStyles, Card, CardContent } from '@material-ui/core'
 import { addComment } from '../../reducers/articlesReducer'
-import { notifySuccess } from '../../reducers/notificationReducer'
+import { notifySuccess, notifyError } from '../../reducers/notificationReducer'
 
 const useStyles = makeStyles(theme => ({
 	text: {
@@ -81,12 +81,17 @@ const Comments = () => {
 		setCommentValue(event.target.value)
 	}
 	
-	const handleSubmit = (event) => {
+	const handleSubmit = async (event) => {
 		event.preventDefault()
-		const newComment = { comment: commentValue }
-		dispatch(addComment(newComment, id, commentator))
-		dispatch(notifySuccess(`${commentValue} added`))
-		setCommentValue('')
+		try {
+			const newComment = { comment: commentValue }
+			await dispatch(addComment(newComment, id, commentator))
+			dispatch(notifySuccess(`${commentValue} added`))
+			setCommentValue('')
+		} catch (error) {
+			dispatch(notifyError('An error occurred. Please try again'))
+		}
+		
 	}
 	
 

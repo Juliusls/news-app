@@ -7,7 +7,7 @@ import Button from '@material-ui/core/Button'
 import { makeStyles, Typography } from '@material-ui/core'
 import { TextField } from 'formik-material-ui'
 import { addWriter } from '../../reducers/loginWriterReducer'
-import { notifySuccess } from '../../reducers/notificationReducer'
+import { notifyError, notifySuccess } from '../../reducers/notificationReducer'
 
 const useStyles = makeStyles(theme => ({
 	inputColor:{
@@ -142,7 +142,7 @@ const LoginWriter = () => {
 			dispatch(notifySuccess('Logged in successfully'))
 			hisotry.push(`/writerssection/profile/${idForLink.id}`)
 		} catch (error) {
-			console.log(error)
+			dispatch(notifyError('Incorrect username or password'))
 		}
 	}
 

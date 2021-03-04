@@ -109,30 +109,42 @@ const WriterPage = () => {
 
 	const matchingSub = (currentReader && currentReader.subscriptions.length !== 0) && writersSubs.filter(suber => readersSubs.some(sub => sub.id === suber.id))[0]
 		
-	const handleAddToFavorites = () => {
-		dispatch(addFavoriteWriter(filteredWriter, currentReader))
-		dispatch(addReaderToFollowers(currentReader, filteredWriter))
-		dispatch(notifySuccess(`${filteredWriter.firstName} ${filteredWriter.lastName} added to favorites`))
+	const handleAddToFavorites = async () => {
+		try {
+			await dispatch(addFavoriteWriter(filteredWriter, currentReader))
+			await dispatch(addReaderToFollowers(currentReader, filteredWriter))
+			dispatch(notifySuccess(`${filteredWriter.firstName} ${filteredWriter.lastName} added to favorites`))
+		} catch (error) {
+			dispatch(notifyError('An error occurred. Please try again'))
+		}
 	}
 	
-	const handleRemoveFromFavorites = () => {
-		dispatch(removeFavoriteWriter(filteredWriter, currentReader))
-		dispatch(removeReaderFromFollowers(currentReader, filteredWriter))
-		dispatch(notifyError(`${filteredWriter.firstName} ${filteredWriter.lastName} removed from favorites`))
+	const handleRemoveFromFavorites = async () => {
+		try {
+			await dispatch(removeFavoriteWriter(filteredWriter, currentReader))
+			await dispatch(removeReaderFromFollowers(currentReader, filteredWriter))
+			dispatch(notifySuccess(`${filteredWriter.firstName} ${filteredWriter.lastName} removed from favorites`))
+		} catch (error) {
+			dispatch(notifyError('An error occurred. Please try again'))
+		}
 	}
 
 	const handleSubscirbe = async (value) => {
 		if (currentReader.funds < filteredWriter[value]) {
 			window.alert('Not enought funds')
 		} else if (window.confirm('Confirm Subscription')) {
-			dispatch(addEarningsToWriter(filteredWriter[value], filteredWriter))
-			dispatch(substractReaderFunds(filteredWriter[value], currentReader))
-			let typeForSub = value === 'montlySubscriptionPrice' ? 'montly' : 'yearly'
-			const newSubscription = { type: typeForSub, writerId: filteredWriter.id }
-			await readersService.createSubscribtion(newSubscription, currentReader.id)
-			dispatch(initReaders())
-			dispatch(initWriters())
-			dispatch(notifySuccess(`Subsribed ${typeForSub} to ${filteredWriter.firstName} ${filteredWriter.lastName}`))
+			try {
+				await dispatch(addEarningsToWriter(filteredWriter[value], filteredWriter))
+				await dispatch(substractReaderFunds(filteredWriter[value], currentReader))
+				let typeForSub = value === 'montlySubscriptionPrice' ? 'montly' : 'yearly'
+				const newSubscription = { type: typeForSub, writerId: filteredWriter.id }
+				await readersService.createSubscribtion(newSubscription, currentReader.id)
+				await dispatch(initReaders())
+				await dispatch(initWriters())
+				dispatch(notifySuccess(`Subsribed ${typeForSub} to ${filteredWriter.firstName} ${filteredWriter.lastName}`))
+			} catch (error) {
+				dispatch(notifyError('An error occurred. Please try again'))
+			}
 		}
 	}
 
