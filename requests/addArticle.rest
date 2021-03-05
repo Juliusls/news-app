@@ -1,4 +1,4 @@
-post http://localhost:3001/api/articles/
+ppost http://localhost:3001/api/articles/
 Content-Type: application/json
 
 {

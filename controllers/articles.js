@@ -34,30 +34,29 @@ articlesRouter.get('/:id', async (request, response) => {
 })
 
 articlesRouter.post('/', async (request, response, next) => {
-	const body = request.body
-
-	let accessToken = request.cookies.writerAuthCookie
-
-	const decodedToken = jwt.verify(accessToken, process.env.WRITER_ACCESS_TOKEN_SECRET)
-
-	if (!request.cookies.writerAuthCookie || !decodedToken.id) {
-		return response.status(401).json({ error: 'token missing or invalid' })
-	}
-  
-	if (body.title === undefined) {
-		return response.status(400).json({ error: 'title missing' })
-	} 
-	if (body.content === undefined) {
-		return response.status(400).json({ error: 'content missing' })
-	}
-	if (body.genres === undefined) {
-		return response.status(400).json({ error: 'genres missing' })
-	}
-	if (body.paid === undefined) {
-		return response.status(400).json({ error: 'paid missing' })
-	} 
-
 	try {
+		const body = request.body
+
+		let accessToken = request.cookies.writerAuthCookie
+
+		const decodedToken = jwt.verify(accessToken, process.env.WRITER_ACCESS_TOKEN_SECRET)
+
+		if (!request.cookies.writerAuthCookie || !decodedToken.id) {
+			return response.status(401).json({ error: 'token missing or invalid' })
+		}
+	
+		if (body.title === undefined) {
+			return response.status(400).json({ error: 'title missing' })
+		} 
+		if (body.content === undefined) {
+			return response.status(400).json({ error: 'content missing' })
+		}
+		if (body.genres === undefined) {
+			return response.status(400).json({ error: 'genres missing' })
+		}
+		if (body.paid === undefined) {
+			return response.status(400).json({ error: 'paid missing' })
+		} 
 		const writer = await Writer.findById(decodedToken.id)
   
 		const article = new Article({
@@ -99,19 +98,21 @@ articlesRouter.put('/:id', async (request, response, next) => {
 // })
 
 articlesRouter.post('/:id/comments', async (request, response, next) => {
-	const body = request.body
-	let accessToken = request.cookies.readerAuthCookie
-
-	const decodedToken = jwt.verify(accessToken, process.env.READER_ACCESS_TOKEN_SECRET)
-
-	if (!request.cookies.readerAuthCookie || !decodedToken.id) {
-		return response.status(401).json({ error: 'token missing or invalid' })
-	}
-
-	if (body.comment === undefined) {
-		return response.status(400).json({error: 'comment missing'})
-	}
 	try {
+		const body = request.body
+		let accessToken = request.cookies.readerAuthCookie
+
+		const decodedToken = jwt.verify(accessToken, process.env.READER_ACCESS_TOKEN_SECRET)
+
+
+		if (!request.cookies.readerAuthCookie || !decodedToken.id) {
+			// return response.status(401).json({ error: 'token missing or invalid' })
+			return response.status(401).json({ error: 'token missing or invalid' })
+		}
+
+		if (body.comment === undefined) {
+			return response.status(400).json({error: 'comment missing'})
+		}
 		const article = await Article.findById(request.params.id)
 		const reader = await Reader.findById(decodedToken.id)
 

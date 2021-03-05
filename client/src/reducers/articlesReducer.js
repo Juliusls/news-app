@@ -1,6 +1,5 @@
 import articlesService from '../services/articles'
 
-
 const articlesReducer = (state = [], action) => {
 	switch(action.type) {
 	case 'INIT_ARTICLES':
@@ -53,8 +52,9 @@ export const addViewToArticle = (article) => {
 }
 
 
-export const addComment = (savedComment, commentator) => {
+export const addComment = (newComment, id, commentator) => {
 	return async dispatch => {
+		const savedComment = await articlesService.postComment(newComment, id)
 		const commentForDispatch = { ...savedComment, commentator: commentator }
 		dispatch ({
 			type: 'ADD_COMMENT',

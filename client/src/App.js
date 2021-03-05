@@ -18,12 +18,9 @@ import ReaderPage from './components/ReaderPage/ReaderPage'
 import AllWriters from './components/AllWriters'
 import WriterAdminPage from './components/WriterSection/WriterAdminPage'
 import NewArticle from './components/WriterSection/NewArticle'
-import { useCookies } from 'react-cookie'
 
 const App = () => {
 	const dispatch = useDispatch()
-	// eslint-disable-next-line no-unused-vars
-	const [cookies, setCookie, removeCookie] = useCookies(['readerAuthCookie', 'writerAuthCookie'])
 
 	useEffect(() => {
 		async function getAllArticles() {

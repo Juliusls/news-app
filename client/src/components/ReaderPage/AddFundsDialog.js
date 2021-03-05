@@ -4,7 +4,9 @@ import NumberFormat from 'react-number-format'
 import { useDispatch } from 'react-redux'
 import { addReaderFunds } from '../../reducers/readersReducer'
 import { notifyError, notifySuccess } from '../../reducers/notificationReducer'
-
+import { removeReader } from '../../reducers/loginReaderReducer'
+import { useCookies } from 'react-cookie'
+import { useHistory } from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
 	text:{
@@ -16,6 +18,10 @@ const AddFundsDialog = ({ openDialog, setOpenDialog, reader }) => {
 	const [fundsValue, setFundsValue] = useState(0)
 	const classes = useStyles()
 	const dispatch = useDispatch()
+	// eslint-disable-next-line no-unused-vars
+	const [cookies, setCookie, removeCookie] = useCookies(['readerAuthCookie'])
+	const history = useHistory()
+
 
 	const onChangeFunds = event => {
 		setFundsValue(event.target.value)
@@ -30,8 +36,15 @@ const AddFundsDialog = ({ openDialog, setOpenDialog, reader }) => {
 			setFundsValue(0)
 			setOpenDialog(false)
 		} catch  (error) {
-			console.log('error resonse from submit', error)
-			dispatch(notifyError('An error occurred. Please try again'))
+			console.log('error response', error.response)
+			if (error.response.statusText === 'Unauthorized' && error.response.data.error === 'token expired') {
+				dispatch(notifyError('You session has expired. Please login again'))
+				dispatch(removeReader())
+				removeCookie('readerAuthCookie', { path: '/' })
+				history.push('/reader/login')
+			} else {
+				dispatch(notifyError('An error occurred. Please try again'))
+			}
 		}
 		
 	}

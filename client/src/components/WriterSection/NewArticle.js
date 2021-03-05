@@ -12,6 +12,8 @@ import { addArticleToWriter } from '../../reducers/writersReducer'
 import { useHistory } from 'react-router-dom'
 import articlesService from '../../services/articles'
 import { notifyError, notifySuccess } from '../../reducers/notificationReducer'
+import { useCookies } from 'react-cookie'
+import { removeWriter } from '../../reducers/loginWriterReducer'
 
 const useStyles = makeStyles(theme => ({
 	inputColor:{
@@ -205,6 +207,8 @@ const NewArticle = () => {
 	const history = useHistory()
 	const writer = useSelector(state => state.writer)
 	const dispatch = useDispatch()
+	// eslint-disable-next-line no-unused-vars
+	const [cookies, setCookie, removeCookie] = useCookies(['writerAuthCookie'])
 
 
 	const handleSubmit = async (values) => {
@@ -215,7 +219,15 @@ const NewArticle = () => {
 			dispatch(notifySuccess('Article created'))
 			history.push(`/writerssection/profile/${writer.id}`)
 		} catch (error) {
-			dispatch(notifyError('An error occurred. Please try again'))
+			console.log('error response', error.response)
+			if (error.response.statusText === 'Unauthorized' && error.response.data.error === 'token expired') {
+				dispatch(notifyError('You session has expired. Please login again'))
+				dispatch(removeWriter())
+				removeCookie('writerAuthCookie', { path: '/' })
+				history.push('/writerssection/login')
+			} else {
+				dispatch(notifyError('An error occurred. Please try again'))
+			}
 		}
 	}
 

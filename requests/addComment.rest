@@ -1,4 +1,4 @@
-post http://localhost:3001/api/articles/603918999a12df5202707690/comments
+post http://localhost:3001/api/articles/6040e88dcee0284e0ef0c8de/comments
 Content-Type: application/json
 
 {

@@ -45,4 +45,6 @@ Readers will be able to read the news by selecting categories or selecting/filte
 | | 1 | Unique username validation with formik and in the back end for new writers and readers, minor form improvements |
 | | 2.5 | Working on error handling in the backend and front end |
 | 4.3 | 3 | Error handling in the front end |
-| Total  | 119 | | 
+| | 4 | Figuring out best way to log out user if token expires, implementing it to AddComment component |
+| 5.3 | 2 | Implementing log out if token expires to all components |
+| Total  | 125 | | 

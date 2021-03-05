@@ -15,6 +15,9 @@ import DoneIcon from '@material-ui/icons/Done'
 import TextField from '@material-ui/core/TextField'
 import { updatePricing } from '../../reducers/writersReducer'
 import { notifyError, notifySuccess } from '../../reducers/notificationReducer'
+import { useCookies } from 'react-cookie'
+import { removeWriter } from '../../reducers/loginWriterReducer'
+import { useHistory } from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
 	main: {
@@ -75,6 +78,9 @@ const WritersPrices = ({ writer }) => {
 	const classes = useStyles()
 	const dispatch = useDispatch()
 	const [isEditMode, setssEditMode] = useState(false)
+	// eslint-disable-next-line no-unused-vars
+	const [cookies, setCookie, removeCookie] = useCookies(['writerAuthCookie'])
+	const history = useHistory()
 
 	const [priceList, setSriceList] = useState({
 		'oneArticlePrice': writer.oneArticlePrice || 0,
@@ -88,7 +94,15 @@ const WritersPrices = ({ writer }) => {
 			dispatch(notifySuccess('Prices updated'))
 			setssEditMode(false)
 		} catch (error) {
-			dispatch(notifyError('An error occurred. Please try again'))
+			console.log('error response', error.response)
+			if (error.response.statusText === 'Unauthorized' && error.response.data.error === 'token expired') {
+				dispatch(notifyError('You session has expired. Please login again'))
+				dispatch(removeWriter())
+				removeCookie('writerAuthCookie', { path: '/' })
+				history.push('/writerssection/login')
+			} else {
+				dispatch(notifyError('An error occurred. Please try again'))
+			}
 		}
 	}
 

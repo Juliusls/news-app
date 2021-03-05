@@ -59,7 +59,9 @@ export const createWriter = (newWriter) => {
 export const addReaderToFollowers = (readerToAdd, writer) => {
 	return async dispatch => {
 		const writerToUpdate = { ...writer, followers: writer.followers.map(follower => follower.id).concat(readerToAdd.id) }
-		await writersService.update(writerToUpdate, writer.id)
+		const writerFromDb = await writersService.update(writerToUpdate, writer.id)
+		console.log('writerFromDb', writerFromDb)
+
 		const writerForDispatch = { ...writer, followers: writer.followers.concat(readerToAdd) }
 		dispatch ({
 			type: 'ADD_READER_TO_FOLLOWERS',
@@ -71,7 +73,8 @@ export const addReaderToFollowers = (readerToAdd, writer) => {
 export const removeReaderFromFollowers = (readerToRemove, writer) => {
 	return async dispatch => {
 		const writerToUpdate = { ...writer, followers: writer.followers.map(follower => follower.id).filter(id => id !== readerToRemove.id) }
-		await writersService.update(writerToUpdate, writer.id)
+		const writerFromDb = await writersService.update(writerToUpdate, writer.id)
+		console.log('writerFromDb', writerFromDb)
 		const writerForDispatch = { ...writer, followers: writer.followers.filter(writer => writer.id !== readerToRemove.id) }
 		dispatch ({
 			type: 'REMOVE_READER_FROM_FOLLOWERS',

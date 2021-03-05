@@ -88,14 +88,14 @@ const Navbar = () =>  {
 	const handleReaderLogout = () => {
 		dispatch(removeReader())
 		dispatch(notifySuccess('Logged out successfully'))
-		removeCookie('readerAuthCookie')
+		removeCookie('readerAuthCookie', { path: '/' })
 		history.push('/')
 	}
 	
 	const handleWriterLogout = () => {
 		dispatch(removeWriter())
 		dispatch(notifySuccess('Logged out successfully'))
-		removeCookie('writerAuthCookie')
+		removeCookie('writerAuthCookie', { path: '/' })
 		history.push('/')
 	}
 

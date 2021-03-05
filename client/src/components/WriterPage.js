@@ -13,6 +13,9 @@ import { addFavoriteWriter, removeFavoriteWriter, substractReaderFunds, initRead
 import { addReaderToFollowers, removeReaderFromFollowers, addEarningsToWriter, initWriters } from '../reducers/writersReducer'
 import readersService from '../services/readers'
 import { notifySuccess, notifyError } from '../reducers/notificationReducer'
+import { removeReader } from '../reducers/loginReaderReducer'
+import { useCookies } from 'react-cookie'
+import { useHistory } from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
 	profileContaner: {
@@ -93,6 +96,9 @@ const WriterPage = () => {
 	const dispatch = useDispatch()
 	let { author } = useParams()
 	const loggedInReader = useSelector(state => state.reader)
+	// eslint-disable-next-line no-unused-vars
+	const [cookies, setCookie, removeCookie] = useCookies(['readerAuthCookie'])
+	const history = useHistory()
 
 
 	const filteredWriter = useSelector(state => state.writers.filter(writer => writer.id === author)[0])
@@ -115,7 +121,16 @@ const WriterPage = () => {
 			await dispatch(addReaderToFollowers(currentReader, filteredWriter))
 			dispatch(notifySuccess(`${filteredWriter.firstName} ${filteredWriter.lastName} added to favorites`))
 		} catch (error) {
-			dispatch(notifyError('An error occurred. Please try again'))
+			console.log('error response', error.response)
+			if (error.response.statusText === 'Unauthorized' && error.response.data.error === 'token expired') {
+				console.log('add to favorite error')
+				dispatch(notifyError('You session has expired. Please login again'))
+				dispatch(removeReader())
+				removeCookie('readerAuthCookie', { path: '/' })
+				history.push('/reader/login')
+			} else {
+				dispatch(notifyError('An error occurred. Please try again'))
+			}
 		}
 	}
 	
@@ -125,7 +140,15 @@ const WriterPage = () => {
 			await dispatch(removeReaderFromFollowers(currentReader, filteredWriter))
 			dispatch(notifySuccess(`${filteredWriter.firstName} ${filteredWriter.lastName} removed from favorites`))
 		} catch (error) {
-			dispatch(notifyError('An error occurred. Please try again'))
+			console.log('error response', error.response)
+			if (error.response.statusText === 'Unauthorized' && error.response.data.error === 'token expired') {
+				dispatch(notifyError('You session has expired. Please login again'))
+				dispatch(removeReader())
+				removeCookie('readerAuthCookie', { path: '/' })
+				history.push('/reader/login')
+			} else {
+				dispatch(notifyError('An error occurred. Please try again'))
+			}
 		}
 	}
 
@@ -143,7 +166,15 @@ const WriterPage = () => {
 				await dispatch(initWriters())
 				dispatch(notifySuccess(`Subsribed ${typeForSub} to ${filteredWriter.firstName} ${filteredWriter.lastName}`))
 			} catch (error) {
-				dispatch(notifyError('An error occurred. Please try again'))
+				console.log('error response', error.response)
+				if (error.response.statusText === 'Unauthorized' && error.response.data.error === 'token expired') {
+					dispatch(notifyError('You session has expired. Please login again'))
+					dispatch(removeReader())
+					removeCookie('readerAuthCookie', { path: '/' })
+					history.push('/reader/login')
+				} else {
+					dispatch(notifyError('An error occurred. Please try again'))
+				}
 			}
 		}
 	}

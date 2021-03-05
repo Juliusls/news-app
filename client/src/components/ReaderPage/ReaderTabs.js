@@ -5,7 +5,10 @@ import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { removeFavoriteWriter } from '../../reducers/readersReducer'
 import { removeReaderFromFollowers } from '../../reducers/writersReducer'
+import { removeReader } from '../../reducers/loginReaderReducer'
 import { notifyError, notifySuccess } from '../../reducers/notificationReducer'
+import { useCookies } from 'react-cookie'
+import { useHistory } from 'react-router-dom'
  
 const useStyles = makeStyles(theme => ({
 	text: {
@@ -60,6 +63,9 @@ const ReaderTabs = ({ reader }) => {
 	const [value, setValue] = useState(0)
 	const classes = useStyles()
 	const dispatch = useDispatch()
+	// eslint-disable-next-line no-unused-vars
+	const [cookies, setCookie, removeCookie] = useCookies(['readerAuthCookie'])
+	const history = useHistory()
 
 	const handleChange = (event, newValue) => {
 		setValue(newValue)
@@ -71,7 +77,15 @@ const ReaderTabs = ({ reader }) => {
 			await dispatch(removeReaderFromFollowers(reader, favoriteWriter))
 			dispatch(notifySuccess(`${favoriteWriter.firstName} ${favoriteWriter.lastName} removed from favorites`))
 		} catch (error) {
-			dispatch(notifyError('An error occurred. Please try again'))
+			console.log('error response', error.response)
+			if (error.response.statusText === 'Unauthorized' && error.response.data.error === 'token expired') {
+				dispatch(notifyError('You session has expired. Please login again'))
+				dispatch(removeReader())
+				removeCookie('readerAuthCookie', { path: '/' })
+				history.push('/reader/login')
+			} else {
+				dispatch(notifyError('An error occurred. Please try again'))
+			}
 		}
 	}
 

@@ -11,7 +11,6 @@ import Button from '@material-ui/core/Button'
 import { TextField, Accordion, makeStyles, Card, CardContent } from '@material-ui/core'
 import { addComment } from '../../reducers/articlesReducer'
 import { notifySuccess, notifyError } from '../../reducers/notificationReducer'
-import articlesService from '../../services/articles'
 import { useCookies } from 'react-cookie'
 import { removeReader } from '../../reducers/loginReaderReducer'
 import { useHistory } from 'react-router-dom'
@@ -93,19 +92,18 @@ const Comments = () => {
 		event.preventDefault()
 		try {
 			const newComment = { comment: commentValue }
-			console.log('newComment', newComment)
-			const savedComment = await articlesService.postComment(newComment, id)
-			dispatch(addComment(savedComment, commentator))
+			await dispatch(addComment(newComment, id, commentator))
 			dispatch(notifySuccess(`${commentValue} added`))
 			setCommentValue('')
 		} catch (error) {
-			console.log('error response from catch block', error.response)
+			console.log('error response', error.response)
 			if (error.response.statusText === 'Unauthorized' && error.response.data.error === 'token expired') {
-				console.log('do action here with expired token')
 				dispatch(notifyError('You session has expired. Please login again'))
 				dispatch(removeReader())
-				removeCookie('readerAuthCookie')
+				removeCookie('readerAuthCookie', { path: '/' })
 				history.push('/reader/login')
+			} else {
+				dispatch(notifyError('An error occurred. Please try again'))
 			}
 		}
 	}

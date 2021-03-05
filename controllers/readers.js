@@ -3,7 +3,6 @@ const bcrypt = require('bcrypt')
 const Reader = require('../models/reader')
 const Writer = require('../models/writer')
 const Subscription = require('../models/subscription')
-const logger = require('../utils/logger')
 const { getDateFormated } = require('../utils/helpers')
 const jwt = require('jsonwebtoken')
 
@@ -72,7 +71,7 @@ readersRouter.get('/:id', async (request, response) => {
 	}
 })
 
-readersRouter.post('/', async (request, response) => {
+readersRouter.post('/', async (request, response, next) => {
 	try {
 		const body = request.body
 
@@ -108,11 +107,11 @@ readersRouter.post('/', async (request, response) => {
 		const savedReader = await reader.save()
 		response.status(201).json(savedReader)
 	} catch(error) {
-		logger.error(error)
+		next(error)
 	}
 })
 
-readersRouter.put('/:id', (request, response) =>{
+readersRouter.put('/:id', (request, response, next) =>{
 	const body = request.body
 
 	let accessToken = request.cookies.readerAuthCookie
@@ -132,7 +131,7 @@ readersRouter.put('/:id', (request, response) =>{
 		.then(updatedReader => {
 			response.status(200).json(updatedReader)
 		})
-		.catch(error => logger.error(error))
+		.catch(error => next(error))
 })
 
 readersRouter.delete('/:id', async (request, response) => {
@@ -140,24 +139,24 @@ readersRouter.delete('/:id', async (request, response) => {
 	response.status(204).end()
 })
 
-readersRouter.post('/:id/subscriptions', async (request, response) => {
-	const body = request.body
-	let accessToken = request.cookies.readerAuthCookie
-
-	const decodedToken = jwt.verify(accessToken, process.env.READER_ACCESS_TOKEN_SECRET)
-
-	if (!request.cookies.readerAuthCookie || !decodedToken.id) {
-		return response.status(401).json({ error: 'Token missing or invalid' })
-	}
-
-	if (body.type === undefined) {
-		return response.status(400).json({error: 'Type missing'})
-	}
-	if (body.writerId === undefined) {
-		return response.status(400).json({error: 'Writers id missing'})
-	}
-
+readersRouter.post('/:id/subscriptions', async (request, response, next) => {
 	try {
+		const body = request.body
+		let accessToken = request.cookies.readerAuthCookie
+
+		const decodedToken = jwt.verify(accessToken, process.env.READER_ACCESS_TOKEN_SECRET)
+
+		if (!request.cookies.readerAuthCookie || !decodedToken.id) {
+			return response.status(401).json({ error: 'Token missing or invalid' })
+		}
+
+		if (body.type === undefined) {
+			return response.status(400).json({error: 'Type missing'})
+		}
+		if (body.writerId === undefined) {
+			return response.status(400).json({error: 'Writers id missing'})
+		}
+
 		const reader = await Reader.findById(decodedToken.id)
 		const writer = await Writer.findById(body.writerId)
 
@@ -187,7 +186,7 @@ readersRouter.post('/:id/subscriptions', async (request, response) => {
 		await writer.save()
 		response.status(201).json(savedSubscription)
 	} catch(error) {
-		logger.error(error)
+		next(error)
 	}
 })
 
