@@ -47,4 +47,5 @@ Readers will be able to read the news by selecting categories or selecting/filte
 | 4.3 | 3 | Error handling in the front end |
 | | 4 | Figuring out best way to log out user if token expires, implementing it to AddComment component |
 | 5.3 | 2 | Implementing log out if token expires to all components |
-| Total  | 125 | | 
+| | 2 | Fixing bugs related to expired tokens |
+| Total  | 127 | | 

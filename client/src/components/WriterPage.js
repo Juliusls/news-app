@@ -96,13 +96,14 @@ const WriterPage = () => {
 	const dispatch = useDispatch()
 	let { author } = useParams()
 	const loggedInReader = useSelector(state => state.reader)
+	const readers = useSelector(state => state.readers)
 	// eslint-disable-next-line no-unused-vars
 	const [cookies, setCookie, removeCookie] = useCookies(['readerAuthCookie'])
 	const history = useHistory()
 
 
 	const filteredWriter = useSelector(state => state.writers.filter(writer => writer.id === author)[0])
-	const currentReader = loggedInReader && useSelector(state => state.readers.filter(reader => reader.id === loggedInReader.id)[0])
+	const currentReader = loggedInReader && readers.filter(reader => reader.id === loggedInReader.id)[0]
 
 	if (!filteredWriter) {
 		return <p>Loading...</p>
@@ -123,7 +124,6 @@ const WriterPage = () => {
 		} catch (error) {
 			console.log('error response', error.response)
 			if (error.response.statusText === 'Unauthorized' && error.response.data.error === 'token expired') {
-				console.log('add to favorite error')
 				dispatch(notifyError('You session has expired. Please login again'))
 				dispatch(removeReader())
 				removeCookie('readerAuthCookie', { path: '/' })

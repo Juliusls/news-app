@@ -2,6 +2,7 @@ const writersRouter = require('express').Router()
 const bcrypt = require('bcrypt')
 const Writer = require('../models/writer')
 const { getDateFormated } = require('../utils/helpers')
+const jwt = require('jsonwebtoken')
 
 writersRouter.get('/', async (request, response) => {
 	const writers = await Writer
@@ -113,22 +114,35 @@ writersRouter.post('/', async (request, response, next) => {
 		.catch(error => next(error))
 })
 
-writersRouter.put('/:id', (request, response, next) => {
-	const body = request.body
+writersRouter.put('/:id', async (request, response, next) => {
+	try {
+		const body = request.body
 
-	const writer = {
-		followers: body.followers,
-		earnings: body.earnings, 
-		oneArticlePrice: body.oneArticlePrice,
-		montlySubscriptionPrice: body.montlySubscriptionPrice,
-		yearlySubscriptionPrice: body.yearlySubscriptionPrice,
+		const writerFromDb = await Writer.findById(request.params.id)
+
+		if (writerFromDb.oneArticlePrice !== body.oneArticlePrice || writerFromDb.montlySubscriptionPrice !== body.montlySubscriptionPrice || writerFromDb.yearlySubscriptionPrice !== body.yearlySubscriptionPrice) {
+			let accessToken = request.cookies.writerAuthCookie
+
+			const decodedToken = jwt.verify(accessToken, process.env.WRITER_ACCESS_TOKEN_SECRET)
+
+			if (!request.cookies.writerAuthCookie || !decodedToken.id) {
+				return response.status(401).json({ error: 'token missing or invalid' })
+			}
+		}
+
+		const writer = {
+			followers: body.followers,
+			earnings: body.earnings, 
+			oneArticlePrice: body.oneArticlePrice,
+			montlySubscriptionPrice: body.montlySubscriptionPrice,
+			yearlySubscriptionPrice: body.yearlySubscriptionPrice,
+		}
+
+		const updatedWriter = await Writer.findByIdAndUpdate(request.params.id, writer, { new: true })
+		response.status(200).json(updatedWriter.toJSON())
+	} catch (error) {
+		next(error)
 	}
-
-	Writer.findByIdAndUpdate(request.params.id, writer, { new: true })
-		.then(updatedWriter => {
-			response.status(200).json(updatedWriter.toJSON())
-		})
-		.catch((error) => next(error))
 })
 
 writersRouter.delete('/:id', async (request, response) => {

@@ -26,7 +26,7 @@ loginReaderRouter.post('/', async (request, response, next) => {
 
 		let accessToken = jwt.sign(userForToken, config.READER_ACCESS_TOKEN_SECRET, {
 			algorithm: 'HS256',
-			expiresIn: 30
+			expiresIn: 60 * 60
 		})
 
 		// let refreshToken = jwt.sign(userForToken, config.REFRESH_TOKEN_SECRET, {

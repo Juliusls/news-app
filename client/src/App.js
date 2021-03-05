@@ -99,7 +99,7 @@ export default App
 
 // TODO funcionality for paying for individual articles
 
-// TODO Expiration time for login reader and writer tokens
+// TODO remember me implementation
 
 // TODO Expiration time for subscription
 
