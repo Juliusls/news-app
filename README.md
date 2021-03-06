@@ -49,4 +49,5 @@ Readers will be able to read the news by selecting categories or selecting/filte
 | 5.3 | 2 | Implementing log out if token expires to all components |
 | | 2 | Fixing bugs related to expired tokens |
 | 6.3 | 5 | Adding funcionality that paid articles can only read by subscribers or by logged in users who paid for one |
-| Total  | 132 | | 
+| | 1 | Started implementing image upload for articles |
+| Total | 133 | | 

@@ -80,6 +80,7 @@ const initialValues = {
 	content: [],
 	genres: [],
 	paid: 'no',
+	file: null
 }
 
 const validationSchema = yup.object().shape({
@@ -93,7 +94,8 @@ const validationSchema = yup.object().shape({
 	genres: yup.array()
 		.min(1, 'Check at least one category'),
 	paid: yup.mixed()
-		.oneOf(['yes', 'no'])
+		.oneOf(['yes', 'no']),
+	file: yup.mixed().required()
 })
 
 const NewArticleForm = ({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => {
@@ -194,6 +196,18 @@ const NewArticleForm = ({ values, errors, touched, handleChange, handleBlur, han
 							label="No"
 						/>
 					</Field>
+					<input
+						accept="image/*"
+						style={{ display: 'none' }}
+						id="raised-button-file"
+						multiple
+						type="file"
+					/>
+					<label htmlFor="raised-button-file">
+						<Button variant="raised" component="span" className={classes.button}>
+							Upload
+						</Button>
+					</label> 
 					<Button color="primary" variant="contained" type="submit" className={classes.button}>
                         Publish
 					</Button>
