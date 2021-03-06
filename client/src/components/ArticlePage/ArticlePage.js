@@ -46,8 +46,8 @@ const ArticlePage = () => {
 					By <Link to={`/author/${filteredArticle.author.id}`}>{filteredArticle.author.firstName} {filteredArticle.author.lastName}</Link> | {filteredArticle.published}
 				</Typography>
 				<br/>
-				{filteredArticle.content.map(content => 
-					<div key={content} >
+				{filteredArticle.content.map((content, index) => 
+					<div key={index} >
 						<Typography >
 							{content}
 						</Typography>

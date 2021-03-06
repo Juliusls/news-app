@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
 import CardActionArea from '@material-ui/core/CardActionArea'
@@ -8,6 +8,13 @@ import Typography from '@material-ui/core/Typography'
 import { Link, useHistory } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { addViewToArticle } from '../../reducers/articlesReducer'
+import { useSelector } from 'react-redux'
+import { notifyError } from '../../reducers/notificationReducer'
+import { substractReaderFunds } from '../../reducers/readersReducer'
+import { addEarningsToWriter } from '../../reducers/writersReducer'
+import DialogBoxToLogin from './DialogBoxToLogIn'
+import DialogBoxToAddFunds from './DialogBoxToAddFunds'
+// import DialogBoxToPay from './DialogBoxToPay'
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -51,14 +58,50 @@ const useStyles = makeStyles(theme => ({
 const ArticleCard = ({ article }) => {
 	const history = useHistory()
 	const dispatch = useDispatch()
+	const reader = useSelector(state => state.reader)
+	const readers = useSelector(state => state.readers)
+	const loggedInReader = reader && readers.filter(readerOne => readerOne.id === reader.id)[0]
+
+	const [openLoginDialog, setOpenLoginDialog] = useState(false)
+	const [openAddFundsDialog, setOpenAddFundsDialog] = useState(false)
+	// const [openPayDialog, setOpenPayDialog] = useState(false)
 
 	if (!article) {
 		return <p>Loading...</p>
 	}
 
-	const handleCardPress = (article) => {
-		dispatch(addViewToArticle(article))
-		history.push(`/article/${article.id}`)
+	const handleCardPress = async (article) => {
+		// first
+		if (article.paid === 'yes') {
+			// second
+			if (!loggedInReader) {
+				setOpenLoginDialog(true)
+			} else {
+				// third
+				if (loggedInReader.subscriptions.some(subscription => subscription.recipient[0].id === article.author.id)) {
+					dispatch(addViewToArticle(article))
+					history.push(`/article/${article.id}`)
+				} else {
+					// fourth
+					if (loggedInReader.funds < article.author.oneArticlePrice) {
+						setOpenAddFundsDialog(true)
+						// fifth
+					} else if (window.confirm(`Confirm payment for this article for ${article.author.oneArticlePrice} €`)) {
+						try {
+							await dispatch(substractReaderFunds(article.author.oneArticlePrice, loggedInReader))
+							await dispatch(addEarningsToWriter(article.author.oneArticlePrice, article.author))
+							dispatch(addViewToArticle(article))
+							history.push(`/article/${article.id}`)
+						} catch (error) {
+							dispatch(notifyError('An error occurred. Please try again'))
+						}
+					}
+				}
+			}
+		} else {
+			dispatch(addViewToArticle(article))
+			history.push(`/article/${article.id}`)
+		}
 	}
 
 	const classes = useStyles()
@@ -93,6 +136,9 @@ const ArticleCard = ({ article }) => {
 					</CardContent>
 				</CardActionArea>
 			</Link>
+			<DialogBoxToLogin openLoginDialog={openLoginDialog} setOpenLoginDialog={setOpenLoginDialog} />
+			{/* <DialogBoxToPay openPayDialog={openPayDialog} setOpenPayDialog={setOpenPayDialog} price={article.author.oneArticlePrice} onConfirm={handlePaymentSubmit}/> */}
+			{loggedInReader && <DialogBoxToAddFunds openAddFundsDialog={openAddFundsDialog} setOpenAddFundsDialog={setOpenAddFundsDialog} loggedInReader={loggedInReader} price={article.author.oneArticlePrice} />}
 		</Card>
 	)
 }

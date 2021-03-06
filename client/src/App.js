@@ -97,12 +97,16 @@ const App = () => {
 export default App
 
 
-// TODO funcionality for paying for individual articles
-
+// TODO ability to add pictures
 // TODO remember me implementation
+// TODO push article to history so reader can read it later after paying for it
+
 
 // TODO Expiration time for subscription
+// TODO if user is logged out make it that after logging in he comes back to the same place 
 
+
+// TODO redux persist
 // TODO date value trough entire project
 // TODO Edit article functionality
 // TODO Fix project theme https://bareynol.github.io/mui-theme-creator/

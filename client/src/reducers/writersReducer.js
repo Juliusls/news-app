@@ -61,7 +61,6 @@ export const addReaderToFollowers = (readerToAdd, writer) => {
 		const writerToUpdate = { ...writer, followers: writer.followers.map(follower => follower.id).concat(readerToAdd.id) }
 		const writerFromDb = await writersService.update(writerToUpdate, writer.id)
 		console.log('writerFromDb', writerFromDb)
-
 		const writerForDispatch = { ...writer, followers: writer.followers.concat(readerToAdd) }
 		dispatch ({
 			type: 'ADD_READER_TO_FOLLOWERS',
