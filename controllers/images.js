@@ -1,5 +1,5 @@
 const imagesRouter = require('express').Router()
-const Image = require('./models/image')
+const Image = require('../models/images')
 const multer = require('multer')
 const fs = require('fs')
 const path = require('path')
@@ -15,9 +15,6 @@ var storage = multer.diskStorage({
 })
 
 var upload = multer({ storage: storage })
-
-
-
 
 imagesRouter.get('/', async (request, response) => {
 	await Image.find({}, (error, items) => {
@@ -51,3 +48,5 @@ imagesRouter.post('/', upload.single('image'), (req, res) => {
 		}
 	})
 })
+
+module.exports = imagesRouter

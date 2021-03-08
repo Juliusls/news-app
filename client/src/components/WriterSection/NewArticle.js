@@ -14,6 +14,31 @@ import articlesService from '../../services/articles'
 import { notifyError, notifySuccess } from '../../reducers/notificationReducer'
 import { useCookies } from 'react-cookie'
 import { removeWriter } from '../../reducers/loginWriterReducer'
+import UploadComponent from './UploadComponent'
+
+const thumbsContainer = {
+	display: 'flex',
+	flexDirection: 'row',
+	flexWrap: 'wrap',
+	marginTop: 16
+}
+
+const thumb = {
+	display: 'inline-flex',
+	marginBottom: 8,
+	marginRight: 8,
+	width: 150,
+	height: 150,
+	padding: 4,
+	boxSizing: 'border-box'
+}
+
+const img = {
+	borderRadius: 10,
+	display: 'block',
+	width: 'auto',
+	height: '100%'
+}
 
 const useStyles = makeStyles(theme => ({
 	inputColor:{
@@ -80,7 +105,7 @@ const initialValues = {
 	content: [],
 	genres: [],
 	paid: 'no',
-	file: null
+	files: []
 }
 
 const validationSchema = yup.object().shape({
@@ -95,12 +120,24 @@ const validationSchema = yup.object().shape({
 		.min(1, 'Check at least one category'),
 	paid: yup.mixed()
 		.oneOf(['yes', 'no']),
-	file: yup.mixed().required()
+	files:  yup.array()
+		.min(1, 'One image required')
 })
 
-const NewArticleForm = ({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => {
+const NewArticleForm = ({ values, errors, touched, handleChange, handleBlur, handleSubmit, setFieldValue }) => {
 	const classes = useStyles()
 
+	const thumbs = values.files.map(file => (
+		<div style={thumb} key={file.name}>
+			<div>
+				<img
+					src={file.preview}
+					style={img}
+				/>
+			</div>
+		</div>
+	))
+	
 	return (
 		<div className={classes.container}>
 			<div className={classes.item}>
@@ -196,18 +233,16 @@ const NewArticleForm = ({ values, errors, touched, handleChange, handleBlur, han
 							label="No"
 						/>
 					</Field>
-					<input
-						accept="image/*"
-						style={{ display: 'none' }}
-						id="raised-button-file"
-						multiple
-						type="file"
-					/>
-					<label htmlFor="raised-button-file">
-						<Button variant="raised" component="span" className={classes.button}>
-							Upload
-						</Button>
-					</label> 
+					<Typography variant='h6' className={classes.formControl}>Cover photo</Typography>
+					<div className={classes.formControl}>
+						{errors.files && touched.files && 
+								<Typography variant='caption' style={{ color: '#f44336' }}>{errors.files}</Typography>
+						}
+					</div>
+					<UploadComponent setFieldValue={setFieldValue} />
+					<aside style={thumbsContainer}>
+						{thumbs}
+					</aside>
 					<Button color="primary" variant="contained" type="submit" className={classes.button}>
                         Publish
 					</Button>
@@ -252,7 +287,7 @@ const NewArticle = () => {
 				validationSchema={validationSchema}
 				onSubmit={handleSubmit}
 			>
-				{({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => 
+				{({ values, errors, touched, handleChange, handleBlur, handleSubmit, setFieldValue }) => 
 					<NewArticleForm 
 						values={values}
 						errors={errors}
@@ -260,6 +295,7 @@ const NewArticle = () => {
 						handleChange={handleChange}
 						handleBlur={handleBlur}
 						handleSubmit={handleSubmit}
+						setFieldValue={setFieldValue}
 					/>}
 			</Formik>
 		</div>
