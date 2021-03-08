@@ -51,4 +51,5 @@ Readers will be able to read the news by selecting categories or selecting/filte
 | 6.3 | 5 | Adding funcionality that paid articles can only read by subscribers or by logged in users who paid for one |
 | | 1 | Started implementing image upload for articles |
 | 8.3 | 3.5 | Implementing image upload component to new article components |
-| Total | 136.5 | | 
+| | 4 | Trying to connect image upload from client to server |
+| Total | 140.5 | | 
