@@ -1,6 +1,7 @@
 const articlesRouter = require('express').Router()
 const Comment = require('../models/comment')
 const Article = require('../models/article')
+const Image = require('../models/images')
 const Writer = require('../models/writer')
 const Reader = require('../models/reader')
 const { getDateFormated } = require('../utils/helpers')
@@ -58,12 +59,14 @@ articlesRouter.post('/', async (request, response, next) => {
 			return response.status(400).json({ error: 'paid missing' })
 		} 
 		const writer = await Writer.findById(decodedToken.id)
+		const image = await Image.findById(body.imageId)
   
 		const article = new Article({
 			title: body.title,
 			content: body.content,
 			published: getDateFormated(true),
 			author: writer._id,
+			image: image._id,
 			views: 0,
 			paid: body.paid || 'no',
 			genres: body.genres,
@@ -71,6 +74,8 @@ articlesRouter.post('/', async (request, response, next) => {
   
 		const savedArticle = await article.save()
 		writer.myarticles = writer.myarticles.concat(savedArticle._id)
+		image.article = savedArticle._id
+		await image.save()
 		await writer.save()
 		response.status(201).json(savedArticle)
 	} catch (error) {

@@ -9,6 +9,10 @@ const articleSchema = new mongoose.Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Writer'
 	},
+	image: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'Image'
+	},
 	published: String,
 	views: Number,
 	paid: {

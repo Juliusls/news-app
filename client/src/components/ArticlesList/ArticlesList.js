@@ -30,8 +30,6 @@ const ArticlesList = () => {
 	const oneReader = loggedInReader && readersList.filter(readerFromList => readerFromList.id === loggedInReader.id)[0]
 	const readerFavorites = loggedInReader && oneReader.favoritewriters.map(favoritewriter => favoritewriter.id)
 
-	
-	
 	let articlesFiltered = articles
 	let allength = null
 

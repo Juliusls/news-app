@@ -266,9 +266,11 @@ const NewArticle = () => {
 			const data = new FormData() 
 			data.append('file', values.files[0])
 			const imageToDb = await imagesService.create(data)
-			console.log('image from service in new article', imageToDb)
 
-			const article = await articlesService.create(values)
+			const itemForArticleDb = await { ...values, imageId: imageToDb.id }
+
+			const article = await articlesService.create(itemForArticleDb)
+
 			await dispatch(createArticle(article))
 			await dispatch(addArticleToWriter(article))
 			dispatch(notifySuccess('Article created'))

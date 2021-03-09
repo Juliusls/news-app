@@ -52,4 +52,5 @@ Readers will be able to read the news by selecting categories or selecting/filte
 | | 1 | Started implementing image upload for articles |
 | 8.3 | 3.5 | Implementing image upload component to new article components |
 | | 4 | Trying to connect image upload from client to server |
-| Total | 140.5 | | 
+| 9.3 | 6 | Completed images implementation for article card and article page |
+| Total | 146.5 | | 

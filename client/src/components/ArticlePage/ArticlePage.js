@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import Comments from './Comments'
+// import Image from 'material-ui-image'
 
 const useStyles = makeStyles({
 	infoText: {
@@ -16,6 +17,9 @@ const useStyles = makeStyles({
 	},
 	articleDiv: {
 		marginBottom: 100
+	},
+	coverPhoto: {
+		height: 200
 	}
 })
 
@@ -23,6 +27,12 @@ const ArticlePage = () => {
 	const classes = useStyles()
 	let { id } = useParams()
 	const articles = useSelector(state => state.articles)
+	const images = useSelector(state => state.images)
+
+	const filteredImage = images.filter(img => img.article === id)[0].img.data.data
+	// const binaryData = images[1].img.data.data
+	var base64 = btoa(new Uint8Array(filteredImage).reduce((data, byte) => data + String.fromCharCode(byte), ''))
+	console.log(base64)
 
 	if (!articles) {
 		return <p>Loading...</p>
@@ -33,6 +43,12 @@ const ArticlePage = () => {
 	return (
 		<div>
 			<div className={classes.articleDiv}>
+				<img
+					style={{ width: '100%', height: 200, borderRadius: 5, objectFit: 'cover' }}
+					fullWidth
+					// imageStyle={{ height: 300 }}
+					src={`data:image/jpeg;base64,${base64}`}
+				/>
 				<div className={classes.categoryButton}>
 					{filteredArticle.genres.map(genre => 
 						<Link style={{ textDecoration: 'none', color: 'inherit' }} to={`/genres/${genre}`} key={genre}><Button marginottom='50' size='small' variant="outlined" color="primary">{genre}</Button></Link>

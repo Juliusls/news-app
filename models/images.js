@@ -5,7 +5,11 @@ const imageSchema = new mongoose.Schema({
 	img: {
 		data: Buffer,
 		contentType: String
-	}
+	},
+	article: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'Article'
+	},
 })
 
 imageSchema.set('toJSON', {

@@ -198,9 +198,11 @@ const WriterPage = () => {
 			return (
 				<div>
 					<BigTooltip TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title="Login to add to favorites">
-						<Button variant="contained" endIcon={<AddOutlinedIcon />}>
-							Add to favorites
-						</Button>
+						<span>
+							<Button variant="contained" endIcon={<AddOutlinedIcon />}>
+								Add to favorites
+							</Button>
+						</span>
 					</BigTooltip>
 				</div>
 			)

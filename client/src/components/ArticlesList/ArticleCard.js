@@ -31,7 +31,6 @@ const useStyles = makeStyles(theme => ({
 	},
 	textauthor: {
 		color: theme.palette.text.secondary
-		
 	},
 	text: {
 		color: '#6A6A6A',
@@ -60,11 +59,20 @@ const ArticleCard = ({ article }) => {
 	const dispatch = useDispatch()
 	const reader = useSelector(state => state.reader)
 	const readers = useSelector(state => state.readers)
+	const images = useSelector(state => state.images)
 	const loggedInReader = reader && readers.filter(readerOne => readerOne.id === reader.id)[0]
 
 	const [openLoginDialog, setOpenLoginDialog] = useState(false)
 	const [openAddFundsDialog, setOpenAddFundsDialog] = useState(false)
-	// const [openPayDialog, setOpenPayDialog] = useState(false)
+
+	const filteredImage = images.filter(img => img.article === article.id)[0].img.data.data
+	// const binaryData = images[1].img.data.data
+	var base64 = btoa(new Uint8Array(filteredImage).reduce((data, byte) => data + String.fromCharCode(byte), ''))
+
+	// const blob = new Blob([binaryData], { type: 'image/jpeg' })
+	// const blobURL = URL.createObjectURL(blob)
+	// console.info('objectURL: ', blobURL)
+
 
 	if (!article) {
 		return <p>Loading...</p>
@@ -111,7 +119,8 @@ const ArticleCard = ({ article }) => {
 				<CardActionArea>
 					<CardMedia
 						className={classes.media}
-						image="https://source.unsplash.com/random"
+						image={`data:image/jpeg;base64,${base64}`}
+						// image="https://source.unsplash.com/random"					// src={`data:${images[0].img.contentType};base64,${images[0].img.data}`}
 						title="Contemplative Reptile"
 					/>
 					<CardContent className={classes.cardContent}>
