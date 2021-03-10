@@ -13,33 +13,10 @@ import { useHistory } from 'react-router-dom'
 import articlesService from '../../services/articles'
 import articleImagesService from '../../services/articleImages'
 import { notifyError, notifySuccess } from '../../reducers/notificationReducer'
+import { addArticleImage } from '../../reducers/articleImagesReducer'
 import { useCookies } from 'react-cookie'
 import { removeWriter } from '../../reducers/loginWriterReducer'
-import UploadComponent from './UploadComponent'
-
-const thumbsContainer = {
-	display: 'flex',
-	flexDirection: 'row',
-	flexWrap: 'wrap',
-	marginTop: 16
-}
-
-const thumb = {
-	display: 'inline-flex',
-	marginBottom: 8,
-	marginRight: 8,
-	width: 150,
-	height: 150,
-	padding: 4,
-	boxSizing: 'border-box'
-}
-
-const img = {
-	borderRadius: 10,
-	display: 'block',
-	width: 'auto',
-	height: '100%'
-}
+import UploadComponent from '../UploadComponent'
 
 const useStyles = makeStyles(theme => ({
 	inputColor:{
@@ -128,17 +105,6 @@ const validationSchema = yup.object().shape({
 const NewArticleForm = ({ values, errors, touched, handleChange, handleBlur, handleSubmit, setFieldValue }) => {
 	const classes = useStyles()
 
-	const thumbs = values.files.map(file => (
-		<div style={thumb} key={file.name}>
-			<div>
-				<img
-					src={file.preview}
-					style={img}
-				/>
-			</div>
-		</div>
-	))
-	
 	return (
 		<div className={classes.container}>
 			<div className={classes.item}>
@@ -240,10 +206,7 @@ const NewArticleForm = ({ values, errors, touched, handleChange, handleBlur, han
 								<Typography variant='caption' style={{ color: '#f44336' }}>{errors.files}</Typography>
 						}
 					</div>
-					<UploadComponent setFieldValue={setFieldValue} />
-					<aside style={thumbsContainer}>
-						{thumbs}
-					</aside>
+					<UploadComponent setFieldValue={setFieldValue} values={values} />
 					<Button color="primary" variant="contained" type="submit" className={classes.button}>
                         Publish
 					</Button>
@@ -265,14 +228,15 @@ const NewArticle = () => {
 		try {
 			const data = new FormData() 
 			data.append('file', values.files[0])
-			const imageToDb = await articleImagesService.create(data)
+			const imageFromDb = await articleImagesService.create(data)
 
-			const itemForArticleDb = await { ...values, imageId: imageToDb.id }
-
-			const article = await articlesService.create(itemForArticleDb)
-
-			await dispatch(createArticle(article))
-			await dispatch(addArticleToWriter(article))
+			const itemForArticleDb = { ...values, imageId: imageFromDb.id }
+			const articleFromDb = await articlesService.create(itemForArticleDb)
+			
+			const imageForDispatch = { ...imageFromDb, article: articleFromDb.id }
+			await dispatch(addArticleImage(imageForDispatch))
+			await dispatch(createArticle(articleFromDb))
+			await dispatch(addArticleToWriter(articleFromDb))
 			dispatch(notifySuccess('Article created'))
 			history.push(`/writerssection/profile/${writer.id}`)
 		} catch (error) {

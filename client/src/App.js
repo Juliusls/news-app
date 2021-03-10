@@ -14,7 +14,9 @@ import SnackBar from './components/SnackBar'
 import LoginWriter from './components/WriterSection/LoginWriter'
 import SignUpReader from './components/SignUpReader'
 import { initReaders } from './reducers/readersReducer'
-import { initImages } from './reducers/articleImagesReducer'
+import { initArticleImages } from './reducers/articleImagesReducer'
+import { initWriterImages } from './reducers/writerImagesReducer'
+import { initReaderImages } from './reducers/readerImagesReducer'
 import ReaderPage from './components/ReaderPage/ReaderPage'
 import AllWriters from './components/AllWriters'
 import WriterAdminPage from './components/WriterSection/WriterAdminPage'
@@ -46,7 +48,21 @@ const App = () => {
 
 	useEffect(() => {
 		async function getAllImages() {
-			await dispatch(initImages())
+			await dispatch(initArticleImages())
+		}
+		getAllImages()
+	})
+	
+	useEffect(() => {
+		async function getAllImages() {
+			await dispatch(initWriterImages())
+		}
+		getAllImages()
+	})
+	
+	useEffect(() => {
+		async function getAllImages() {
+			await dispatch(initReaderImages())
 		}
 		getAllImages()
 	})

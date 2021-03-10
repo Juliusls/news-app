@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { withStyles, makeStyles, Button, IconButton, Typography, Toolbar, AppBar, Tooltip, Fade } from '@material-ui/core/'
+import { withStyles, makeStyles, Button, IconButton, Typography, Toolbar, AppBar, Tooltip, Fade, Avatar } from '@material-ui/core/'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
-import AccountCircle from '@material-ui/icons/AccountCircle'
 import EditIcon from '@material-ui/icons/Edit'
 import MenuIcon from '@material-ui/icons/Menu'
 import SearchField from '../SearchField'
@@ -76,10 +75,18 @@ const Navbar = () =>  {
 	const history = useHistory()
 	const reader = useSelector(state => state.reader)
 	const writer = useSelector(state => state.writer)
+	const readersImages = useSelector(state => state.readerImages)
+	const writersImages = useSelector(state => state.writerImages)
 	const classes = useStyles()
 	const [leftSideMenuIsOpen, setLeftSideMenuIsOpenIsOpen] = useState(false)
 	// eslint-disable-next-line no-unused-vars
 	const [cookies, setCookie, removeCookie] = useCookies(['readerAuthCookie', 'writerAuthCookie'])
+
+	const filteredReaderImage = reader && readersImages.filter(img => img.reader === reader.id)[0].img.data.data
+	var encodedReaderImage = btoa(new Uint8Array(filteredReaderImage).reduce((data, byte) => data + String.fromCharCode(byte), ''))
+	
+	const filteredWriterImage = writer && writersImages.filter(img => img.writer === writer.id)[0].img.data.data
+	var encodedWriterImage = filteredWriterImage && btoa(new Uint8Array(filteredWriterImage).reduce((data, byte) => data + String.fromCharCode(byte), ''))
 
 	const handleLeftSideMenuIsOpen = () => {
 		setLeftSideMenuIsOpenIsOpen(true)
@@ -138,7 +145,10 @@ const Navbar = () =>  {
 											component={ Link }
 											to={`/reader/profile/${reader.id}`}
 										>
-											<AccountCircle className={classes.accountIcon}/>
+											<Avatar 
+												alt="Reader Profile Picture"
+												src={`data:image/jpeg;base64,${encodedReaderImage}`}
+											/>
 										</IconButton>
 									</span>
 								</BigTooltip>
@@ -178,8 +188,11 @@ const Navbar = () =>  {
 												aria-haspopup="true"
 												component={ Link }
 												to={`/writerssection/profile/${writer.id}`}
-											>
-												<AccountCircle className={classes.accountIcon}/>
+											> 
+												<Avatar 
+													alt="Writers Profile Picture"
+													src={`data:image/jpeg;base64,${encodedWriterImage}`}
+												/>
 											</IconButton>
 										</span>
 									</BigTooltip>

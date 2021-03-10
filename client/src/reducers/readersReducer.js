@@ -41,10 +41,9 @@ export const initReaders = () => {
 
 export const createReader = (newReader) => {
 	return async dispatch => {
-		const reader = await readersService.create(newReader)
 		dispatch ({
 			type: 'CREATE_READER',
-			data: reader
+			data: newReader
 		})
 	}
 }

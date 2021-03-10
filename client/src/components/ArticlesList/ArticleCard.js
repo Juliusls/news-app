@@ -65,34 +65,23 @@ const ArticleCard = ({ article }) => {
 	const [openAddFundsDialog, setOpenAddFundsDialog] = useState(false)
 
 	const filteredImage = images.filter(img => img.article === article.id)[0].img.data.data
-	// const binaryData = images[1].img.data.data
 	var base64 = btoa(new Uint8Array(filteredImage).reduce((data, byte) => data + String.fromCharCode(byte), ''))
-
-	// const blob = new Blob([binaryData], { type: 'image/jpeg' })
-	// const blobURL = URL.createObjectURL(blob)
-	// console.info('objectURL: ', blobURL)
-
 
 	if (!article) {
 		return <p>Loading...</p>
 	}
 
 	const handleCardPress = async (article) => {
-		// first
 		if (article.paid === 'yes') {
-			// second
 			if (!loggedInReader) {
 				setOpenLoginDialog(true)
 			} else {
-				// third
 				if (loggedInReader.subscriptions.some(subscription => subscription.recipient[0].id === article.author.id)) {
 					dispatch(addViewToArticle(article))
 					history.push(`/article/${article.id}`)
 				} else {
-					// fourth
 					if (loggedInReader.funds < article.author.oneArticlePrice) {
 						setOpenAddFundsDialog(true)
-						// fifth
 					} else if (window.confirm(`Confirm payment for this article for ${article.author.oneArticlePrice} €`)) {
 						try {
 							await dispatch(substractReaderFunds(article.author.oneArticlePrice, loggedInReader))

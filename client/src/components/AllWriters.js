@@ -29,15 +29,25 @@ const useStyles = makeStyles(theme => ({
 const AllWriters = () => {
 	const classes = useStyles()
 	const writers = useSelector(state => state.writers)
+	const writersImages = useSelector(state => state.writerImages)
+
+	const imageComp = (id) => {
+		const filteredWriterImage = writersImages.filter(img => img.writer === id)[0].img.data.data
+		let encodedWriterImage = filteredWriterImage && btoa(new Uint8Array(filteredWriterImage).reduce((data, byte) => data + String.fromCharCode(byte), ''))
+		
+		return <Avatar alt="Writers Profile Picture" src={`data:image/jpeg;base64,${encodedWriterImage}`} />
+	}
+
+	// TODO add dividers
 
 	return (
 		<div>
 			<Typography variant='h3' className={classes.textWithPadding}>All writers</Typography>
-			<List dense className={classes.root}>
+			<List className={classes.root}>
 				{writers.map(writer => (
 					<ListItem key={writer.id} button component={ Link } to={`/author/${writer.id}`} classes={{ hover: classes.hover }} className={classes.listItem}>
 						<ListItemAvatar>
-							<Avatar/>
+							{imageComp(writer.id)}
 						</ListItemAvatar>
 						<ListItemText
 							primary={

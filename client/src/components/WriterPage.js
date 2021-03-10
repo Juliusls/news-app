@@ -96,6 +96,7 @@ const WriterPage = () => {
 	const dispatch = useDispatch()
 	let { author } = useParams()
 	const loggedInReader = useSelector(state => state.reader)
+	const writersImages = useSelector(state => state.writerImages)
 	const readers = useSelector(state => state.readers)
 	// eslint-disable-next-line no-unused-vars
 	const [cookies, setCookie, removeCookie] = useCookies(['readerAuthCookie'])
@@ -104,6 +105,9 @@ const WriterPage = () => {
 
 	const filteredWriter = useSelector(state => state.writers.filter(writer => writer.id === author)[0])
 	const currentReader = loggedInReader && readers.filter(reader => reader.id === loggedInReader.id)[0]
+
+	const filteredWriterImage = writersImages.filter(img => img.writer === author)[0].img.data.data
+	var encodedWriterImage = filteredWriterImage && btoa(new Uint8Array(filteredWriterImage).reduce((data, byte) => data + String.fromCharCode(byte), ''))
 
 	if (!filteredWriter) {
 		return <p>Loading...</p>
@@ -215,9 +219,8 @@ const WriterPage = () => {
 		<div>
 			<div className={classes.profileContaner}>
 				<img
-					src='https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1650&q=80'
 					width="200"
-					height="150"
+					src={`data:image/jpeg;base64,${encodedWriterImage}`}
 				/>
 				<div className={classes.infoContainer}>
 					<Typography variant='h4'>

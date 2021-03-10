@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt')
 const Reader = require('../models/reader')
 const Writer = require('../models/writer')
 const Subscription = require('../models/subscription')
+const ReaderImage = require('../models/readerImage')
 const { getDateFormated } = require('../utils/helpers')
 const jwt = require('jsonwebtoken')
 
@@ -94,17 +95,21 @@ readersRouter.post('/', async (request, response, next) => {
 		const saltRounds = 12
 		const passwordHash = await bcrypt.hash(body.password, saltRounds)
 
+		const image = await ReaderImage.findById(body.imageId)
 
 		const reader = new Reader({
 			firstName: body.firstName,
 			lastName: body.lastName,
 			userName: body.userName,
 			joined: getDateFormated(true),
+			image: image._id,
 			funds: 0,
 			passwordHash
 		})
 
 		const savedReader = await reader.save()
+		image.reader = savedReader._id
+		await image.save()
 		response.status(201).json(savedReader)
 	} catch(error) {
 		next(error)

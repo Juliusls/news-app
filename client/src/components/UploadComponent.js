@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
 import { useDropzone } from 'react-dropzone'
-import theme from '../../theme'
+import theme from '../theme'
 import BackupIcon from '@material-ui/icons/Backup'
 
 const baseStyle = {
@@ -17,6 +17,30 @@ const baseStyle = {
 	color: theme.palette.primary.main,
 	outline: 'none',
 }
+
+const thumbsContainer = {
+	display: 'flex',
+	flexDirection: 'row',
+	flexWrap: 'wrap',
+	marginTop: 16
+}
+
+const thumb = {
+	display: 'inline-flex',
+	marginBottom: 8,
+	marginRight: 8,
+	width: 150,
+	height: 150,
+	padding: 4,
+	boxSizing: 'border-box'
+}
+
+const img = {
+	borderRadius: 10,
+	display: 'block',
+	width: 'auto',
+	height: '100%'
+}
   
 const activeStyle = {
 	borderColor: '#2196f3'
@@ -31,7 +55,7 @@ const rejectStyle = {
 }
 
 
-const UploadComponent = ({ setFieldValue }) => {
+const UploadComponent = ({ setFieldValue, values }) => {
 	const { getRootProps, getInputProps, isDragActive, isDragAccept, isDragReject } = useDropzone({
 		accept: 'image/*',
 		onDrop: acceptedFiles => {
@@ -40,6 +64,17 @@ const UploadComponent = ({ setFieldValue }) => {
 			})))
 		}
 	})
+	
+	const thumbs = values.files.map(file => (
+		<div style={thumb} key={file.name}>
+			<div>
+				<img
+					src={file.preview}
+					style={img}
+				/>
+			</div>
+		</div>
+	))
 
 	const style = useMemo(() => ({
 		...baseStyle,
@@ -53,11 +88,17 @@ const UploadComponent = ({ setFieldValue }) => {
 	])
 
 	return (
-		<div {...getRootProps({ style })}>
-			<input {...getInputProps()} name='image'/>
-			<p>Drag and drop image here, or click to select image</p>
-			<BackupIcon />
+		<div>
+			<div {...getRootProps({ style })}>
+				<input {...getInputProps()} name='image'/>
+				<p>Drag and drop image here, or click to select image</p>
+				<BackupIcon />
+			</div>
+			<aside style={thumbsContainer}>
+				{thumbs}
+			</aside>
 		</div>
+		
 	)
 }
 

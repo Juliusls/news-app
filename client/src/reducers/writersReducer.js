@@ -48,10 +48,9 @@ export const initWriters = () => {
 
 export const createWriter = (newWriter) => {
 	return async dispatch => {
-		const writerToAdd = await writersService.create(newWriter)
 		dispatch({
 			type: 'ADD_NEW_WRITER',
-			data: writerToAdd
+			data: newWriter
 		})
 	}
 }

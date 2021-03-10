@@ -7,7 +7,11 @@ import Button from '@material-ui/core/Button'
 import { makeStyles, Typography } from '@material-ui/core'
 import { TextField } from 'formik-material-ui'
 import { createReader } from '../reducers/readersReducer'
+import { addReaderImage } from '../reducers/readerImagesReducer'
 import { notifyError, notifySuccess } from '../reducers/notificationReducer'
+import UploadComponent from './UploadComponent'
+import readerImagesService from '../services/readerImages'
+import readersService from '../services/readers'
 
 const useStyles = makeStyles(theme => ({
 	inputColor:{
@@ -41,7 +45,13 @@ const useStyles = makeStyles(theme => ({
 		display: 'block',
 		marginLeft: 'auto',
 		marginRight: 'auto',
-	}
+	},
+	formControl: {
+		display: 'flex',
+		alignItems: 'center',
+		justifyContent: 'center',
+		marginTop: 5,
+	},
 }))
 
 const initialValues = {
@@ -49,7 +59,8 @@ const initialValues = {
 	lastName: '',
 	userName: '',
 	password: '',
-	passwordConfirmation: ''
+	passwordConfirmation: '',
+	files: []
 }
 
 const validationSchema = yup.object().shape({
@@ -70,10 +81,12 @@ const validationSchema = yup.object().shape({
 		.max(50, 'Password too Long!')
 		.required('Required'),
 	passwordConfirmation: yup.string()
-		.oneOf([yup.ref('password'), null], 'Passwords must match')
+		.oneOf([yup.ref('password'), null], 'Passwords must match'),
+	files:  yup.array()
+		.min(1, 'One image required')
 })
 
-const SignUpReaderForm = ({ values, errors, touched, handleChange, handleBlur, handleSubmit, validateUsername }) => {
+const SignUpReaderForm = ({ values, errors, touched, handleChange, handleBlur, handleSubmit, validateUsername, setFieldValue }) => {
 	const classes = useStyles()
 
 	return (
@@ -172,6 +185,13 @@ const SignUpReaderForm = ({ values, errors, touched, handleChange, handleBlur, h
 						}}
 						className={classes.paddings}
 					/>
+					<Typography variant='subtitle1' className={classes.formControl}>Profile picture</Typography>
+					<div className={classes.formControl}>
+						{errors.files && touched.files && 
+								<Typography variant='caption' style={{ color: '#f44336' }}>{errors.files}</Typography>
+						}
+					</div>
+					<UploadComponent setFieldValue={setFieldValue} values={values}/>
 					<Button color="primary" variant="contained" type="submit" className={classes.button}>
                         Sign Up
 					</Button>
@@ -188,7 +208,16 @@ const SignUpReader = () => {
 
 	const handleSubmit = async (values) => {
 		try {
-			await dispatch(createReader(values))
+			const data = new FormData() 
+			data.append('file', values.files[0])
+			const imageFromDb = await readerImagesService.create(data)
+
+			const readerforDb = { ...values, imageId: imageFromDb.id }
+			const readerFromDb = await readersService.create(readerforDb)
+
+			const imageForDispatch = { ...imageFromDb, reader: readerFromDb.id }
+			await dispatch(addReaderImage(imageForDispatch))
+			await dispatch(createReader(readerFromDb))
 			dispatch(notifySuccess('Registration successful'))
 			history.push('/reader/login')
 		} catch (error) {
@@ -211,7 +240,7 @@ const SignUpReader = () => {
 				validationSchema={validationSchema}
 				onSubmit={handleSubmit}
 			>
-				{({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => 
+				{({ values, errors, touched, handleChange, handleBlur, handleSubmit, setFieldValue }) => 
 					<SignUpReaderForm 
 						validateUsername={validateUsername}
 						values={values}
@@ -220,6 +249,7 @@ const SignUpReader = () => {
 						handleChange={handleChange}
 						handleBlur={handleBlur}
 						handleSubmit={handleSubmit}
+						setFieldValue={setFieldValue}
 					/>}
 			</Formik>
 		</div>

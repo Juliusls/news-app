@@ -6,8 +6,12 @@ import { makeStyles, FormControl, Typography, FormControlLabel, FormGroup, Butto
 import { TextField, CheckboxWithLabel } from 'formik-material-ui'
 import { newsCategories } from '../../data/data'
 import { createWriter } from '../../reducers/writersReducer'
+import { addWriterImage } from '../../reducers/writerImagesReducer'
 import { notifySuccess, notifyError } from '../../reducers/notificationReducer'
 import { useHistory } from 'react-router-dom'
+import UploadComponent from '../UploadComponent'
+import writerImagesService from '../../services/writerImages'
+import writerService from '../../services/writers'
 
 const useStyles = makeStyles(theme => ({
 	inputColor:{
@@ -67,7 +71,8 @@ const initialValues = {
 	montlySubscriptionPrice: 0,
 	yearlySubscriptionPrice: 0,
 	password: '',
-	passwordConfirmation: ''
+	passwordConfirmation: '',
+	files: []
 }
 
 const validationSchema = yup.object().shape({
@@ -103,10 +108,12 @@ const validationSchema = yup.object().shape({
 		.max(50, 'Password too Long')
 		.required('Required'),
 	passwordConfirmation: yup.string()
-		.oneOf([yup.ref('password'), null], 'Passwords must match')
+		.oneOf([yup.ref('password'), null], 'Passwords must match'),
+	files:  yup.array()
+		.min(1, 'One image required')
 })
 
-const WriterSignUpForm = ({ validateUsername,  values, errors, touched, handleChange, handleBlur, handleSubmit }) => {
+const WriterSignUpForm = ({ validateUsername,  values, errors, touched, handleChange, handleBlur, handleSubmit, setFieldValue }) => {
 	const classes = useStyles()
 
 	return (
@@ -304,6 +311,13 @@ const WriterSignUpForm = ({ validateUsername,  values, errors, touched, handleCh
 							className: classes.inputColor
 						}}
 					/>
+					<Typography variant='subtitle1' className={classes.formControl}>Profile picture</Typography>
+					<div className={classes.formControl}>
+						{errors.files && touched.files && 
+								<Typography variant='caption' style={{ color: '#f44336' }}>{errors.files}</Typography>
+						}
+					</div>
+					<UploadComponent setFieldValue={setFieldValue} values={values}/>
 					<Button color="primary" variant="contained" type="submit" className={classes.button}>
                         Sign Up
 					</Button>
@@ -321,7 +335,17 @@ const SignUpWriter = () => {
 
 	const handleSubmit = async (values) => {
 		try {
-			await dispatch(createWriter(values))
+			const data = new FormData() 
+			data.append('file', values.files[0])
+			const imageFromDb = await writerImagesService.create(data)
+
+			const writerForFb = { ...values, imageId: imageFromDb.id }
+			const writerFromDb = await writerService.create(writerForFb)
+
+			const imageForDispatch = { ...imageFromDb, writer: writerFromDb.id }
+
+			await dispatch(addWriterImage(imageForDispatch))
+			await dispatch(createWriter(writerFromDb))
 			dispatch(notifySuccess('Registered successfully'))
 			history.push('/writerssection/login')
 		} catch (error) {
@@ -344,7 +368,7 @@ const SignUpWriter = () => {
 				validationSchema={validationSchema}
 				onSubmit={handleSubmit}
 			>
-				{({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => 
+				{({ values, errors, touched, handleChange, handleBlur, handleSubmit, setFieldValue }) => 
 					<WriterSignUpForm 
 						validateUsername={validateUsername}
 						values={values}
@@ -353,6 +377,7 @@ const SignUpWriter = () => {
 						handleChange={handleChange}
 						handleBlur={handleBlur}
 						handleSubmit={handleSubmit}
+						setFieldValue={setFieldValue}
 					/>}
 			</Formik>
 		</div>

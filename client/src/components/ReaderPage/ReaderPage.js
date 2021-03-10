@@ -41,8 +41,12 @@ const ReaderPage = () => {
 	const [openDialog, setOpenDialog] = useState(false)
 	const { id } = useParams()
 	const readers = useSelector(state => state.readers)
+	const images = useSelector(state => state.readerImages)
 	const filteredReader = readers.filter(reader => reader.id === id)[0]
 	const date = filteredReader.joined !== undefined ? filteredReader.joined : 'No data'
+
+	const filteredImage = images.filter(img => img.reader === id)[0].img.data.data
+	var base64 = btoa(new Uint8Array(filteredImage).reduce((data, byte) => data + String.fromCharCode(byte), ''))
 
 	if (!readers) {
 		return <p>Loading...</p>
@@ -52,9 +56,8 @@ const ReaderPage = () => {
 		<div>
 			<div className={classes.profileContaner}>
 				<img
-					src='https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1650&q=80'
 					width="200"
-					height="150"
+					src={`data:image/jpeg;base64,${base64}`}
 				/>
 				<div className={classes.infoContainer}>
 					<Typography variant='h4'>

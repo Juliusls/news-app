@@ -1,6 +1,7 @@
 const writersRouter = require('express').Router()
 const bcrypt = require('bcrypt')
 const Writer = require('../models/writer')
+const WriterImage = require('../models/writerImage')
 const { getDateFormated } = require('../utils/helpers')
 const jwt = require('jsonwebtoken')
 
@@ -59,59 +60,64 @@ writersRouter.get('/:id', async (request, response) => {
 })
 
 writersRouter.post('/', async (request, response, next) => {
-	const body = request.body
+	try {
+		const body = request.body
 
-	if (body.firstName === undefined) {
-		return response.status(400).json({error: 'First name missing'})
-	}
-	if (body.lastName === undefined) {
-		return response.status(400).json({error: 'Last name missing'})
-	}
-	if (body.userName === undefined) {
-		return response.status(400).json({error: 'User name missing'})
-	}
-	if (body.writerGenres === undefined) {
-		return response.status(400).json({error: 'Genres missing'})
-	}
-	if (body.writerDescription === undefined) {
-		return response.status(400).json({error: 'Writer description missing'})
-	}
-	if (body.oneArticlePrice === undefined) {
-		return response.status(400).json({error: 'One Article Price missing'})
-	}
-	if (body.montlySubscriptionPrice === undefined) {
-		return response.status(400).json({error: 'Montly Subscription Price missing'})
-	}
-	if (body.yearlySubscriptionPrice === undefined) {
-		return response.status(400).json({error: 'Yearly Subscription Price missing'})
-	}
-	if (body.password === undefined) {
-		return response.status(400).json({error: 'password missing'})
-	}
+		if (body.firstName === undefined) {
+			return response.status(400).json({error: 'First name missing'})
+		}
+		if (body.lastName === undefined) {
+			return response.status(400).json({error: 'Last name missing'})
+		}
+		if (body.userName === undefined) {
+			return response.status(400).json({error: 'User name missing'})
+		}
+		if (body.writerGenres === undefined) {
+			return response.status(400).json({error: 'Genres missing'})
+		}
+		if (body.writerDescription === undefined) {
+			return response.status(400).json({error: 'Writer description missing'})
+		}
+		if (body.oneArticlePrice === undefined) {
+			return response.status(400).json({error: 'One Article Price missing'})
+		}
+		if (body.montlySubscriptionPrice === undefined) {
+			return response.status(400).json({error: 'Montly Subscription Price missing'})
+		}
+		if (body.yearlySubscriptionPrice === undefined) {
+			return response.status(400).json({error: 'Yearly Subscription Price missing'})
+		}
+		if (body.password === undefined) {
+			return response.status(400).json({error: 'password missing'})
+		}
 
-	const saltRounds = 12
-	const passwordHash = await bcrypt.hash(body.password, saltRounds)
+		const saltRounds = 12
+		const passwordHash = await bcrypt.hash(body.password, saltRounds)
 
+		const image = await WriterImage.findById(body.imageId)
 
-	const writer = new Writer({
-		firstName: body.firstName,
-		lastName: body.lastName,
-		userName: body.userName,
-		writerGenres: body.writerGenres,
-		writerDescription: body.writerDescription,
-		oneArticlePrice: body.oneArticlePrice,
-		montlySubscriptionPrice: body.montlySubscriptionPrice,
-		yearlySubscriptionPrice: body.yearlySubscriptionPrice,
-		passwordHash,
-		joined: getDateFormated(true),
-		earnings: 0,
-	})
-
-	writer.save()
-		.then(savedWriter => {
-			response.json(savedWriter.toJSON())
+		const writer = new Writer({
+			firstName: body.firstName,
+			lastName: body.lastName,
+			userName: body.userName,
+			writerGenres: body.writerGenres,
+			writerDescription: body.writerDescription,
+			oneArticlePrice: body.oneArticlePrice,
+			montlySubscriptionPrice: body.montlySubscriptionPrice,
+			yearlySubscriptionPrice: body.yearlySubscriptionPrice,
+			passwordHash,
+			image: image._id,
+			joined: getDateFormated(true),
+			earnings: 0,
 		})
-		.catch(error => next(error))
+
+		const savedWriter = await writer.save()
+		image.writer = savedWriter._id
+		await image.save()
+		response.status(201).json(savedWriter)
+	} catch (error) {
+		next(error)
+	}
 })
 
 writersRouter.put('/:id', async (request, response, next) => {
