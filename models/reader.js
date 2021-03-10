@@ -20,6 +20,10 @@ const readerSchema = new mongoose.Schema({
 		minlength: 3,
 		unique: true
 	},
+	image: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'ReaderImage'
+	},
 	joined: String,
 	passwordHash: String,
 	refreshToken: String,

@@ -14,7 +14,7 @@ import SnackBar from './components/SnackBar'
 import LoginWriter from './components/WriterSection/LoginWriter'
 import SignUpReader from './components/SignUpReader'
 import { initReaders } from './reducers/readersReducer'
-import { initImages } from './reducers/imagesReducer'
+import { initImages } from './reducers/articleImagesReducer'
 import ReaderPage from './components/ReaderPage/ReaderPage'
 import AllWriters from './components/AllWriters'
 import WriterAdminPage from './components/WriterSection/WriterAdminPage'
@@ -106,15 +106,11 @@ export default App
 
 
 // TODO ability to add pictures
-// TODO remember me implementation
-// TODO push article to history so reader can read it later after paying for it
-
-
 // TODO Expiration time for subscription
+
+
 // TODO if user is logged out make it that after logging in he comes back to the same place 
+// TODO Edit article functionality
 
 
 // TODO redux persist
-// TODO date value trough entire project
-// TODO Edit article functionality
-// TODO Fix project theme https://bareynol.github.io/mui-theme-creator/

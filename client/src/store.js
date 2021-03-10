@@ -5,7 +5,7 @@ import loginWriterReducer from './reducers/loginWriterReducer'
 import loginReaderReducer from './reducers/loginReaderReducer'
 import readersReducer from './reducers/readersReducer'
 import notificationReducer from './reducers/notificationReducer'
-import imagesReducer from './reducers/imagesReducer'
+import artcileImagesReducer from './reducers/articleImagesReducer'
 import thunk from 'redux-thunk'
 import { combineReducers } from 'redux' 
 import storage from 'redux-persist/lib/storage'
@@ -18,7 +18,7 @@ const reducers = combineReducers({
 	reader: loginReaderReducer,
 	readers: readersReducer,
 	notification: notificationReducer,
-	images: imagesReducer
+	articleImages: artcileImagesReducer
 })
 
 const persistConfig = {

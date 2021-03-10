@@ -20,6 +20,10 @@ const writerSchema = new mongoose.Schema({
 		required: true,
 		unique: true
 	},
+	image: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'WriterImage'
+	},
 	passwordHash: String,
 	earnings: Number,
 	joined: String,

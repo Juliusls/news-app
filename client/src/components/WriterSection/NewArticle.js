@@ -11,7 +11,7 @@ import { createArticle } from '../../reducers/articlesReducer'
 import { addArticleToWriter } from '../../reducers/writersReducer'
 import { useHistory } from 'react-router-dom'
 import articlesService from '../../services/articles'
-import imagesService from '../../services/images'
+import articleImagesService from '../../services/articleImages'
 import { notifyError, notifySuccess } from '../../reducers/notificationReducer'
 import { useCookies } from 'react-cookie'
 import { removeWriter } from '../../reducers/loginWriterReducer'
@@ -265,7 +265,7 @@ const NewArticle = () => {
 		try {
 			const data = new FormData() 
 			data.append('file', values.files[0])
-			const imageToDb = await imagesService.create(data)
+			const imageToDb = await articleImagesService.create(data)
 
 			const itemForArticleDb = await { ...values, imageId: imageToDb.id }
 

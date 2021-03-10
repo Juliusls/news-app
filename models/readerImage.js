@@ -6,9 +6,9 @@ const imageSchema = new mongoose.Schema({
 		data: Buffer,
 		contentType: String
 	},
-	article: {
+	reader: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref: 'Article'
+		ref: 'Reader'
 	},
 })
 
@@ -20,4 +20,4 @@ imageSchema.set('toJSON', {
 	}
 })
 
-module.exports = mongoose.model('Image', imageSchema)
+module.exports = mongoose.model('ReaderImage', imageSchema)

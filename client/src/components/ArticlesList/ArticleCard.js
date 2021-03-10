@@ -59,9 +59,8 @@ const ArticleCard = ({ article }) => {
 	const dispatch = useDispatch()
 	const reader = useSelector(state => state.reader)
 	const readers = useSelector(state => state.readers)
-	const images = useSelector(state => state.images)
+	const images = useSelector(state => state.articleImages)
 	const loggedInReader = reader && readers.filter(readerOne => readerOne.id === reader.id)[0]
-
 	const [openLoginDialog, setOpenLoginDialog] = useState(false)
 	const [openAddFundsDialog, setOpenAddFundsDialog] = useState(false)
 
