@@ -7,7 +7,6 @@ import ArticleCard from './ArticleCard'
 import ArticlesFilter from './ArticlesFilter'
 import { useParams } from 'react-router-dom'
 
-
 const useStyles = makeStyles({
 	text: {
 		textAlign: 'center',
@@ -29,6 +28,7 @@ const ArticlesList = () => {
 	const readersList = useSelector(state => state.readers)
 	const oneReader = loggedInReader && readersList.filter(readerFromList => readerFromList.id === loggedInReader.id)[0]
 	const readerFavorites = loggedInReader && oneReader.favoritewriters.map(favoritewriter => favoritewriter.id)
+	const readerSubscriptions = loggedInReader && oneReader.subscriptions.map(subscription => subscription.recipient[0].id)
 
 	let articlesFiltered = articles
 	let allength = null
@@ -39,6 +39,8 @@ const ArticlesList = () => {
 
 	if (genre === 'My Favorites') {
 		articlesFiltered = articles.filter(article => readerFavorites.includes(article.author.id))
+	} else if (genre === 'My Subscriptions') {
+		articlesFiltered = articles.filter(article => readerSubscriptions.includes(article.author.id))
 	} else if (genre !== undefined) {
 		articlesFiltered = articles.filter(article => article.genres.includes(genre))
 	}
@@ -70,7 +72,7 @@ const ArticlesList = () => {
 
 	return (
 		<div>
-			<ArticlesFilter setFilterValue={setFilterValue}/>
+			<ArticlesFilter setFilterValue={setFilterValue} />
 			<Typography className={classes.textWithPadding} variant='h3' style={{ display: genre === undefined ? 'none' : 'block' }}>
 				{genre}
 			</Typography>

@@ -121,12 +121,10 @@ const App = () => {
 export default App
 
 
-// TODO ability to add pictures
 // TODO Expiration time for subscription
 
-
+// TODO paid article available for 24 hours
 // TODO if user is logged out make it that after logging in he comes back to the same place 
 // TODO Edit article functionality
-
 
 // TODO redux persist

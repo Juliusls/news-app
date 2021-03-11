@@ -55,4 +55,5 @@ Readers will be able to read the news by selecting categories or selecting/filte
 | 9.3 | 6 | Completed images implementation for article card and article page |
 | 10.3 | 1 | Creating back end for readers and writers profile pictures |
 | | 3.5 | Creating writers and readers profile images and connecting them to back end |
-| Total | 151 | | 
+| 11.3 | 0.5 | Adding readers My subscriptions option in left side menu |
+| Total | 151.5 | | 
