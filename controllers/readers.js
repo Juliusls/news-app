@@ -174,13 +174,8 @@ readersRouter.post('/:id/subscriptions', async (request, response, next) => {
 			recipient: writer._id,
 			type: body.type,
 			startDate: getDateFormated(true),
-			endDate: getDateFormated(true, (body.type === 'montly' ? 2592000000 : 31556952000)),
-			// TODO check how it works
-			createdAt: { 
-				index: {
-					expires: (body.type === 'montly') ? 300 : 600
-				}
-			}
+			endDate: getDateFormated(true, (body.type === 'montly' ? 2592000000 : 31536600000)),
+			expirationDate: getDateFormated(false) + (body.type === 'montly' ? 2592000000 : 31536600000)
 		})
 
 		const savedSubscription = await subscription.save()

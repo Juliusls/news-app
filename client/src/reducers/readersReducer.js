@@ -24,6 +24,8 @@ const readersReducer = (state = [], action) => {
 			}
 			return reader
 		})
+	case 'REMOVE_SUBS_FROM_READERS':
+		return state.map(reader => ({ ...reader, subscriptions: reader.subscriptions.filter(sub => !action.data.includes(sub.id)) }))
 	default:
 		return state
 	}
@@ -102,6 +104,16 @@ export const substractReaderFunds = (fundsToSubstract, reader) => {
 		dispatch ({
 			type: 'UPDATE_READERS_FUNDS',
 			data: updatedReader
+		})
+	}
+}
+
+export const removeSubsFromReaders = (subsToRemove) => {
+	return async dispatch => {
+		console.log('ids from readers reducer', subsToRemove)
+		dispatch ({
+			type: 'REMOVE_SUBS_FROM_READERS',
+			data: subsToRemove
 		})
 	}
 }

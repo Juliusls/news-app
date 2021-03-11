@@ -1,26 +1,31 @@
 import React, { useEffect } from 'react'
-import Navbar from './components/Navigation/Navbar'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { initArticles } from './reducers/articlesReducer'
-import { initWriters } from './reducers/writersReducer'
+
 import Container  from '@material-ui/core/Container'
+
+import Navbar from './components/Navigation/Navbar'
 import ArticlesList from './components/ArticlesList/ArticlesList'
 import ArticlePage from './components/ArticlePage/ArticlePage'
 import WriterPage from './components/WriterPage'
 import SignUpWriter from './components/WriterSection/SignUpWriter'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import LoginReader from './components/LoginReader'
 import SnackBar from './components/SnackBar'
 import LoginWriter from './components/WriterSection/LoginWriter'
 import SignUpReader from './components/SignUpReader'
-import { initReaders } from './reducers/readersReducer'
-import { initArticleImages } from './reducers/articleImagesReducer'
-import { initWriterImages } from './reducers/writerImagesReducer'
-import { initReaderImages } from './reducers/readerImagesReducer'
 import ReaderPage from './components/ReaderPage/ReaderPage'
 import AllWriters from './components/AllWriters'
 import WriterAdminPage from './components/WriterSection/WriterAdminPage'
 import NewArticle from './components/WriterSection/NewArticle'
+
+import { initArticles } from './reducers/articlesReducer'
+import { initWriters, removeSubsFromWriters } from './reducers/writersReducer'
+import { initReaders, removeSubsFromReaders } from './reducers/readersReducer'
+import { initArticleImages } from './reducers/articleImagesReducer'
+import { initWriterImages } from './reducers/writerImagesReducer'
+import { initReaderImages } from './reducers/readerImagesReducer'
+
+import subscriptionService from './services/subscriptions'
 
 const App = () => {
 	const dispatch = useDispatch()
@@ -66,6 +71,23 @@ const App = () => {
 		}
 		getAllImages()
 	})
+
+	const getSubs = async () => {	
+		const twoHours = 7200000
+		const subs = await subscriptionService.getAll()	
+		const currentTime = Date.now() + twoHours
+		const subsToDelete = subs.filter(sub => sub.expirationDate < currentTime)	
+		if (subsToDelete.length > 0) {
+			const subsIds = subsToDelete.map(sub => sub.id)
+			await subscriptionService.deleteMany(subsToDelete)
+			dispatch(removeSubsFromWriters(subsIds))
+			dispatch(removeSubsFromReaders(subsIds))
+		}
+	}
+	
+	setInterval(() => {
+		getSubs()
+	}, 60 * 1000)
 
 	return (
 		<Router>
@@ -120,11 +142,14 @@ const App = () => {
 
 export default App
 
+// TODO refresh token
+// TODO After new writer or article is added name is not showing up
 
-// TODO Expiration time for subscription
-
-// TODO paid article available for 24 hours
 // TODO if user is logged out make it that after logging in he comes back to the same place 
-// TODO Edit article functionality
 
 // TODO redux persist
+// TODO fix routes in serives
+
+// TODO Cypress testing
+
+// TODO Push code to Heroku

@@ -56,4 +56,5 @@ Readers will be able to read the news by selecting categories or selecting/filte
 | 10.3 | 1 | Creating back end for readers and writers profile pictures |
 | | 3.5 | Creating writers and readers profile images and connecting them to back end |
 | 11.3 | 0.5 | Adding readers My subscriptions option in left side menu |
-| Total | 151.5 | | 
+| | 7.5| (commit after midnigtht for 11.3) Full implementation of expired subscriptions removal |
+| Total | 159 | | 

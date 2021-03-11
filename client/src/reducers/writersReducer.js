@@ -31,6 +31,8 @@ const writersReducer = (state = [], action) => {
 		return state.map(writer => writer.id === action.data.id ? action.data : writer)
 	case 'REMOVE_READER_FROM_FOLLOWERS':
 		return state.map(writer => writer.id === action.data ? action.data : writer)
+	case 'REMOVE_SUBS_FROM_WRITERS':
+		return state.map(writer => ({ ...writer, subscriptions: writer.subscribers.filter(sub => !action.data.includes(sub.id)) }))
 	default:
 		return state
 	}
@@ -109,6 +111,16 @@ export const addArticleToWriter = (article) => {
 		dispatch ({
 			type: 'ADD_ARTICLE_TO_WRITER',
 			data: article
+		})
+	}
+}
+
+export const removeSubsFromWriters = (subsToRemove) => {
+	return async dispatch => {
+		console.log('ids from writers reducer', subsToRemove)
+		dispatch ({
+			type: 'REMOVE_SUBS_FROM_WRITERS',
+			data: subsToRemove
 		})
 	}
 }

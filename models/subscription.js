@@ -12,11 +12,12 @@ const subscriptionSchema = new mongoose.Schema({
 	type: String,
 	startDate: String,
 	endDate: String,
-	expireAt: {
-		type: Date,
-		default: Date.now,
-		index: { expires: Number },
-	}
+	// expireAt: {
+	// 	type: Date,
+	// 	default: Date.now,
+	// 	index: { expires: Number },
+	// },
+	expirationDate: Number
 })
 
 subscriptionSchema.set('toJSON', {

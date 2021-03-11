@@ -29,8 +29,6 @@ const ArticlePage = () => {
 	const articles = useSelector(state => state.articles)
 	const images = useSelector(state => state.articleImages)
 
-	const filteredImg = images.filter(img => img.article === id)[0]
-	console.log(filteredImg)
 	const filteredImage = images.filter(img => img.article === id)[0].img.data.data
 	// const binaryData = images[1].img.data.data
 	var base64 = btoa(new Uint8Array(filteredImage).reduce((data, byte) => data + String.fromCharCode(byte), ''))
