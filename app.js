@@ -16,7 +16,7 @@ const logger = require('./utils/logger')
 const cookieParser = require('cookie-parser')
 const middleware = require('./utils/middleware')
 const loginReaderRouter = require('./controllers/loginReader')
-// const refreshReader = require('./controllers/refreshReader')
+const refreshReaderRouter = require('./controllers/refreshReader')
 const loginWriterRouter = require('./controllers/loginWriter')
 // const refreshWriter = require('./controllers/refreshWriter')
 
@@ -49,7 +49,7 @@ app.use('/api/subscriptions', subscriptionsRouter)
 app.get('/*',(req, res) => {
 	res.sendFile(path.join(__dirname + '/build/index.html'))
 })
-// app.post('/api/reader/refresh', refreshReader)
+app.use('/api/reader/refresh', refreshReaderRouter)
 
 app.use(middleware.errorHandler)
 

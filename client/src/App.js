@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import Container  from '@material-ui/core/Container'
 
@@ -26,9 +26,11 @@ import { initWriterImages } from './reducers/writerImagesReducer'
 import { initReaderImages } from './reducers/readerImagesReducer'
 
 import subscriptionService from './services/subscriptions'
+import readerRefreshServices from './services/readerRefresh'
 
 const App = () => {
 	const dispatch = useDispatch()
+	const reader = useSelector(state => state.reader)
 
 	useEffect(() => {
 		async function getAllArticles() {
@@ -84,10 +86,25 @@ const App = () => {
 			dispatch(removeSubsFromReaders(subsIds))
 		}
 	}
+
+	const refreshReader = async () => {	
+		console.log('reader id sent to service', reader.id)
+		const idForService = { id: reader.id }
+		await readerRefreshServices.refreshReader(idForService)
+		console.log('refreshed')
+	}
 	
 	setInterval(() => {
 		getSubs()
 	}, 60 * 1000)
+
+	setInterval(() => {
+		if (reader) {
+			console.log('reader refresh started')
+			refreshReader()
+		}
+	}, 10 * 1000)
+	
 
 	return (
 		<Router>

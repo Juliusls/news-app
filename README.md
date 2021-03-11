@@ -57,4 +57,5 @@ Readers will be able to read the news by selecting categories or selecting/filte
 | | 3.5 | Creating writers and readers profile images and connecting them to back end |
 | 11.3 | 0.5 | Adding readers My subscriptions option in left side menu |
 | | 7.5| (commit after midnigtht for 11.3) Full implementation of expired subscriptions removal |
-| Total | 159 | | 
+| 12.3 | 1 | Starting to implement refresh token functionality |
+| Total | 160 | | 

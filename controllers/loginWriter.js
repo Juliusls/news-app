@@ -37,8 +37,7 @@ loginWriterRouter.post('/', async (request, response, next) => {
 		// user.refreshToken = refreshToken
 		// await user.save()
 
-		response.cookie('writerAuthCookie', accessToken)
-		// TODO response.cookie('writerAuthCookie', accessToken, {secure: true, httpOnly: true})
+		response.cookie('writerAuthCookie', accessToken, {secure: true, httpOnly: true})
 		response.status(200).send({ userName: user.userName, id: user._id })
 	} catch (error) {
 		next(error)

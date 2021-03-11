@@ -26,19 +26,18 @@ loginReaderRouter.post('/', async (request, response, next) => {
 
 		let accessToken = jwt.sign(userForToken, config.READER_ACCESS_TOKEN_SECRET, {
 			algorithm: 'HS256',
-			expiresIn: 60 * 60 * 24
+			expiresIn: 60
 		})
 
-		// let refreshToken = jwt.sign(userForToken, config.REFRESH_TOKEN_SECRET, {
-		// 	algorithm: 'HS256',
-		// 	expiresIn: config.REFRESH_TOKEN_LIFE
-		// })
+		let refreshToken = jwt.sign(userForToken, config.READER_REFRESH_TOKEN_SECRET, {
+			algorithm: 'HS256',
+			expiresIn: 86400
+		})
 
-		// user.refreshToken = refreshToken
-		// await user.save()
+		user.refreshToken = refreshToken
+		await user.save()
 
-		response.cookie('readerAuthCookie', accessToken)
-		// TODO response.cookie('readerAuthCookie', accessToken, {secure: true, httpOnly: true})
+		response.cookie('readerAuthCookie', accessToken, {secure: true, httpOnly: true})
 		response.status(200).send({ userName: user.userName, id: user._id })
 	} catch (error) {
 		next(error)
