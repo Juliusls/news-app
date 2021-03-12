@@ -1,25 +1,26 @@
 const jwt = require('jsonwebtoken')
-const refreshReaderRouter = require('express').Router()
-const Reader = require('../models/reader')
+const refreshWriterRouter = require('express').Router()
+const Writer = require('../models/writer')
 const config = require('../utils/config')
 
-refreshReaderRouter.post('/', async (request, response, next) => {
+refreshWriterRouter.post('/', async (request, response, next) => {
 	const body = request.body
-	let accessToken = request.cookies.readerAuthCookie
+	let accessToken = request.cookies.writerAuthCookie
 
 	if (!accessToken){
 		return response.status(403).send()
 	}
 
-	try{
-		jwt.verify(accessToken, config.READER_ACCESS_TOKEN_SECRET)
+	try {
+		jwt.verify(accessToken, config.WRITER_ACCESS_TOKEN_SECRET)
 		console.log('Access Token Is Still Valid')
 		return response.status(204).send()
-	} catch(error) {
+	} catch (error) {
 		console.log('error response', error)
 		if (error.name === 'TokenExpiredError' && error.message === 'jwt expired') {
 			console.log('Access Token Is Not Valid')
-			const user = await Reader.findById(body.id)
+
+			const user = await Writer.findById(body.id)
 
 			let refreshToken = user.refreshToken
 
@@ -28,21 +29,21 @@ refreshReaderRouter.post('/', async (request, response, next) => {
 			}
 
 			try {
-				jwt.verify(refreshToken, config.READER_REFRESH_TOKEN_SECRET)
+				jwt.verify(refreshToken, config.WRITER_REFRESH_TOKEN_SECRET)
 				console.log('Refresh Token Is Still Valid')
 				const userForToken = {
 					userName: user.userName,
 					id: user._id,
 				}
 
-				let newToken = jwt.sign(userForToken, config.READER_ACCESS_TOKEN_SECRET, {
+				let newToken = jwt.sign(userForToken, config.WRITER_ACCESS_TOKEN_SECRET, {
 					algorithm: 'HS256',
-					expiresIn: parseInt(config.READER_ACCESS_TOKEN_LIFE)
+					expiresIn: parseInt(config.WRITER_ACCESS_TOKEN_LIFE)
 				})
 			
 				console.log('newToken', newToken)
 			
-				response.cookie('readerAuthCookie', newToken, {httpOnly: true})
+				response.cookie('writerAuthCookie', newToken, {httpOnly: true})
 				response.send({ userName: user.userName, id: user._id })
 			}
 			catch(error){
@@ -53,4 +54,4 @@ refreshReaderRouter.post('/', async (request, response, next) => {
 	}	
 })
 
-module.exports = refreshReaderRouter
+module.exports = refreshWriterRouter

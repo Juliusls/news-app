@@ -27,10 +27,12 @@ import { initReaderImages } from './reducers/readerImagesReducer'
 
 import subscriptionService from './services/subscriptions'
 import readerRefreshServices from './services/readerRefresh'
+import writerRefreshServices from './services/writerRefresh'
 
 const App = () => {
 	const dispatch = useDispatch()
 	const reader = useSelector(state => state.reader)
+	const writer = useSelector(state => state.writer)
 
 	useEffect(() => {
 		async function getAllArticles() {
@@ -88,10 +90,15 @@ const App = () => {
 	}
 
 	const refreshReader = async () => {	
-		console.log('reader id sent to service', reader.id)
 		const idForService = { id: reader.id }
 		await readerRefreshServices.refreshReader(idForService)
-		console.log('refreshed')
+		console.log('refreshed reader')
+	}
+
+	const refreshWriter = async () => {	
+		const idForService = { id: writer.id }
+		await writerRefreshServices.refreshWriter(idForService)
+		console.log('refreshed writer')
 	}
 	
 	setInterval(() => {
@@ -100,10 +107,12 @@ const App = () => {
 
 	setInterval(() => {
 		if (reader) {
-			console.log('reader refresh started')
 			refreshReader()
 		}
-	}, 10 * 1000)
+		if (writer) {
+			refreshWriter()
+		}
+	}, 60 * 1000)
 	
 
 	return (

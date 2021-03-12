@@ -26,18 +26,19 @@ loginWriterRouter.post('/', async (request, response, next) => {
 
 		let accessToken = jwt.sign(userForToken, config.WRITER_ACCESS_TOKEN_SECRET, {
 			algorithm: 'HS256',
-			expiresIn: 60 * 60 * 24
+			expiresIn: parseInt(config.WRITER_ACCESS_TOKEN_LIFE)
 		})
 
-		// let refreshToken = jwt.sign(userForToken, config.REFRESH_TOKEN_SECRET, {
-		// 	algorithm: 'HS256',
-		// 	expiresIn: config.REFRESH_TOKEN_LIFE
-		// })
+		let refreshToken = jwt.sign(userForToken, config.WRITER_REFRESH_TOKEN_SECRET, {
+			algorithm: 'HS256',
+			expiresIn: parseInt(config.WRITER_REFRESH_TOKEN_LIFE)
+		})
 
-		// user.refreshToken = refreshToken
-		// await user.save()
+		user.refreshToken = refreshToken
+		await user.save()
 
-		response.cookie('writerAuthCookie', accessToken, {secure: true, httpOnly: true})
+		// TODO add secure: true before pushing to Heroku
+		response.cookie('writerAuthCookie', accessToken, {httpOnly: true})
 		response.status(200).send({ userName: user.userName, id: user._id })
 	} catch (error) {
 		next(error)

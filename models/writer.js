@@ -25,6 +25,7 @@ const writerSchema = new mongoose.Schema({
 		ref: 'WriterImage'
 	},
 	passwordHash: String,
+	refreshToken: String,
 	earnings: Number,
 	joined: String,
 	writerDescription: String,

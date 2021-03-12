@@ -18,7 +18,7 @@ const middleware = require('./utils/middleware')
 const loginReaderRouter = require('./controllers/loginReader')
 const refreshReaderRouter = require('./controllers/refreshReader')
 const loginWriterRouter = require('./controllers/loginWriter')
-// const refreshWriter = require('./controllers/refreshWriter')
+const refreshWriterRouter = require('./controllers/refreshWriter')
 
 mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
 	.then(() => {
@@ -49,7 +49,10 @@ app.use('/api/subscriptions', subscriptionsRouter)
 app.get('/*',(req, res) => {
 	res.sendFile(path.join(__dirname + '/build/index.html'))
 })
+
 app.use('/api/reader/refresh', refreshReaderRouter)
+app.use('/api/writer/refresh', refreshWriterRouter)
+
 
 app.use(middleware.errorHandler)
 

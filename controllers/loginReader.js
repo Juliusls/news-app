@@ -26,18 +26,19 @@ loginReaderRouter.post('/', async (request, response, next) => {
 
 		let accessToken = jwt.sign(userForToken, config.READER_ACCESS_TOKEN_SECRET, {
 			algorithm: 'HS256',
-			expiresIn: 60
+			expiresIn: parseInt(config.READER_ACCESS_TOKEN_LIFE)
 		})
 
 		let refreshToken = jwt.sign(userForToken, config.READER_REFRESH_TOKEN_SECRET, {
 			algorithm: 'HS256',
-			expiresIn: 86400
+			expiresIn: parseInt(config.READER_REFRESH_TOKEN_LIFE)
 		})
 
 		user.refreshToken = refreshToken
 		await user.save()
 
-		response.cookie('readerAuthCookie', accessToken, {secure: true, httpOnly: true})
+		// TODO add secure: true before pushing to Heroku
+		response.cookie('readerAuthCookie', accessToken, {httpOnly: true})
 		response.status(200).send({ userName: user.userName, id: user._id })
 	} catch (error) {
 		next(error)
