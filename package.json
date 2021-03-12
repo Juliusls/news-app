@@ -9,7 +9,9 @@
     "lint": "eslint .",
     "build:client": "rm -rf build && cd client && npm run build && cp -r build ../",
     "doAll": "npm run build:client && npm run dev",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:test": "NODE_ENV=test node index.js",
+    "cypress:open": "cypress open"
   },
   "author": "Julius Lubys",
   "license": "ISC",
@@ -28,6 +30,7 @@
     "multer": "^1.4.2"
   },
   "devDependencies": {
+    "cypress": "^6.6.0",
     "eslint": "^7.19.0",
     "nodemon": "^2.0.7"
   }

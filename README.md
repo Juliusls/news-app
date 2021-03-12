@@ -59,4 +59,5 @@ Readers will be able to read the news by selecting categories or selecting/filte
 | | 7.5| (commit after midnigtht for 11.3) Full implementation of expired subscriptions removal |
 | 12.3 | 1 | Starting to implement refresh token functionality |
 | | 3.5 | Implementing refresh token functionality both for writer and reader |
-| Total | 163.5 | | 
+| | 1 | Started to work on E2E testing with cypress |
+| Total | 164.5 | | 

@@ -16,6 +16,11 @@ let WRITER_ACCESS_TOKEN_LIFE = process.env.WRITER_ACCESS_TOKEN_LIFE
 let WRITER_REFRESH_TOKEN_SECRET = process.env.WRITER_REFRESH_TOKEN_SECRET
 let WRITER_REFRESH_TOKEN_LIFE = process.env.WRITER_REFRESH_TOKEN_LIFE
 
+// For testing
+if (process.env.NODE_ENV === 'test') {
+	MONGODB_URI = process.env.TEST_MONGODB_URI
+}
+
 module.exports = {
 	PORT,
 	MONGODB_URI,

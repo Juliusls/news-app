@@ -53,6 +53,11 @@ app.get('/*',(req, res) => {
 app.use('/api/reader/refresh', refreshReaderRouter)
 app.use('/api/writer/refresh', refreshWriterRouter)
 
+// For testing
+if (process.env.NODE_ENV === 'test') {
+	const testingRouter = require('./controllers/testing')
+	app.use('/api/testing', testingRouter)
+}
 
 app.use(middleware.errorHandler)
 

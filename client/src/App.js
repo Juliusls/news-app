@@ -168,13 +168,7 @@ const App = () => {
 
 export default App
 
-// TODO refresh token
 // TODO After new writer or article is added name is not showing up
-
-// TODO if user is logged out make it that after logging in he comes back to the same place 
-
-// TODO redux persist
-// TODO fix routes in serives
 
 // TODO Cypress testing
 
