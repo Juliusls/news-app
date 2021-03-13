@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = '/api/writers'
+const baseUrl = 'https://own-news-app.herokuapp.com/api/writers'
 
 const getAll = async () => {
 	const response = await axios.get(baseUrl)

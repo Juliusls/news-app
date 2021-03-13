@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = '/api/reader/refresh'
+const baseUrl = 'https://own-news-app.herokuapp.com/api/reader/refresh'
 
 const refreshReader = async (readerId) => {
 	const response = await axios.post(baseUrl, readerId)
