@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = 'http://localhost:3001/api/reader/refresh'
+const baseUrl = '/api/reader/refresh'
 
 const refreshReader = async (readerId) => {
 	const response = await axios.post(baseUrl, readerId)
