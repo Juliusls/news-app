@@ -90,7 +90,7 @@ const UploadComponent = ({ setFieldValue, values }) => {
 	return (
 		<div>
 			<div {...getRootProps({ style })}>
-				<input {...getInputProps()} name='image'/>
+				<input {...getInputProps()} name='image' id='imageUpload'/>
 				<p>Drag and drop image here, or click to select image</p>
 				<BackupIcon />
 			</div>

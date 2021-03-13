@@ -67,7 +67,7 @@ const ReaderPage = () => {
 						<Typography variant='h6' >
 							My funds: {filteredReader.funds} €
 						</Typography>
-						<Button color='primary' size="small" variant='outlined' className={classes.addFundsButton} onClick={() => setOpenDialog(true)}>
+						<Button color='primary' size="small" variant='outlined' id='addFundsButton' className={classes.addFundsButton} onClick={() => setOpenDialog(true)}>
 							Add funds
 						</Button>
 					</div>

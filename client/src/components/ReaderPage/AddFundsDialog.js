@@ -59,11 +59,12 @@ const AddFundsDialog = ({ openDialog, setOpenDialog, reader }) => {
 			<DialogTitle id="alert-dialog-title" className={classes.text}>Add Funds</DialogTitle>
 			<DialogActions>
 				<NumberFormat
+					id='addFundsInput'
 					onChange={onChangeFunds}
 					value={fundsValue}
 					isNumericString
 				/>
-				<Button color="primary" autoFocus onClick={handleSubmit}>
+				<Button color="primary" id='addFundsDialogAddButton' autoFocus onClick={handleSubmit}>
 						add
 				</Button>
 				<Button onClick={() => setOpenDialog(false)} color="primary" autoFocus>

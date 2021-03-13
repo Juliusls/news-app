@@ -142,6 +142,7 @@ const NewArticleForm = ({ values, errors, touched, handleChange, handleBlur, han
 											variant="outlined"
 											name={`content.${index}`}
 											type="text"
+											id={`paragraphInput-${index}`}
 											multiline
 											fullWidth
 											className={classes.contentField}
@@ -153,7 +154,7 @@ const NewArticleForm = ({ values, errors, touched, handleChange, handleBlur, han
 									</div>
 								))
 								}
-								<IconButton color="primary" size='small' aria-label="upload picture" component="span" onClick={() => push('')}>
+								<IconButton id='addParagraphButton' color="primary" size='small' aria-label="upload picture" component="span" onClick={() => push('')}>
 									<AddIcon />
 								</IconButton>
 								<IconButton className={classes.minusItem} color="primary" aria-label="upload picture" size='small' component="span" onClick={pop}>

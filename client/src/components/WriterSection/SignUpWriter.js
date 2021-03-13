@@ -207,6 +207,7 @@ const WriterSignUpForm = ({ validateUsername,  values, errors, touched, handleCh
 										<Field
 											component={CheckboxWithLabel}
 											classes={{ root: classes.checkBoxMargins }}
+											id={categoryValue.toLowerCase()}
 											type="checkbox"
 											name="writerGenres"
 											value={categoryValue}
@@ -318,7 +319,7 @@ const WriterSignUpForm = ({ validateUsername,  values, errors, touched, handleCh
 						}
 					</div>
 					<UploadComponent setFieldValue={setFieldValue} values={values}/>
-					<Button color="primary" variant="contained" type="submit" className={classes.button}>
+					<Button color="primary" variant="contained" type="submit" id='submitWriterRegister' className={classes.button}>
                         Sign Up
 					</Button>
 				</form>
@@ -337,6 +338,7 @@ const SignUpWriter = () => {
 		try {
 			const data = new FormData() 
 			data.append('file', values.files[0])
+			
 			const imageFromDb = await writerImagesService.create(data)
 
 			const writerForFb = { ...values, imageId: imageFromDb.id }

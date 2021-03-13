@@ -116,7 +116,7 @@ const LoginWriterForm = ({ reader, values, errors, touched, handleChange, handle
 							</div>
 						)
 						: (
-							<Button color="primary" variant="contained" type="submit" className={classes.button}>
+							<Button color="primary" variant="contained" type="submit" id='writerLoginButton' className={classes.button}>
 								Log in
 							</Button>
 						) 

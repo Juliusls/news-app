@@ -85,7 +85,7 @@ const WritersDashboard = ({ writer, setComponentToOpen }) => {
 				</Grid>
 				<Grid item xs={2}>
 					<Card variant="outlined" className={classes.card}>
-						<CardActionArea onClick={() => setComponentToOpen('prices')} classes={{ root: classes.actionArea, focusHighlight: classes.focusHighlight }}>
+						<CardActionArea id='myPricesCardButton' onClick={() => setComponentToOpen('prices')} classes={{ root: classes.actionArea, focusHighlight: classes.focusHighlight }}>
 							<CardContent>
 								<Typography className={classes.titleText} gutterBottom variant='body2'>
 									My prices, €

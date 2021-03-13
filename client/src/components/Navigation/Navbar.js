@@ -112,7 +112,7 @@ const Navbar = () =>  {
 			<AppBar position="fixed" className={classes.appbar}>
 				<Toolbar>
 					<div className={classes.leftElement}>
-						<IconButton className={classes.leftElementChild} color="inherit" aria-label="menu" onClick={handleLeftSideMenuIsOpen} style={{ display: writer ? 'none' : 'block' }}>
+						<IconButton className={classes.leftElementChild} color="inherit" id='leftSideMenuButton' aria-label="menu" onClick={handleLeftSideMenuIsOpen} style={{ display: writer ? 'none' : 'block' }}>
 							<MenuIcon className={classes.menuIcon} />
 						</IconButton>
 					</div>
@@ -123,7 +123,7 @@ const Navbar = () =>  {
 							</Typography>
 						)
 						: (
-							<Typography component={ Link } to='/' variant="h6" className={classes.titleText}>
+							<Typography component={ Link } to='/' variant="h6" id='newsAppHome' className={classes.titleText}>
 								News App
 							</Typography>
 						)
@@ -142,6 +142,7 @@ const Navbar = () =>  {
 										<IconButton
 											aria-controls="menu-appbar"
 											aria-haspopup="true"
+											className='readerProfileAvatarButton'
 											component={ Link }
 											to={`/reader/profile/${reader.id}`}
 										>
@@ -157,6 +158,7 @@ const Navbar = () =>  {
 										<IconButton
 											aria-controls="menu-appbar"
 											aria-haspopup="true"
+											className='readerLogoutButton'
 											onClick={handleReaderLogout}
 										>
 											<ExitToAppIcon className={classes.accountIcon}/>
@@ -176,8 +178,9 @@ const Navbar = () =>  {
 												aria-haspopup="true"
 												component={ Link }
 												to='/writerssection/newarticle'
+												id='newArticleIcon'
 											>
-												<EditIcon className={classes.accountIcon}/>
+												<EditIcon className={classes.accountIcon} />
 											</IconButton>
 										</span>
 									</BigTooltip>
@@ -200,6 +203,7 @@ const Navbar = () =>  {
 										<span>
 											<IconButton
 												aria-controls="menu-appbar"
+												className='writerLogoutButton'
 												aria-haspopup="true"
 												onClick={handleWriterLogout}
 											>

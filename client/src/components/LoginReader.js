@@ -103,7 +103,7 @@ const LoginReaderForm = ({ values, errors, touched, handleChange, handleBlur, ha
 						}}
 						className={classes.paddings}
 					/>
-					<Button color="primary" variant="contained" type="submit" className={classes.button}>
+					<Button id='readerLoginButton' color="primary" variant="contained" type="submit" className={classes.button}>
                         Log in
 					</Button>
 				</form>

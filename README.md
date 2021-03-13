@@ -60,4 +60,5 @@ Readers will be able to read the news by selecting categories or selecting/filte
 | 12.3 | 1 | Starting to implement refresh token functionality |
 | | 3.5 | Implementing refresh token functionality both for writer and reader |
 | | 1 | Started to work on E2E testing with cypress |
-| Total | 164.5 | | 
+| 13.3 | 6 | Creating cypress tests |
+| Total | 170.5 | | 

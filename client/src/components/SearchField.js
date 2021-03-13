@@ -41,6 +41,7 @@ const SearchField = () => {
 			<TextField
 				label="Search"
 				type="search"
+				id='searchInput'
 				value={searchValue}
 				onChange={onChangeSearch}
 				variant="outlined"
@@ -55,6 +56,7 @@ const SearchField = () => {
 			
 			<IconButton
 				onClick={handleSearchVisibility}
+				id='searchFieldButton'
 			>
 				<SearchIcon className={classes.icons}/>
 			</IconButton>

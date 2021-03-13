@@ -66,7 +66,7 @@ const SubscriptionPlans = ({ filteredWriter, matchingSub, handleSubscirbe }) => 
 							</BigTooltip>
 						)
 						: (
-							<Button size="small" color="primary" variant="contained" endIcon={<AddOutlinedIcon />} onClick={() => handleSubscirbe('montlySubscriptionPrice')}>
+							<Button size="small" color="primary" variant="contained" id='montlySubscriptionButton' endIcon={<AddOutlinedIcon />} onClick={() => handleSubscirbe('montlySubscriptionPrice')}>
 								Subscribe
 							</Button>
 

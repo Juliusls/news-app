@@ -192,7 +192,7 @@ const SignUpReaderForm = ({ values, errors, touched, handleChange, handleBlur, h
 						}
 					</div>
 					<UploadComponent setFieldValue={setFieldValue} values={values}/>
-					<Button color="primary" variant="contained" type="submit" className={classes.button}>
+					<Button id='submitReaderRegister' color="primary" variant="contained" type="submit" className={classes.button}>
                         Sign Up
 					</Button>
 				</form>

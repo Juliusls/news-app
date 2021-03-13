@@ -61,6 +61,7 @@ const CustomTableCell = ({ isEditMode, value, name, onChange }) => {
 					variant="outlined"
 					value={value}
 					name={name}
+					id={`priceInput-${name}`}
 					onChange={e => onChange(e)}
 					InputProps={{
 						className: classes.inputColor
@@ -143,6 +144,7 @@ const WritersPrices = ({ writer }) => {
 									<IconButton
 										aria-label="done"
 										onClick={() => handleSubmit()}
+										id='confirmChangedPricesButton'
 									>
 										<DoneIcon />
 									</IconButton>
@@ -155,6 +157,7 @@ const WritersPrices = ({ writer }) => {
 								</div>
 							) : (
 								<IconButton
+									id='editPricesButton'
 									aria-label="delete"
 									onClick={() => setssEditMode(true)}
 								>

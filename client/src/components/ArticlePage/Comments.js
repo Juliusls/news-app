@@ -132,12 +132,13 @@ const Comments = () => {
 										value={commentValue}
 										onChange={onChangeComment}
 										variant="outlined"
+										id='commentInput'
 										InputProps={{
 											className: classes.inputColor
 										}}
 									/>
 								
-									<Button size="small" color="primary" variant="contained" type="submit" className={classes.commentButton}>
+									<Button size="small" color="primary" variant="contained" type="submit"  id='addCommentButton' className={classes.commentButton}>
 										Comment
 									</Button>
 								</form>
@@ -165,7 +166,7 @@ const Comments = () => {
 											{comment.comment}
 										</Typography>
 										<Typography className={classes.text} variant='caption'>
-										Posted on {comment.date}
+											Posted on {comment.date}
 										</Typography>
 									</CardContent>
 								</Card>)
