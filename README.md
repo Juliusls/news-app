@@ -61,4 +61,5 @@ Readers will be able to read the news by selecting categories or selecting/filte
 | | 3.5 | Implementing refresh token functionality both for writer and reader |
 | | 1 | Started to work on E2E testing with cypress |
 | 13.3 | 6 | Creating cypress tests |
-| Total | 170.5 | | 
+| | 1 | Adding project back end to Heroku and front end to Netlify |
+| Total | 171.5 | | 

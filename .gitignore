@@ -7,3 +7,5 @@ client/uploads
 .env
 .vscode
 .DS_Store
+# Local Netlify folder
+.netlify
