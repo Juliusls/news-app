@@ -10,7 +10,7 @@ import AddOutlinedIcon from '@material-ui/icons/AddOutlined'
 import CheckOutlinedIcon from '@material-ui/icons/CheckOutlined'
 
 import ArticlesList from '../ArticlesList/ArticlesList'
-import SubscriptionPlans from './SubscriptionPlans'
+import SubscriptionPlans from '../SubscriptionPlans'
 
 import { addFavoriteWriter, removeFavoriteWriter, substractReaderFunds, initReaders } from '../../reducers/readersReducer'
 import { addReaderToFollowers, removeReaderFromFollowers, addEarningsToWriter, initWriters } from '../../reducers/writersReducer'
