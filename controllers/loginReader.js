@@ -3,7 +3,6 @@ const bcrypt = require('bcrypt')
 const loginReaderRouter = require('express').Router()
 const User = require('../models/reader')
 const config = require('../utils/config')
-const { stubFalse } = require('cypress/types/lodash')
 
 loginReaderRouter.post('/', async (request, response, next) => {
 	try {

@@ -5,6 +5,7 @@ client/.env
 /imagesForTesting
 /node_modules
 /build
+/cypress
 .env
 .vscode
 .DS_Store
