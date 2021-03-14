@@ -37,7 +37,12 @@ loginWriterRouter.post('/', async (request, response, next) => {
 		user.refreshToken = refreshToken
 		await user.save()
 
-		response.cookie('writerAuthCookie', accessToken)
+		response.cookie('writerAuthCookie', accessToken, { 
+			httpOnly: false,
+			secure: false,
+			domain: 'julius-news-app.netlify.app',
+			sameSite: false 
+		})
 		response.status(200).send({ userName: user.userName, id: user._id })
 	} catch (error) {
 		next(error)
@@ -46,4 +51,3 @@ loginWriterRouter.post('/', async (request, response, next) => {
 })
 
 module.exports = loginWriterRouter
-

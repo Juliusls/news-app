@@ -37,6 +37,7 @@ app.use(express.urlencoded({
 	parameterLimit: 52428800,
 	extended: false }))
 app.set('view engine', 'ejs')
+app.set('trust proxy', 'julius-news-app.netlify.app')
 app.use('/api/articles', articlesRouter)
 app.use('/api/images/articles', articleImageRouter)
 app.use('/api/images/writers', writerImageRouter)
