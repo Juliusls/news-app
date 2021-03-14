@@ -28,7 +28,7 @@ mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology
 		logger.error('error connecing to MongoDB', error.message)
 	})
 
-app.use(cors())
+app.use(cors({ origin: 'https://julius-news-app.netlify.app/' }))
 app.use(express.static('build'))
 app.use(cookieParser())
 app.use(express.json({ limit: '50mb' }))
@@ -60,6 +60,6 @@ if (process.env.NODE_ENV === 'test') {
 }
 
 app.use(middleware.errorHandler)
-app.use(middleware.cookieChecker)
+// app.use(middleware.cookieChecker)
 
 module.exports = app
