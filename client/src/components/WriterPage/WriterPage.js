@@ -5,6 +5,7 @@ import { useParams, useHistory } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
 
 import { makeStyles, withStyles, Typography, ButtonGroup, Button, Tooltip, Fade, Card, CardContent, List } from '@material-ui/core'
+import Skeleton from '@material-ui/lab/Skeleton'
 import AddOutlinedIcon from '@material-ui/icons/AddOutlined'
 import CheckOutlinedIcon from '@material-ui/icons/CheckOutlined'
 
@@ -107,7 +108,7 @@ const WriterPage = () => {
 	const filteredWriter = useSelector(state => state.writers.filter(writer => writer.id === author)[0])
 	const currentReader = loggedInReader && readers.filter(reader => reader.id === loggedInReader.id)[0]
 
-	const filteredWriterImage = writersImages && writersImages.filter(img => img.writer === author)[0].img.data.data
+	const filteredWriterImage = writersImages && writersImages.length !== 0 && writersImages.filter(img => img.writer === author)[0].img.data.data
 	var encodedWriterImage = filteredWriterImage && btoa(new Uint8Array(filteredWriterImage).reduce((data, byte) => data + String.fromCharCode(byte), ''))
 
 	if (!filteredWriter) {
@@ -219,10 +220,13 @@ const WriterPage = () => {
 	return (
 		<div>
 			<div className={classes.profileContaner}>
-				<img
-					width="200"
-					src={`data:image/jpeg;base64,${encodedWriterImage}`}
-				/>
+				{writersImages.length === 0
+					? <Skeleton width={200} variant="rect" animation="wave"/>
+					: <img
+						width="200"
+						src={`data:image/jpeg;base64,${encodedWriterImage}`}
+					/>
+				}
 				<div className={classes.infoContainer}>
 					<Typography variant='h4'>
 						{filteredWriter.firstName} {filteredWriter.lastName}

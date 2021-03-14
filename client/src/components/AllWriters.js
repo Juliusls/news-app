@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 import { Avatar, ListItemAvatar, ListItemText, ListItemSecondaryAction, ListItem, List, makeStyles, Typography } from '@material-ui/core'
-
+import Skeleton from '@material-ui/lab/Skeleton'
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -33,10 +33,17 @@ const AllWriters = () => {
 	const writersImages = useSelector(state => state.writerImages)
 
 	const imageComp = (id) => {
-		const filteredWriterImage = writersImages && writersImages.filter(img => img.writer === id)[0].img.data.data
+		const filteredWriterImage = writersImages && writersImages.length !== 0 && writersImages.filter(img => img.writer === id)[0].img.data.data
 		let encodedWriterImage = filteredWriterImage && btoa(new Uint8Array(filteredWriterImage).reduce((data, byte) => data + String.fromCharCode(byte), ''))
 		
-		return <Avatar alt="Writers Profile Picture" src={`data:image/jpeg;base64,${encodedWriterImage}`} />
+		return ( 
+			<div>
+				{ writersImages.length === 0
+					? <Skeleton animation="wave"><Avatar/></Skeleton>
+					: <Avatar alt="Writers Profile Picture" src={`data:image/jpeg;base64,${encodedWriterImage}`} />
+				}
+			</div>
+		)
 	}
 
 	return (

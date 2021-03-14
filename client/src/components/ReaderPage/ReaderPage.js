@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 
 import { makeStyles, Typography, Button } from '@material-ui/core'
+import Skeleton from '@material-ui/lab/Skeleton'
 
 import AddFundsDialog from './AddFundsDialog'
 import ReaderTabs from './ReaderTabs'
@@ -46,7 +47,7 @@ const ReaderPage = () => {
 	const filteredReader = readers.filter(reader => reader.id === id)[0]
 	const date = filteredReader.joined !== undefined ? filteredReader.joined : 'No data'
 
-	const filteredImage = images && images.filter(img => img.reader === id)[0].img.data.data
+	const filteredImage = images && images.length !== 0 && images.filter(img => img.reader === id)[0].img.data.data
 	var base64 = btoa(new Uint8Array(filteredImage).reduce((data, byte) => data + String.fromCharCode(byte), ''))
 
 	if (!readers) {
@@ -56,10 +57,13 @@ const ReaderPage = () => {
 	return (
 		<div>
 			<div className={classes.profileContaner}>
-				<img
-					width="200"
-					src={`data:image/jpeg;base64,${base64}`}
-				/>
+				{images.length === 0
+					? <Skeleton width={200} variant="rect" animation="wave"/>
+					: <img
+						width="200"
+						src={`data:image/jpeg;base64,${base64}`}
+					/>
+				}
 				<div className={classes.infoContainer}>
 					<Typography variant='h4'>
 						{filteredReader.userName}

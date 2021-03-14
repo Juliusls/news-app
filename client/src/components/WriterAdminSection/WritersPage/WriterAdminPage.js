@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 
 import { makeStyles, Typography, List } from '@material-ui/core'
+import Skeleton from '@material-ui/lab/Skeleton'
 
 import WritersDashboard from './WritersDashboard'
 import ArticlesStatistics from './ArticlesStatistics'
@@ -39,7 +40,7 @@ const WriterAdminPage = () => {
 
 	const [componentToOpen, setComponentToOpen] = useState('articles')
 
-	const filteredWriterImage = writersImages && writersImages.filter(img => img.writer === id)[0].img.data.data
+	const filteredWriterImage = writersImages && writersImages.length !== 0 && writersImages.filter(img => img.writer === id)[0].img.data.data
 	var encodedWriterImage = filteredWriterImage && btoa(new Uint8Array(filteredWriterImage).reduce((data, byte) => data + String.fromCharCode(byte), ''))
 
 	const tabToOpen = () => {
@@ -60,10 +61,13 @@ const WriterAdminPage = () => {
 	return (
 		<div>
 			<div className={classes.profileContaner}>
-				<img
-					width="200"
-					src={`data:image/jpeg;base64,${encodedWriterImage}`}
-				/>
+				{writersImages.length === 0
+					? <Skeleton width={200} variant="rect" animation="wave"/>
+					: <img
+						width="200"
+						src={`data:image/jpeg;base64,${encodedWriterImage}`}
+					/>
+				}
 				<div className={classes.infoContainer}>
 					<Typography variant='h4'>
 						{loggedInWritter.firstName} {loggedInWritter.lastName}

@@ -66,4 +66,5 @@ Readers will be able to read the news by selecting categories or selecting/filte
 | | 2 | Trying to fix and issue of cookies not being set on netlify from response |
 | | 1.5 | Did not manage to make cookies work on Netlify. App now is fully functional backend and front end on Heroku |
 | | 3 | File imports clean up and restructuring, front end file restructuring, minor bug fixes |
-| Total | 178.5 | | 
+| | 1 | Fixing issue that page brakes when images are not loaded with material ui Skeleton |
+| Total | 179.5 | | 

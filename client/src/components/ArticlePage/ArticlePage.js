@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 import { makeStyles, Typography, Button } from '@material-ui/core'
+import Skeleton from '@material-ui/lab/Skeleton'
 
 import Comments from './Comments'
 
@@ -28,7 +29,7 @@ const ArticlePage = () => {
 	const articles = useSelector(state => state.articles)
 	const images = useSelector(state => state.articleImages)
 
-	const filteredImage = images && images.filter(img => img.article === id)[0].img.data.data
+	const filteredImage = images && images.length !== 0 && images.filter(img => img.article === id)[0].img.data.data
 	var base64 = btoa(new Uint8Array(filteredImage).reduce((data, byte) => data + String.fromCharCode(byte), ''))
 
 	if (!articles) {
@@ -40,12 +41,16 @@ const ArticlePage = () => {
 	return (
 		<div>
 			<div className={classes.articleDiv}>
-				<img
-					style={{ width: '100%', height: 200, borderRadius: 5, objectFit: 'cover' }}
-					fullWidth
-					// imageStyle={{ height: 300 }}
-					src={`data:image/jpeg;base64,${base64}`}
-				/>
+				{images.length === 0 
+					? <Skeleton variant="rect" width={1232} height={200} animation="wave"/>
+					: <img
+						style={{ width: '100%', height: 200, borderRadius: 5, objectFit: 'cover' }}
+						fullWidth
+						// imageStyle={{ height: 300 }}
+						src={`data:image/jpeg;base64,${base64}`}
+					/>
+				}
+				
 				<div className={classes.categoryButton}>
 					{filteredArticle.genres.map(genre => 
 						<Link style={{ textDecoration: 'none', color: 'inherit' }} to={`/genres/${genre}`} key={genre}><Button marginottom='50' size='small' variant="outlined" color="primary">{genre}</Button></Link>

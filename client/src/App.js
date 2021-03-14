@@ -167,5 +167,3 @@ const App = () => {
 export default App
 
 // TODO readme description
-
-// TODO fix images problem

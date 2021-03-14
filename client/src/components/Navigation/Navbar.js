@@ -7,6 +7,7 @@ import { withStyles, makeStyles, Button, IconButton, Typography, Toolbar, AppBar
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import EditIcon from '@material-ui/icons/Edit'
 import MenuIcon from '@material-ui/icons/Menu'
+import Skeleton from '@material-ui/lab/Skeleton'
 
 import SearchField from './SearchField'
 import LeftSideMenu from './LeftSideMenu'
@@ -85,10 +86,10 @@ const Navbar = () =>  {
 	// eslint-disable-next-line no-unused-vars
 	const [cookies, setCookie, removeCookie] = useCookies(['readerAuthCookie', 'writerAuthCookie'])
 
-	const filteredReaderImage = reader && readersImages.filter(img => img.reader === reader.id)[0].img.data.data
+	const filteredReaderImage = reader && readersImages.length !== 0 && readersImages.filter(img => img.reader === reader.id)[0].img.data.data
 	var encodedReaderImage = btoa(new Uint8Array(filteredReaderImage).reduce((data, byte) => data + String.fromCharCode(byte), ''))
 	
-	const filteredWriterImage = writer && writersImages.filter(img => img.writer === writer.id)[0].img.data.data
+	const filteredWriterImage = writer && writersImages.length !== 0 && writersImages.filter(img => img.writer === writer.id)[0].img.data.data
 	var encodedWriterImage = filteredWriterImage && btoa(new Uint8Array(filteredWriterImage).reduce((data, byte) => data + String.fromCharCode(byte), ''))
 
 	const handleLeftSideMenuIsOpen = () => {
@@ -149,10 +150,14 @@ const Navbar = () =>  {
 											component={ Link }
 											to={`/reader/profile/${reader.id}`}
 										>
-											<Avatar 
-												alt="Reader Profile Picture"
-												src={`data:image/jpeg;base64,${encodedReaderImage}`}
-											/>
+											{readersImages.length === 0
+												? <Skeleton animation="wave"><Avatar/></Skeleton>
+												: <Avatar 
+													alt="Reader Profile Picture"
+													src={`data:image/jpeg;base64,${encodedReaderImage}`}
+												/>
+											}
+											
 										</IconButton>
 									</span>
 								</BigTooltip>
@@ -195,10 +200,14 @@ const Navbar = () =>  {
 												component={ Link }
 												to={`/writerssection/profile/${writer.id}`}
 											> 
-												<Avatar 
-													alt="Writers Profile Picture"
-													src={`data:image/jpeg;base64,${encodedWriterImage}`}
-												/>
+												{writersImages.length === 0
+													? <Skeleton animation="wave"><Avatar/></Skeleton>
+													: <Avatar 
+														alt="Writers Profile Picture"
+														src={`data:image/jpeg;base64,${encodedWriterImage}`}
+													/>
+												}
+												
 											</IconButton>
 										</span>
 									</BigTooltip>
