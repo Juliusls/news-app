@@ -60,6 +60,5 @@ if (process.env.NODE_ENV === 'test') {
 }
 
 app.use(middleware.errorHandler)
-app.use(middleware.cookieChecker)
 
 module.exports = app
