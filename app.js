@@ -29,7 +29,7 @@ mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology
 	})
 
 app.use(middleware.cookieChecker)
-app.use(cors({ origin: 'https://julius-news-app.netlify.app' }))
+app.use(cors())
 app.use(express.static('build'))
 app.use(cookieParser())
 app.use(express.json({ limit: '50mb' }))

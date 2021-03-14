@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt')
 const loginReaderRouter = require('express').Router()
 const User = require('../models/reader')
 const config = require('../utils/config')
+const { stubFalse } = require('cypress/types/lodash')
 
 loginReaderRouter.post('/', async (request, response, next) => {
 	try {
@@ -38,9 +39,8 @@ loginReaderRouter.post('/', async (request, response, next) => {
 		await user.save()
 
 		response.cookie('readerAuthCookie', accessToken, { 
-			httpOnly: true,
-			secure: true,
-			domain: 'julius-news-app.netlify.app',
+			httpOnly: false,
+			secure: false,
 			sameSite: 'none' 
 		})
 		response.status(200).send({ userName: user.userName, id: user._id })
