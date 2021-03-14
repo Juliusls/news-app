@@ -63,4 +63,5 @@ Readers will be able to read the news by selecting categories or selecting/filte
 | 13.3 | 6 | Creating cypress tests |
 | | 1 | Adding project back end to Heroku and front end to Netlify |
 | 14.3 | 0.5 | Adding env base url for react to work localy with localhost and in netlify with heroku |
-| Total | 172 | | 
+| | 2 | Trying to fix and issue of cookies not being set on netlify from response |
+| Total | 174 | | 
