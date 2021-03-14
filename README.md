@@ -1,12 +1,35 @@
-# news-app
+# NEWS-APP
 
-**News-app application description:**
-React and Node base application connecting news writers directly with readers.
-Writers will be able to create articles by categories and then select if their article is free or paid. Writers will be able to create one  article price and monthly plan for their readers.
-Readers will be able to read the news by selecting categories or selecting/filtering writers. Not registered readers can only read free articles. Logged-in readers will be able to add funds to their accounts and then use it to read a specific paid article or subscribe to a specific writer's monthly plan.
+[Link to site hosted on Heroku!](https://own-news-app.herokuapp.com/)
 
+## News-app application description:
 
-**Working time**
+MERN Stack app - News-App
+
+**Functionality**
+
+Writer:
+ - Create article
+ - Define one article price
+ - Define montly and yearly subscription prices
+ - In personal profile view: own articles, subscribers with subscription type and period, followers, prices, total and specific article views, earnings, comments count
+
+Not registered Reader:
+ - Read free articles
+ - Search for article using search field
+ - View all writers
+ - Filter articles by: all, free, paid
+ - View articles by specific selected category
+
+Registerd Reader:
+ - Add Funds
+ - In personal profile: view favorite writers and remove them, view subscribtions, view posted comments
+ - Pay and read one paid article
+ - Add and remove writers from favorites
+ - Subscribe to writer and read all his/her's paid articles for paid subscription period
+ - Comment on articles
+
+## Working time
 | Day | Time | What I did |
 | :----:|:-----| :-----|
 | 4.2. | 1 | Initial commit |
@@ -67,4 +90,5 @@ Readers will be able to read the news by selecting categories or selecting/filte
 | | 1.5 | Did not manage to make cookies work on Netlify. App now is fully functional backend and front end on Heroku |
 | | 2 | File imports clean up and restructuring, front end file restructuring, minor bug fixes |
 | | 1 | Fixing issue that page brakes when images are not loaded with material ui Skeleton |
-| Total | 178.5 | | 
+| | 0.5 | Final commit |
+| Total | 179 | | 
