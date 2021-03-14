@@ -41,7 +41,7 @@ loginWriterRouter.post('/', async (request, response, next) => {
 			httpOnly: true,
 			secure: true,
 			domain: 'julius-news-app.netlify.app',
-			sameSite: true 
+			sameSite: false 
 		})
 		response.status(200).send({ userName: user.userName, id: user._id })
 	} catch (error) {

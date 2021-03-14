@@ -38,8 +38,9 @@ loginReaderRouter.post('/', async (request, response, next) => {
 		await user.save()
 
 		response.cookie('readerAuthCookie', accessToken, { 
-			httpOnly: false,
-			secure: request.secure || request.headers['x-forwarded-proto'] === 'https',
+			httpOnly: true,
+			secure: true,
+			domain: 'julius-news-app.netlify.app',
 			sameSite: false 
 		})
 		response.status(200).send({ userName: user.userName, id: user._id })
