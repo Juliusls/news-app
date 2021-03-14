@@ -28,8 +28,8 @@ mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology
 		logger.error('error connecing to MongoDB', error.message)
 	})
 
-// app.use(middleware.cookieChecker)
 app.use(cors())
+app.use(middleware.cookieChecker)
 app.use(express.static('build'))
 app.use(cookieParser())
 app.use(express.json({ limit: '50mb' }))
