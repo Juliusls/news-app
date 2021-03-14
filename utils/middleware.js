@@ -17,15 +17,15 @@ const errorHandler = (error, request, response, next) => {
 	next(error)
 }
 
-const cookieChecker = (request, response, next) => {
-	response.setHeader('Access-Control-Allow-Origin', 'https://julius-news-app.netlify.app')
-	response.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE')
-	response.setHeader('Access-Control-Allow-Headers', 'X-Access-Token, Authorization X-Requested-With, Content-Type, Accept')
-	response.setHeader('Access-Control-Allow-Credentials', true)
-	next()
-}
+// const cookieChecker = (request, response, next) => {
+// 	response.setHeader('Access-Control-Allow-Origin', 'https://julius-news-app.netlify.app')
+// 	response.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE')
+// 	response.setHeader('Access-Control-Allow-Headers', 'X-Access-Token, Authorization X-Requested-With, Content-Type, Accept')
+// 	response.setHeader('Access-Control-Allow-Credentials', true)
+// 	next()
+// }
 
 module.exports = {
 	errorHandler,
-	cookieChecker
+	// cookieChecker
 }

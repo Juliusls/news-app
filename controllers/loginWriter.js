@@ -38,8 +38,8 @@ loginWriterRouter.post('/', async (request, response, next) => {
 		await user.save()
 
 		response.cookie('writerAuthCookie', accessToken, { 
-			httpOnly: false,
-			secure: false,
+			httpOnly: true,
+			secure: true,
 			sameSite: 'none'
 		})
 		response.status(200).send({ userName: user.userName, id: user._id })
