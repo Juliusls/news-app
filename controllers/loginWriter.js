@@ -37,8 +37,11 @@ loginWriterRouter.post('/', async (request, response, next) => {
 		user.refreshToken = refreshToken
 		await user.save()
 
-		// TODO add secure: true before pushing to Heroku
-		response.cookie('writerAuthCookie', accessToken, {httpOnly: true})
+		response.cookie('writerAuthCookie', accessToken, { 
+			httpOnly: true,
+			secure: true,
+			sameSite: 'none' 
+		})
 		response.status(200).send({ userName: user.userName, id: user._id })
 	} catch (error) {
 		next(error)
