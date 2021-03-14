@@ -19,12 +19,11 @@ const errorHandler = (error, request, response, next) => {
 
 const cookieChecker = (req, res, next) => {
 
-	res.setHeader('Access-Control-Allow-Origin', '*')
+	res.setHeader('Access-Control-Allow-Origin', 'https://julius-news-app.netlify.app')
 
 	res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE')
 
-	// Request headers you wish to allow
-	res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept')
+	res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With, X-Forward-Proto, X-HTTP-Method-Override, Content-Type, Accept')
 
 	res.setHeader('Access-Control-Allow-Credentials', true)
 

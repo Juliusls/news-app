@@ -38,8 +38,8 @@ loginReaderRouter.post('/', async (request, response, next) => {
 		await user.save()
 
 		response.cookie('readerAuthCookie', accessToken, { 
-			httpOnly: false,
-			secure: false,
+			httpOnly: true,
+			secure: true,
 			domain: 'julius-news-app.netlify.app',
 			sameSite: 'none' 
 		})
