@@ -170,7 +170,3 @@ export default App
 
 // TODO Confirm paying for one paid article
 // TODO After new writer or article is added name is not showing up
-
-// TODO Cypress testing
-
-// TODO Push code to Heroku

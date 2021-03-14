@@ -38,8 +38,6 @@ const AllWriters = () => {
 		return <Avatar alt="Writers Profile Picture" src={`data:image/jpeg;base64,${encodedWriterImage}`} />
 	}
 
-	// TODO add dividers
-
 	return (
 		<div>
 			<Typography variant='h3' className={classes.textWithPadding}>All writers</Typography>
