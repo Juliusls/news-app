@@ -62,4 +62,5 @@ Readers will be able to read the news by selecting categories or selecting/filte
 | | 1 | Started to work on E2E testing with cypress |
 | 13.3 | 6 | Creating cypress tests |
 | | 1 | Adding project back end to Heroku and front end to Netlify |
-| Total | 171.5 | | 
+| 14.3 | 0.5 | Adding env base url for react to work localy with localhost and in netlify with heroku |
+| Total | 172 | | 

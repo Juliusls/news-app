@@ -25,7 +25,6 @@
     "redux-thunk": "^2.3.0",
     "yup": "^0.32.8"
   },
-  "proxy": "https://own-news-app.herokuapp.com/",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

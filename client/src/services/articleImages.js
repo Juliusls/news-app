@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = 'https://own-news-app.herokuapp.com/api/images/articles'
+const baseUrl = `${process.env.REACT_APP_BASE_URL}/api/images/articles`
 
 const getAll = async () => {
 	const response = await axios.get(baseUrl)

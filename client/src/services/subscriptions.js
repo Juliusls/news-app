@@ -1,5 +1,6 @@
 import axios from 'axios'
-const baseUrl = 'https://own-news-app.herokuapp.com/api/subscriptions'
+const baseUrl = `${process.env.REACT_APP_BASE_URL}/api/subscriptions`
+
 
 const getAll = async () => {
 	const response = await axios.get(baseUrl)

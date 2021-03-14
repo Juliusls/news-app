@@ -31,6 +31,7 @@ const ArticlesList = () => {
 	const readerSubscriptions = loggedInReader && oneReader.subscriptions.map(subscription => subscription.recipient[0].id)
 
 	let articlesFiltered = articles
+	console.log('articlesFiltered', articlesFiltered)
 	let allength = null
 
 	if (!articles) {

@@ -64,7 +64,7 @@ const ArticleCard = ({ article }) => {
 	const [openLoginDialog, setOpenLoginDialog] = useState(false)
 	const [openAddFundsDialog, setOpenAddFundsDialog] = useState(false)
 
-	const filteredImage = images.filter(img => img.article === article.id)[0].img.data.data
+	const filteredImage = images && images.filter(img => img.article === article.id)[0].img.data.data
 	var base64 = btoa(new Uint8Array(filteredImage).reduce((data, byte) => data + String.fromCharCode(byte), ''))
 
 	if (!article) {

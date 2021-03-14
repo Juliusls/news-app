@@ -1,5 +1,6 @@
 client/node_modules
 client/uploads
+client/.env
 
 /imagesForTesting
 /node_modules
