@@ -37,11 +37,7 @@ loginWriterRouter.post('/', async (request, response, next) => {
 		user.refreshToken = refreshToken
 		await user.save()
 
-		response.cookie('writerAuthCookie', accessToken, { 
-			httpOnly: true,
-			secure: true,
-			sameSite: 'none'
-		})
+		response.cookie('writerAuthCookie', accessToken)
 		response.status(200).send({ userName: user.userName, id: user._id })
 	} catch (error) {
 		next(error)
@@ -50,3 +46,9 @@ loginWriterRouter.post('/', async (request, response, next) => {
 })
 
 module.exports = loginWriterRouter
+
+// { 
+// 	httpOnly: false,
+// 	secure: false,
+// 	sameSite: 'none' 
+// }

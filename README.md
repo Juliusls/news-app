@@ -65,4 +65,5 @@ Readers will be able to read the news by selecting categories or selecting/filte
 | 14.3 | 0.5 | Adding env base url for react to work localy with localhost and in netlify with heroku |
 | | 2 | Trying to fix and issue of cookies not being set on netlify from response |
 | | 1.5 | Did not manage to make cookies work on Netlify. App now is fully functional backend and front end on Heroku |
-| Total | 175.5 | | 
+| | 3 | File imports clean up and restructuring, front end file restructuring, minor bug fixes |
+| Total | 178.5 | | 

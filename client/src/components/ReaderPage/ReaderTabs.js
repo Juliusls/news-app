@@ -1,14 +1,17 @@
 import React, { useState } from 'react'
+import { Link, useHistory } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { useCookies } from 'react-cookie'
+
+
 import { AppBar, Tabs, Tab, Typography, Box, ListItem, ListItemText, List, makeStyles, Button } from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/Delete'
-import { Link } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+
 import { removeFavoriteWriter } from '../../reducers/readersReducer'
 import { removeReaderFromFollowers } from '../../reducers/writersReducer'
 import { removeReader } from '../../reducers/loginReaderReducer'
 import { notifyError, notifySuccess } from '../../reducers/notificationReducer'
-import { useCookies } from 'react-cookie'
-import { useHistory } from 'react-router-dom'
+
  
 const useStyles = makeStyles(theme => ({
 	text: {

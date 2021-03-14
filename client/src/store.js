@@ -1,4 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit'
+import thunk from 'redux-thunk'
+import { combineReducers } from 'redux' 
+import { persistReducer } from 'redux-persist'
+import storage from 'redux-persist/lib/storage'
+
 import articlesReducer from './reducers/articlesReducer'
 import writersReducer from './reducers/writersReducer'
 import loginWriterReducer from './reducers/loginWriterReducer'
@@ -8,10 +13,6 @@ import notificationReducer from './reducers/notificationReducer'
 import artcileImagesReducer from './reducers/articleImagesReducer'
 import writerImagesReducer from './reducers/writerImagesReducer'
 import readerImagesReducer from './reducers/readerImagesReducer'
-import thunk from 'redux-thunk'
-import { combineReducers } from 'redux' 
-import storage from 'redux-persist/lib/storage'
-import { persistReducer } from 'redux-persist'
 
 const reducers = combineReducers({
 	articles: articlesReducer,
@@ -27,7 +28,8 @@ const reducers = combineReducers({
 
 const persistConfig = {
 	key: 'root',
-	storage
+	storage,
+	blacklist: ['articleImages', 'writerImages', 'readerImages']
 }
 
 const persistedReducer = persistReducer(persistConfig, reducers)

@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import SearchIcon from '@material-ui/icons/Search'
+
 import { makeStyles, IconButton, TextField } from '@material-ui/core/'
+import SearchIcon from '@material-ui/icons/Search'
 
 const useStyles = makeStyles(theme => ({
 	icons: {

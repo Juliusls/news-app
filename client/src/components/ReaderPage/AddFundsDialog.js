@@ -1,12 +1,15 @@
 import React, { useState } from 'react'
-import { DialogActions, DialogTitle, Dialog, Button, makeStyles } from '@material-ui/core/'
+import { useCookies } from 'react-cookie'
+import { useHistory } from 'react-router-dom'
 import NumberFormat from 'react-number-format'
 import { useDispatch } from 'react-redux'
+
+import { DialogActions, DialogTitle, Dialog, Button, makeStyles } from '@material-ui/core/'
+
 import { addReaderFunds } from '../../reducers/readersReducer'
 import { notifyError, notifySuccess } from '../../reducers/notificationReducer'
 import { removeReader } from '../../reducers/loginReaderReducer'
-import { useCookies } from 'react-cookie'
-import { useHistory } from 'react-router-dom'
+
 
 const useStyles = makeStyles(theme => ({
 	text:{

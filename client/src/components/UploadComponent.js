@@ -1,6 +1,8 @@
 import React, { useMemo } from 'react'
 import { useDropzone } from 'react-dropzone'
+
 import theme from '../theme'
+
 import BackupIcon from '@material-ui/icons/Backup'
 
 const baseStyle = {

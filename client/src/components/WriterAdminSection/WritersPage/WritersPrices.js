@@ -1,23 +1,20 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { makeStyles, withStyles } from '@material-ui/core/styles'
-import Table from '@material-ui/core/Table'
-import TableBody from '@material-ui/core/TableBody'
-import TableCell from '@material-ui/core/TableCell'
-import TableContainer from '@material-ui/core/TableContainer'
-import TableHead from '@material-ui/core/TableHead'
-import TableRow from '@material-ui/core/TableRow'
-import IconButton from '@material-ui/core/IconButton'
-import Paper from '@material-ui/core/Paper'
+import { useHistory } from 'react-router-dom'
+import { useCookies } from 'react-cookie'
+
+
+import { makeStyles, withStyles, TextField, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton } from '@material-ui/core'
+
+
 import EditIcon from '@material-ui/icons/Edit'
 import CancelIcon from '@material-ui/icons/Cancel'
 import DoneIcon from '@material-ui/icons/Done'
-import TextField from '@material-ui/core/TextField'
-import { updatePricing } from '../../reducers/writersReducer'
-import { notifyError, notifySuccess } from '../../reducers/notificationReducer'
-import { useCookies } from 'react-cookie'
-import { removeWriter } from '../../reducers/loginWriterReducer'
-import { useHistory } from 'react-router-dom'
+
+import { updatePricing } from '../../../reducers/writersReducer'
+import { notifyError, notifySuccess } from '../../../reducers/notificationReducer'
+import { removeWriter } from '../../../reducers/loginWriterReducer'
+
 
 const useStyles = makeStyles(theme => ({
 	main: {

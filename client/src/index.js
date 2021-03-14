@@ -1,14 +1,15 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import App from './App'
-import store from './store'
 import { Provider } from 'react-redux'
-import theme from './theme'
+import { PersistGate } from 'redux-persist/integration/react'
+import { persistStore } from 'redux-persist'
 import { ThemeProvider } from '@material-ui/styles'
 import { CookiesProvider } from 'react-cookie'
 
-import { PersistGate } from 'redux-persist/integration/react'
-import { persistStore } from 'redux-persist'
+import App from './App'
+import store from './store'
+import theme from './theme'
+
 let persistor = persistStore(store)
 
 ReactDOM.render(

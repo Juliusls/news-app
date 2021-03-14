@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
+import { useParams } from 'react-router-dom'
+
 import { makeStyles, Typography, List } from '@material-ui/core'
+
 import WritersDashboard from './WritersDashboard'
 import ArticlesStatistics from './ArticlesStatistics'
 import WritersFollowers from './WritersFollowers'
 import WritersSubscribers from './WritersSubscribers'
 import WritersPrices from './WritersPrices'
-import { useParams } from 'react-router-dom'
 
 const useStyles = makeStyles({
 	profileContaner: {
@@ -37,7 +39,7 @@ const WriterAdminPage = () => {
 
 	const [componentToOpen, setComponentToOpen] = useState('articles')
 
-	const filteredWriterImage = writersImages.filter(img => img.writer === id)[0].img.data.data
+	const filteredWriterImage = writersImages && writersImages.filter(img => img.writer === id)[0].img.data.data
 	var encodedWriterImage = filteredWriterImage && btoa(new Uint8Array(filteredWriterImage).reduce((data, byte) => data + String.fromCharCode(byte), ''))
 
 	const tabToOpen = () => {

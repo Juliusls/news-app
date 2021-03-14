@@ -1,21 +1,22 @@
 /* eslint-disable no-fallthrough */
 import React from 'react'
-import { useDispatch } from 'react-redux'
-import { makeStyles, withStyles } from '@material-ui/core/styles'
-import { useSelector } from 'react-redux'
-import ArticlesList from './ArticlesList/ArticlesList'
-import SubscriptionPlans from './SubscriptionPlans'
-import { Typography, ButtonGroup, Button, Tooltip, Fade, Card, CardContent, List } from '@material-ui/core'
-import { useParams } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { useParams, useHistory } from 'react-router-dom'
+import { useCookies } from 'react-cookie'
+
+import { makeStyles, withStyles, Typography, ButtonGroup, Button, Tooltip, Fade, Card, CardContent, List } from '@material-ui/core'
 import AddOutlinedIcon from '@material-ui/icons/AddOutlined'
 import CheckOutlinedIcon from '@material-ui/icons/CheckOutlined'
-import { addFavoriteWriter, removeFavoriteWriter, substractReaderFunds, initReaders } from '../reducers/readersReducer'
-import { addReaderToFollowers, removeReaderFromFollowers, addEarningsToWriter, initWriters } from '../reducers/writersReducer'
-import readersService from '../services/readers'
-import { notifySuccess, notifyError } from '../reducers/notificationReducer'
-import { removeReader } from '../reducers/loginReaderReducer'
-import { useCookies } from 'react-cookie'
-import { useHistory } from 'react-router-dom'
+
+import ArticlesList from '../ArticlesList/ArticlesList'
+import SubscriptionPlans from './SubscriptionPlans'
+
+import { addFavoriteWriter, removeFavoriteWriter, substractReaderFunds, initReaders } from '../../reducers/readersReducer'
+import { addReaderToFollowers, removeReaderFromFollowers, addEarningsToWriter, initWriters } from '../../reducers/writersReducer'
+import { notifySuccess, notifyError } from '../../reducers/notificationReducer'
+import { removeReader } from '../../reducers/loginReaderReducer'
+
+import readersService from '../../services/readers'
 
 const useStyles = makeStyles(theme => ({
 	profileContaner: {
@@ -106,7 +107,7 @@ const WriterPage = () => {
 	const filteredWriter = useSelector(state => state.writers.filter(writer => writer.id === author)[0])
 	const currentReader = loggedInReader && readers.filter(reader => reader.id === loggedInReader.id)[0]
 
-	const filteredWriterImage = writersImages.filter(img => img.writer === author)[0].img.data.data
+	const filteredWriterImage = writersImages && writersImages.filter(img => img.writer === author)[0].img.data.data
 	var encodedWriterImage = filteredWriterImage && btoa(new Uint8Array(filteredWriterImage).reduce((data, byte) => data + String.fromCharCode(byte), ''))
 
 	if (!filteredWriter) {

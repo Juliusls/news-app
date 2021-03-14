@@ -17,4 +17,8 @@ const create = async (newImage) => {
 	return response.data
 }
 
-export default { getAll, getOne, create }
+export default { 
+	getAll, 
+	getOne, 
+	create 
+}

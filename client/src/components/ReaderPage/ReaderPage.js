@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
-import { makeStyles } from '@material-ui/core/styles'
 import { useSelector } from 'react-redux'
-import { Typography, Button } from '@material-ui/core'
 import { useParams } from 'react-router-dom'
+
+import { makeStyles, Typography, Button } from '@material-ui/core'
+
 import AddFundsDialog from './AddFundsDialog'
 import ReaderTabs from './ReaderTabs'
 
@@ -45,7 +46,7 @@ const ReaderPage = () => {
 	const filteredReader = readers.filter(reader => reader.id === id)[0]
 	const date = filteredReader.joined !== undefined ? filteredReader.joined : 'No data'
 
-	const filteredImage = images.filter(img => img.reader === id)[0].img.data.data
+	const filteredImage = images && images.filter(img => img.reader === id)[0].img.data.data
 	var base64 = btoa(new Uint8Array(filteredImage).reduce((data, byte) => data + String.fromCharCode(byte), ''))
 
 	if (!readers) {

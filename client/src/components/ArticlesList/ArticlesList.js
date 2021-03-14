@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
+import { useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import Grid from '@material-ui/core/Grid'
-import Typography from '@material-ui/core/Typography'
-import { makeStyles } from '@material-ui/core/styles'
+
+import { makeStyles, Grid, Typography } from '@material-ui/core'
+
 import ArticleCard from './ArticleCard'
 import ArticlesFilter from './ArticlesFilter'
-import { useParams } from 'react-router-dom'
 
 const useStyles = makeStyles({
 	text: {

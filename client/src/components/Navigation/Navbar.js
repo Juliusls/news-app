@@ -1,14 +1,17 @@
 import React, { useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+import { useCookies } from 'react-cookie'
+
 import { withStyles, makeStyles, Button, IconButton, Typography, Toolbar, AppBar, Tooltip, Fade, Avatar } from '@material-ui/core/'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import EditIcon from '@material-ui/icons/Edit'
 import MenuIcon from '@material-ui/icons/Menu'
-import SearchField from '../SearchField'
+
+import SearchField from './SearchField'
 import LeftSideMenu from './LeftSideMenu'
+
 import { removeReader } from '../../reducers/loginReaderReducer'
-import { useCookies } from 'react-cookie'
 import { removeWriter } from '../../reducers/loginWriterReducer'
 import { notifySuccess } from '../../reducers/notificationReducer'
 

@@ -2,16 +2,21 @@ import React from 'react'
 import { Formik, Field } from 'formik'
 import { useDispatch, useSelector } from 'react-redux'
 import * as yup from 'yup'
-import { makeStyles, FormControl, Typography, FormControlLabel, FormGroup, Button } from '@material-ui/core'
-import { TextField, CheckboxWithLabel } from 'formik-material-ui'
-import { newsCategories } from '../../data/data'
-import { createWriter } from '../../reducers/writersReducer'
-import { addWriterImage } from '../../reducers/writerImagesReducer'
-import { notifySuccess, notifyError } from '../../reducers/notificationReducer'
 import { useHistory } from 'react-router-dom'
-import UploadComponent from '../UploadComponent'
-import writerImagesService from '../../services/writerImages'
-import writerService from '../../services/writers'
+
+import { TextField, CheckboxWithLabel } from 'formik-material-ui'
+import { makeStyles, FormControl, Typography, FormControlLabel, FormGroup, Button } from '@material-ui/core'
+
+import { newsCategories } from '../../../data/data'
+
+import { createWriter } from '../../../reducers/writersReducer'
+import { addWriterImage } from '../../../reducers/writerImagesReducer'
+import { notifySuccess, notifyError } from '../../../reducers/notificationReducer'
+
+import UploadComponent from '../../UploadComponent'
+
+import writerImagesService from '../../../services/writerImages'
+import writerService from '../../../services/writers'
 
 const useStyles = makeStyles(theme => ({
 	inputColor:{

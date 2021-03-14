@@ -35,7 +35,7 @@
   "eslintConfig": {
     "extends": "react-app"
   },
-  "proxy": "https://own-news-app.herokuapp.com",
+  "proxy": "http://localhost:3001",
   "browserslist": {
     "production": [
       ">0.2%",

@@ -1,8 +1,8 @@
 import React from 'react'
-import { Snackbar } from '@material-ui/core'
-import MuiAlert from '@material-ui/lab/Alert'
 import { useSelector } from 'react-redux'
-import Fade from '@material-ui/core/Fade'
+
+import { Snackbar, Fade } from '@material-ui/core'
+import MuiAlert from '@material-ui/lab/Alert'
 
 const Alert = (props) => {
 	return <MuiAlert elevation={6} variant="filled" {...props} />

@@ -7,16 +7,16 @@ import Container  from '@material-ui/core/Container'
 import Navbar from './components/Navigation/Navbar'
 import ArticlesList from './components/ArticlesList/ArticlesList'
 import ArticlePage from './components/ArticlePage/ArticlePage'
-import WriterPage from './components/WriterPage'
-import SignUpWriter from './components/WriterSection/SignUpWriter'
-import LoginReader from './components/LoginReader'
+import WriterPage from './components/WriterPage/WriterPage'
+import SignUpWriter from './components/WriterAdminSection/WriterEntry/SignUpWriter'
+import LoginReader from './components/ReaderEntry/LoginReader'
 import SnackBar from './components/SnackBar'
-import LoginWriter from './components/WriterSection/LoginWriter'
-import SignUpReader from './components/SignUpReader'
+import LoginWriter from './components/WriterAdminSection/WriterEntry/LoginWriter'
+import SignUpReader from './components/ReaderEntry/SignUpReader'
 import ReaderPage from './components/ReaderPage/ReaderPage'
 import AllWriters from './components/AllWriters'
-import WriterAdminPage from './components/WriterSection/WriterAdminPage'
-import NewArticle from './components/WriterSection/NewArticle'
+import WriterAdminPage from './components/WriterAdminSection/WritersPage/WriterAdminPage'
+import NewArticle from './components/WriterAdminSection/NewArticle'
 
 import { initArticles } from './reducers/articlesReducer'
 import { initWriters, removeSubsFromWriters } from './reducers/writersReducer'
@@ -166,13 +166,6 @@ const App = () => {
 
 export default App
 
-// TODO Confirm paying for one paid article
-
-// TODO After new writer or article is added name is not showing up
-// TODO snackbar messages randomly showing up
-
-// TODO fix file structure
-// TODO add dummy data for project
-
 // TODO readme description
 
+// TODO fix images problem

@@ -1,21 +1,27 @@
 import React from 'react'
 import { Formik, Field, FieldArray } from 'formik'
 import { useSelector, useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 import * as yup from 'yup'
-import { makeStyles, FormControl, Typography, FormControlLabel, FormGroup, Button, Radio, IconButton } from '@material-ui/core'
+import { useCookies } from 'react-cookie'
+
 import { RadioGroup, CheckboxWithLabel, TextField } from 'formik-material-ui'
+import { makeStyles, FormControl, Typography, FormControlLabel, FormGroup, Button, Radio, IconButton } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
 import RemoveIcon from '@material-ui/icons/Remove'
+
 import { newsCategories } from '../../data/data'
+
 import { createArticle } from '../../reducers/articlesReducer'
 import { addArticleToWriter } from '../../reducers/writersReducer'
-import { useHistory } from 'react-router-dom'
-import articlesService from '../../services/articles'
-import articleImagesService from '../../services/articleImages'
 import { notifyError, notifySuccess } from '../../reducers/notificationReducer'
 import { addArticleImage } from '../../reducers/articleImagesReducer'
-import { useCookies } from 'react-cookie'
 import { removeWriter } from '../../reducers/loginWriterReducer'
+
+import articlesService from '../../services/articles'
+import articleImagesService from '../../services/articleImages'
+
+
 import UploadComponent from '../UploadComponent'
 
 const useStyles = makeStyles(theme => ({

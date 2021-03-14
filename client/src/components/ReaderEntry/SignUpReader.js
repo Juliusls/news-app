@@ -3,15 +3,18 @@ import { Formik, Field } from 'formik'
 import * as yup from 'yup'
 import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import Button from '@material-ui/core/Button'
-import { makeStyles, Typography } from '@material-ui/core'
+
 import { TextField } from 'formik-material-ui'
-import { createReader } from '../reducers/readersReducer'
-import { addReaderImage } from '../reducers/readerImagesReducer'
-import { notifyError, notifySuccess } from '../reducers/notificationReducer'
-import UploadComponent from './UploadComponent'
-import readerImagesService from '../services/readerImages'
-import readersService from '../services/readers'
+import { makeStyles, Typography, Button } from '@material-ui/core'
+
+import { createReader } from '../../reducers/readersReducer'
+import { addReaderImage } from '../../reducers/readerImagesReducer'
+import { notifyError, notifySuccess } from '../../reducers/notificationReducer'
+
+import UploadComponent from '../UploadComponent'
+
+import readerImagesService from '../../services/readerImages'
+import readersService from '../../services/readers'
 
 const useStyles = makeStyles(theme => ({
 	inputColor:{

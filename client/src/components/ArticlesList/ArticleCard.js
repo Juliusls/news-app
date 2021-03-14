@@ -1,17 +1,15 @@
 import React, { useState } from 'react'
-import { makeStyles } from '@material-ui/core/styles'
-import Card from '@material-ui/core/Card'
-import CardActionArea from '@material-ui/core/CardActionArea'
-import CardContent from '@material-ui/core/CardContent'
-import CardMedia from '@material-ui/core/CardMedia'
-import Typography from '@material-ui/core/Typography'
-import { Link, useHistory } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { Link, useHistory,  } from 'react-router-dom'
+
+import { makeStyles, Card, CardActionArea, CardContent, CardMedia, Typography } from '@material-ui/core'
+import Skeleton from '@material-ui/lab/Skeleton'
+
 import { addViewToArticle } from '../../reducers/articlesReducer'
-import { useSelector } from 'react-redux'
 import { notifyError } from '../../reducers/notificationReducer'
 import { substractReaderFunds } from '../../reducers/readersReducer'
 import { addEarningsToWriter } from '../../reducers/writersReducer'
+
 import DialogBoxToLogin from './DialogBoxToLogIn'
 import DialogBoxToAddFunds from './DialogBoxToAddFunds'
 // import DialogBoxToPay from './DialogBoxToPay'
@@ -64,7 +62,7 @@ const ArticleCard = ({ article }) => {
 	const [openLoginDialog, setOpenLoginDialog] = useState(false)
 	const [openAddFundsDialog, setOpenAddFundsDialog] = useState(false)
 
-	const filteredImage = images && images.filter(img => img.article === article.id)[0].img.data.data
+	const filteredImage = images.length !== 0 && images.filter(img => img.article === article.id)[0].img.data.data
 	var base64 = btoa(new Uint8Array(filteredImage).reduce((data, byte) => data + String.fromCharCode(byte), ''))
 
 	if (!article) {
@@ -105,12 +103,17 @@ const ArticleCard = ({ article }) => {
 		<Card className={classes.root} >
 			<Link style={{ textDecoration: 'none', color: 'inherit' }} to="#" onClick={() => handleCardPress(article)}>
 				<CardActionArea>
-					<CardMedia
-						className={classes.media}
-						image={`data:image/jpeg;base64,${base64}`}
-						// image="https://source.unsplash.com/random"					// src={`data:${images[0].img.contentType};base64,${images[0].img.data}`}
-						title="Contemplative Reptile"
-					/>
+					{images.length === 0 
+						?
+						<Skeleton variant="rect" width={380} height={140} animation="wave"/>
+						:
+						<CardMedia
+							className={classes.media}
+							image={`data:image/jpeg;base64,${base64}`}
+							// image="https://source.unsplash.com/random"					// src={`data:${images[0].img.contentType};base64,${images[0].img.data}`}
+							title="Contemplative Reptile"
+						/>
+					}
 					<CardContent className={classes.cardContent}>
 						<Typography className={classes.textTitle}>
 							{article.title}
@@ -121,7 +124,7 @@ const ArticleCard = ({ article }) => {
 						<div className={classes.cardInfoContainer}>
 							<div className={classes.cardInfoCategories}>
 								{article.genres.map(genre => 
-									<Typography key={genre} className={classes.text}>
+									<Typography key={genre} className={classes.text} variant='caption'>
 										{genre}
 									</Typography>
 								)}

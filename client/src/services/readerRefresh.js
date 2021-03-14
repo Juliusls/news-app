@@ -7,4 +7,6 @@ const refreshReader = async (readerId) => {
 	return response.data
 }
 
-export default { refreshReader }
+export default { 
+	refreshReader 
+}

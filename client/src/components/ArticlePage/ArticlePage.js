@@ -1,11 +1,10 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/core/styles'
 import { Link, useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import Typography from '@material-ui/core/Typography'
-import Button from '@material-ui/core/Button'
+
+import { makeStyles, Typography, Button } from '@material-ui/core'
+
 import Comments from './Comments'
-// import Image from 'material-ui-image'
 
 const useStyles = makeStyles({
 	infoText: {
@@ -29,8 +28,7 @@ const ArticlePage = () => {
 	const articles = useSelector(state => state.articles)
 	const images = useSelector(state => state.articleImages)
 
-	const filteredImage = images.filter(img => img.article === id)[0].img.data.data
-	// const binaryData = images[1].img.data.data
+	const filteredImage = images && images.filter(img => img.article === id)[0].img.data.data
 	var base64 = btoa(new Uint8Array(filteredImage).reduce((data, byte) => data + String.fromCharCode(byte), ''))
 
 	if (!articles) {

@@ -37,11 +37,7 @@ loginReaderRouter.post('/', async (request, response, next) => {
 		user.refreshToken = refreshToken
 		await user.save()
 
-		response.cookie('readerAuthCookie', accessToken, { 
-			httpOnly: true,
-			secure: true,
-			sameSite: 'none' 
-		})
+		response.cookie('readerAuthCookie', accessToken)
 		response.status(200).send({ userName: user.userName, id: user._id })
 	} catch (error) {
 		next(error)
@@ -50,3 +46,9 @@ loginReaderRouter.post('/', async (request, response, next) => {
 })
 
 module.exports = loginReaderRouter
+
+// { 
+// 	httpOnly: false,
+// 	secure: false,
+// 	sameSite: 'none' 
+// }

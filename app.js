@@ -2,6 +2,13 @@ const express = require('express')
 const app = express()
 const path = require('path')
 const cors = require('cors')
+const mongoose = require('mongoose')
+const cookieParser = require('cookie-parser')
+
+const config = require('./utils/config')
+const logger = require('./utils/logger')
+const middleware = require('./utils/middleware')
+
 const articlesRouter = require('./controllers/articles')
 const articleImageRouter = require('./controllers/articleImage')
 const writerImageRouter = require('./controllers/writerImage')
@@ -9,16 +16,11 @@ const readerImageRouter = require('./controllers/readerImage')
 const writersRouter = require('./controllers/writers')
 const readersRouter = require('./controllers/readers')
 const subscriptionsRouter = require('./controllers/subscriptions')
-
-const mongoose = require('mongoose')
-const config = require('./utils/config')
-const logger = require('./utils/logger')
-const cookieParser = require('cookie-parser')
-const middleware = require('./utils/middleware')
 const loginReaderRouter = require('./controllers/loginReader')
 const refreshReaderRouter = require('./controllers/refreshReader')
 const loginWriterRouter = require('./controllers/loginWriter')
 const refreshWriterRouter = require('./controllers/refreshWriter')
+
 
 mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
 	.then(() => {

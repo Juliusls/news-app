@@ -1,19 +1,14 @@
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { Link } from 'react-router-dom'
-import AccordionDetails from '@material-ui/core/AccordionDetails'
-import AccordionSummary from '@material-ui/core/AccordionSummary'
-import AccordionActions from '@material-ui/core/AccordionActions'
-import { useParams } from 'react-router-dom'
-import Typography from '@material-ui/core/Typography'
+import { Link, useParams, useHistory } from 'react-router-dom'
+import { useCookies } from 'react-cookie'
+
+import { AccordionDetails, AccordionSummary, AccordionActions, Typography, Button, TextField, Accordion, makeStyles, Card, CardContent } from '@material-ui/core'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-import Button from '@material-ui/core/Button'
-import { TextField, Accordion, makeStyles, Card, CardContent } from '@material-ui/core'
+
 import { addComment } from '../../reducers/articlesReducer'
 import { notifySuccess, notifyError } from '../../reducers/notificationReducer'
-import { useCookies } from 'react-cookie'
 import { removeReader } from '../../reducers/loginReaderReducer'
-import { useHistory } from 'react-router-dom'
 
 
 const useStyles = makeStyles(theme => ({
@@ -182,7 +177,3 @@ const Comments = () => {
 }
 
 export default Comments
-
-{/* <Typography key={value} variant="caption" className={classes.text}>
-							{value}
-</Typography> */}

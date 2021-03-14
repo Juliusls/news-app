@@ -1,16 +1,11 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
-import { makeStyles } from '@material-ui/core/styles'
-import Drawer from '@material-ui/core/Drawer'
-import IconButton from '@material-ui/core/IconButton'
-import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemText from '@material-ui/core/ListItemText'
-import CloseIcon from '@material-ui/icons/Close'
-import Divider from '@material-ui/core/Divider'
-import { allCategories, newsCategories } from '../../data/data'
-import { sideMenuWriterSection } from '../../data/data'
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+
+import { makeStyles, Drawer, IconButton, List, ListItem, ListItemText, Divider } from '@material-ui/core'
+import CloseIcon from '@material-ui/icons/Close'
+
+import { allCategories, newsCategories, sideMenuWriterSection } from '../../data/data'
 
 const useStyles = makeStyles(theme => ({
 	list: {

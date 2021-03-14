@@ -7,4 +7,6 @@ const refreshWriter = async (writerId) => {
 	return response.data
 }
 
-export default { refreshWriter }
+export default { 
+	refreshWriter
+}

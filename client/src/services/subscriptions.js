@@ -12,4 +12,7 @@ const deleteMany = async (array) => {
 	return response.data
 }
 
-export default { getAll, deleteMany }
+export default { 
+	getAll, 
+	deleteMany 
+}

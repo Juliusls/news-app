@@ -1,6 +1,7 @@
 import React from 'react'
-import { DialogActions, DialogTitle, Dialog, Button, makeStyles, DialogContent, Typography } from '@material-ui/core/'
 import { useHistory } from 'react-router-dom'
+
+import { DialogActions, DialogTitle, Dialog, Button, makeStyles, DialogContent, Typography } from '@material-ui/core/'
 
 const useStyles = makeStyles(theme => ({
 	text:{
