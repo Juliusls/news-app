@@ -1,7 +1,5 @@
 import axios from 'axios'
 const baseUrl = `${process.env.REACT_APP_BASE_URL}/api/articles`
-console.log('baseUrl', baseUrl)
-
 
 const getAll = async () => {
 	const response = await axios.get(baseUrl)

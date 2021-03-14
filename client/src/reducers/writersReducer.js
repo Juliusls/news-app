@@ -117,7 +117,6 @@ export const addArticleToWriter = (article) => {
 
 export const removeSubsFromWriters = (subsToRemove) => {
 	return async dispatch => {
-		console.log('ids from writers reducer', subsToRemove)
 		dispatch ({
 			type: 'REMOVE_SUBS_FROM_WRITERS',
 			data: subsToRemove

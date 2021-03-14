@@ -110,7 +110,6 @@ export const substractReaderFunds = (fundsToSubstract, reader) => {
 
 export const removeSubsFromReaders = (subsToRemove) => {
 	return async dispatch => {
-		console.log('ids from readers reducer', subsToRemove)
 		dispatch ({
 			type: 'REMOVE_SUBS_FROM_READERS',
 			data: subsToRemove

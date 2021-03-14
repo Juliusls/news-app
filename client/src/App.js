@@ -92,13 +92,11 @@ const App = () => {
 	const refreshReader = async () => {	
 		const idForService = { id: reader.id }
 		await readerRefreshServices.refreshReader(idForService)
-		console.log('refreshed reader')
 	}
 
 	const refreshWriter = async () => {	
 		const idForService = { id: writer.id }
 		await writerRefreshServices.refreshWriter(idForService)
-		console.log('refreshed writer')
 	}
 	
 	setInterval(() => {
